@@ -1,0 +1,39 @@
+/* stylelint-disable-next-line at-rule-no-unknown */
+@tailwind base;
+/* stylelint-disable-next-line at-rule-no-unknown */
+@tailwind components;
+/* stylelint-disable-next-line at-rule-no-unknown */
+@tailwind utilities;
+
+:root {
+  /* Color Hunt Palette Application */
+  --foreground: #000000;
+  --background: #FAFAFA;
+
+  /* Semantic Color Tokens */
+  --primary: #FAFAFA;
+  /* 60% - Backgrounds */
+  --secondary: #841818;
+  /* 30% - Structure */
+  --accent: #E0BB20;
+  /* 10% - Highlights */
+  --pure-black: #000000;
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: var(--font-inter), Inter, Arial, Helvetica, sans-serif;
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+/* Hide scrollbar for Chrome, Safari, Opera */
+::-webkit-scrollbar {
+  display: none;
+}
