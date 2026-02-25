@@ -2,7 +2,6 @@
 
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
-import { ChevronDown } from "lucide-react";
 import { useRef } from "react";
 
 type CompanyHeroProps = {
@@ -92,22 +91,6 @@ export default function CompanyHero({
                     </motion.p>
                 </div>
 
-                {/* Scroll indicator */}
-                <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 1, delay: 1.1 }}
-                    className="absolute bottom-10"
-                >
-                    <motion.div
-                        animate={{ y: [0, 7, 0] }}
-                        transition={{ duration: 1.5, repeat: Infinity }}
-                        className="flex flex-col items-center gap-1 text-white/50"
-                    >
-                        <span className="text-xs tracking-widest uppercase">Scroll</span>
-                        <ChevronDown className="w-5 h-5" />
-                    </motion.div>
-                </motion.div>
             </motion.div>
         </section>
     );

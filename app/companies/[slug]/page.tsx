@@ -73,7 +73,7 @@ export default async function CompanyPage({ params }: Props) {
               <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight">
                 Who We Are
               </h2>
-              <p className="text-lg text-gray-600 leading-relaxed">
+              <p className="text-lg text-gray-600 leading-relaxed text-justify">
                 {company.description}
               </p>
             </div>
