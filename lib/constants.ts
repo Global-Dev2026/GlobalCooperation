@@ -109,7 +109,7 @@ export const COMPANIES = [
     focus: [
       "Custom Software Development",
       "Cloud Architecture",
-      "AI & ML Integration",
+      "POS System & Services",
     ],
     features: [
       {
@@ -125,10 +125,10 @@ export const COMPANIES = [
         icon: "Cloud",
       },
       {
-        title: "AI/ML Integration",
+        title: "POS System & Services",
         description:
-          "Implement intelligent features with machine learning models, natural language processing, and predictive analytics.",
-        icon: "Brain",
+          "Our flagship product, Global POS, is a comprehensive point-of-sale solution designed to manage supermarkets, retail outlets, and more.",
+        icon: "ShoppingCart",
       },
       {
         title: "Enterprise Architecture",

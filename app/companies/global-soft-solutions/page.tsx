@@ -8,6 +8,7 @@ import {
     Code2,
     Cloud,
     MonitorSmartphone,
+    ShoppingCart,
     Building2,
     Workflow,
     Headphones,
@@ -41,7 +42,7 @@ const services = [
         highlights: ["AWS & Azure", "Auto-scaling", "High Availability"],
     },
     {
-        icon: MonitorSmartphone,
+        icon: ShoppingCart,
         title: "POS System & Services",
         description:
             "Our flagship product, Global POS, is a comprehensive point-of-sale solution designed to manage supermarkets, retail outlets, and more — with full maintenance and ongoing support.",
@@ -215,7 +216,7 @@ export default function GlobalSoftSolutionsPage() {
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
                             {services.map((service, index) => (
-                                <motion.div key={service.title} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.1 }} transition={{ duration: 0.5, delay: index * 0.06 }}
+                                <motion.div key={service.title} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0 }} transition={{ duration: 0.5, delay: index * 0.06 }}
                                     className="bg-white rounded-2xl p-6 border border-gray-100 hover:shadow-lg transition-all duration-300">
                                     <div className="mb-4 w-11 h-11 rounded-xl flex items-center justify-center" style={{ backgroundColor: "#84181815" }}>
                                         <service.icon className="w-5 h-5 text-burgundy" />
