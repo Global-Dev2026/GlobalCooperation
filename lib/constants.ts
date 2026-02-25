@@ -201,8 +201,8 @@ export const COMPANIES = [
       },
     ],
     stats: [
-      { label: "Businesses Served", value: 150, suffix: "+" },
-      { label: "Installations Completed", value: 300, suffix: "+" },
+      { label: "Businesses Served", value: 800, suffix: "+" },
+      { label: "Installations Completed", value: 1200, suffix: "+" },
       { label: "Years of Experience", value: 15, suffix: "+" },
       { label: "Client Satisfaction", value: 98, suffix: "%" },
     ],
