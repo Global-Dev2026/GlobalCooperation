@@ -215,7 +215,6 @@ export const COMPANIES = [
       buttonText: "Contact Us Today",
     },
     image: "/images/companies/tech.jpg",
-    directors: ["pasan"],
   },
   {
     slug: "global-advisory-services",
