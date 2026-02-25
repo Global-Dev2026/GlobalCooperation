@@ -275,46 +275,70 @@ export const COMPANIES = [
     focus: ["Digital Strategy", "Cloud Migration", "Data & AI Advisory"],
     features: [
       {
-        title: "Digital Strategy",
+        title: "Business Setup & Expansion Services",
         description:
-          "Develop comprehensive digital transformation strategies aligned with your business goals and market demands.",
-        icon: "Target",
+          "End-to-end support for business registration, licensing, and strategic expansion planning to launch and grow your business with confidence.",
+        icon: "Briefcase",
       },
       {
-        title: "Cloud Migration",
+        title: "Retail Strategy & Growth Consulting",
         description:
-          "Plan and execute seamless cloud migrations with minimal disruption and maximum cost optimization.",
-        icon: "CloudUpload",
+          "Tailored retail strategies to boost sales performance, enhance customer experience, and drive sustainable business growth.",
+        icon: "TrendingUp",
       },
       {
-        title: "Data Analytics",
+        title: "Financial Advisory Services",
         description:
-          "Build data strategies and analytics frameworks that turn your data into actionable business insights.",
-        icon: "BarChart3",
+          "Expert financial planning, budgeting, and investment advisory to strengthen your financial position and maximize profitability.",
+        icon: "DollarSign",
       },
       {
-        title: "AI Implementation",
+        title: "Inventory & Supply Chain Management",
         description:
-          "Strategic planning for AI adoption, from use case identification to implementation roadmaps.",
-        icon: "Sparkles",
+          "Optimize your inventory control and supply chain operations to reduce costs, minimize waste, and improve delivery efficiency.",
+        icon: "Package",
       },
       {
-        title: "Technology Governance",
+        title: "Operations & Process Improvement",
         description:
-          "Establish governance frameworks that balance innovation with security, compliance, and risk management.",
+          "Identify inefficiencies and implement streamlined processes to enhance operational performance across your entire organization.",
+        icon: "Settings2",
+      },
+      {
+        title: "Marketing & Sales Solutions",
+        description:
+          "Develop data-driven marketing strategies and sales frameworks that attract customers, build brand loyalty, and increase revenue.",
+        icon: "Megaphone",
+      },
+      {
+        title: "Technology & Digital Solutions",
+        description:
+          "Strategic guidance on technology adoption and digital transformation to keep your business competitive in a fast-evolving landscape.",
+        icon: "Laptop",
+      },
+      {
+        title: "Human Resource & Staff Training",
+        description:
+          "Comprehensive HR consulting and customized staff training programs to build a skilled, motivated, and high-performing workforce.",
+        icon: "Users",
+      },
+      {
+        title: "Risk Management & Compliance",
+        description:
+          "Proactive risk identification, assessment, and compliance advisory to safeguard your business from operational and regulatory threats.",
         icon: "Shield",
       },
       {
-        title: "Change Management",
+        title: "Ongoing Advisory & Support Packages",
         description:
-          "Guide your organization through technology changes with structured change management programs.",
-        icon: "Users",
+          "Flexible retainer-based advisory and support packages providing continuous expert guidance tailored to your evolving business needs.",
+        icon: "HeadphonesIcon",
       },
     ],
     stats: [
       { label: "Consulting Projects", value: 180, suffix: "+" },
       { label: "Enterprise Clients", value: 65, suffix: "+" },
-      { label: "ROI Improvement", value: 45, suffix: "%" },
+      { label: "ROI Improvement", value: 95, suffix: "%" },
       { label: "Consultants", value: 50, suffix: "+" },
     ],
     color: "#841818",
@@ -326,7 +350,6 @@ export const COMPANIES = [
       buttonText: "Schedule Consultation",
     },
     image: "/images/companies/advisory.webp",
-    directors: ["lakshitha"],
   },
   {
     slug: "global-sleek",
@@ -390,7 +413,6 @@ export const COMPANIES = [
       buttonText: "Start Design Project",
     },
     image: "/images/companies/sleek.webp",
-    directors: ["channa"],
   },
 ] as const;
 
