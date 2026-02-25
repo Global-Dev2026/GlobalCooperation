@@ -142,7 +142,7 @@ export default function GlobalTechPage() {
                                 className="text-3xl sm:text-5xl md:text-7xl font-bold text-white leading-tight"
                             >
                                 Global Tech
-                                <span className="block text-[#E0BB20] font-light">(Private) Limited</span>
+                                <span className="block text-gold font-light">(Private) Limited</span>
                             </motion.h1>
 
                             {/* Thin divider */}
@@ -418,11 +418,11 @@ export default function GlobalTechPage() {
                                 <div className="text-center md:text-left space-y-4">
                                     <div>
                                         <h3 className="text-xl font-bold text-gray-900">Mr. Pasan Wickramathanthri</h3>
-                                        <p className="text-sm text-burgundy font-semibold mt-1">Director — Global Tech (Pvt) Ltd</p>
+                                        <p className="text-sm text-burgundy font-semibold mt-1">Director — Global Tech (Private) Limited</p>
                                     </div>
                                     <div className="h-px w-10 bg-gray-200 mx-auto md:mx-0" />
                                     <p className="text-sm text-gray-600 leading-relaxed">
-                                        Under the leadership of Director Pasan, Global Tech (Pvt) Ltd delivers cutting-edge technology
+                                        Under the leadership of Director Pasan, Global Tech (Private) Limited delivers cutting-edge technology
                                         solutions that empower businesses to innovate, optimize, and grow.
                                     </p>
                                     <Link

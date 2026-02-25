@@ -141,7 +141,7 @@ export default function GlobalSoftSolutionsPage() {
                             <motion.h1 initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }}
                                 className="text-3xl sm:text-5xl md:text-7xl font-bold text-white leading-tight">
                                 Global Soft Solutions
-                                <span className="block text-[#E0BB20] font-light">(Private) Limited</span>
+                                <span className="block text-gold font-light">(Private) Limited</span>
                             </motion.h1>
                             <motion.div initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 0.6, delay: 0.6 }}
                                 className="h-px w-20 bg-white/40 mx-auto" />
@@ -294,8 +294,8 @@ export default function GlobalSoftSolutionsPage() {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto items-stretch">
                             {[
-                                { name: "Mr. Sumudu Masakorala", title: "Director — Global Soft Solutions", image: "/images/directers/sumudu.png", linkedin: "https://www.linkedin.com/in/sumudu-masakorala/", bio: "Leads Global Soft Solutions with a focus on innovative software and IT solutions that empower businesses to achieve efficiency, scalability, and sustainable growth." },
-                                { name: "Mr. Rashmika Perera", title: "Director — Global Soft Solutions", image: "/images/directers/rashmika.png", linkedin: "https://www.linkedin.com/in/rashmika-perera-640639149/", bio: "Drives the company's commitment to quality and forward-thinking strategies, transforming ideas into impactful digital solutions for clients across Sri Lanka." },
+                                { name: "Mr. Sumudu Masakorala", title: "Director — Global Soft Solutions (Private) Limited", image: "/images/directers/sumudu.png", linkedin: "https://www.linkedin.com/in/sumudu-masakorala/", bio: "Leads Global Soft Solutions (Private) Limited with a focus on innovative software and IT solutions that empower businesses to achieve efficiency, scalability, and sustainable growth." },
+                                { name: "Mr. Rashmika Perera", title: "Director — Global Soft Solutions (Private) Limited", image: "/images/directers/rashmika.png", linkedin: "https://www.linkedin.com/in/rashmika-perera-640639149/", bio: "Drives the company's commitment to quality and forward-thinking strategies, transforming ideas into impactful digital solutions for clients across Sri Lanka." },
                             ].map((director, i) => (
                                 <motion.div key={director.name} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.7, delay: i * 0.1 }} className="h-full">
                                     <div className="h-full bg-white rounded-3xl border border-gray-100 shadow-sm p-6 sm:p-8 flex flex-col sm:flex-row items-center gap-6">
