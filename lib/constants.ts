@@ -182,22 +182,70 @@ export const COMPANIES = [
     ],
     features: [
       {
-        title: "CCTV & Security Systems",
+        title: "Wireless CCTV Cameras",
         description:
-          "Professional installation and maintenance of CCTV surveillance systems to protect your premises and assets.",
-        icon: "Video",
+          "Professional wireless CCTV camera installation and monitoring solutions to secure your premises around the clock.",
+        icon: "Camera",
       },
       {
-        title: "AC Solutions & Maintenance",
+        title: "Air Condition Solutions (AC)",
         description:
-          "Supply, installation, and servicing of air conditioning systems for commercial and retail environments.",
+          "Supply, installation, and servicing of energy-efficient air conditioning systems for commercial and retail environments.",
         icon: "Wind",
       },
       {
-        title: "IT Support & Maintenance",
+        title: "Burglar Alarm Systems",
         description:
-          "Ongoing technical support, preventive maintenance, and rapid-response IT services to keep your operations running smoothly.",
-        icon: "Headphones",
+          "Advanced burglar alarm installations with real-time alerts and 24/7 monitoring to protect your assets.",
+        icon: "ShieldAlert",
+      },
+      {
+        title: "Access Control Systems",
+        description:
+          "Smart access control solutions including keycard, biometric, and PIN-based systems for secure entry management.",
+        icon: "KeyRound",
+      },
+      {
+        title: "Video & Audio Intercom Systems",
+        description:
+          "Integrated video and audio intercom systems for seamless visitor management and internal communication.",
+        icon: "Video",
+      },
+      {
+        title: "Telephone Systems",
+        description:
+          "Business telephone system installation, configuration, and maintenance for reliable office communication.",
+        icon: "Phone",
+      },
+      {
+        title: "PA Systems",
+        description:
+          "Public address system setup and installation for clear, wide-area audio broadcasting in any environment.",
+        icon: "Speaker",
+      },
+      {
+        title: "Wi-Fi Solutions",
+        description:
+          "Enterprise-grade Wi-Fi network planning, installation, and support ensuring seamless connectivity throughout your premises.",
+        icon: "Wifi",
+      },
+      {
+        title: "Smart Board Solutions",
+        description:
+          "Interactive smart board installation and configuration for modern meeting rooms, classrooms, and boardrooms.",
+        icon: "Monitor",
+      },
+      {
+        title: "Computer Network Solutions",
+        description:
+          "End-to-end computer network design, structured cabling, and infrastructure deployment for businesses of all sizes.",
+        icon: "Network",
+      },
+      {
+        title: "UPS Solutions",
+        description:
+          "Uninterruptible power supply installation and maintenance to safeguard your equipment from power outages.",
+        icon: "Zap",
       },
     ],
     stats: [

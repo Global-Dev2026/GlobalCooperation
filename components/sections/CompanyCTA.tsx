@@ -98,16 +98,6 @@ export default function CompanyCTA({ cta, companyColor }: CompanyCTAProps) {
                         ))}
                     </div>
 
-                    {/* CTA button */}
-                    <motion.a
-                        href="/#contact"
-                        whileHover={{ scale: 1.03 }}
-                        whileTap={{ scale: 0.97 }}
-                        className="inline-flex items-center gap-2 px-8 py-4 text-white rounded-full font-semibold text-sm transition-all duration-300 shadow-sm"
-                        style={{ backgroundColor: companyColor }}
-                    >
-                        {cta.buttonText} <ArrowRight className="w-4 h-4" />
-                    </motion.a>
                 </motion.div>
             </div>
         </section>
