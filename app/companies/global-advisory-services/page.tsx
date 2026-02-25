@@ -227,7 +227,7 @@ export default function GlobalAdvisoryServicesPage() {
                             </div>
                             <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900">Meet Our Director</h2>
                         </motion.div>
-                        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.7 }} className="max-w-2xl mx-auto">
+                        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0 }} transition={{ duration: 0.7 }} className="max-w-2xl mx-auto">
                             <div className="bg-white rounded-3xl border border-gray-100 shadow-sm p-8 md:p-12 flex flex-col md:flex-row items-center gap-8">
                                 <div className="flex-shrink-0">
                                     <div className="w-32 h-32 rounded-full overflow-hidden border-2 border-gray-200">

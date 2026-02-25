@@ -297,7 +297,7 @@ export default function GlobalSoftSolutionsPage() {
                                 { name: "Mr. Sumudu Masakorala", title: "Director — Global Soft Solutions (Private) Limited", image: "/images/directers/sumudu.png", linkedin: "https://www.linkedin.com/in/sumudu-masakorala/", bio: "Leads Global Soft Solutions (Private) Limited with a focus on innovative software and IT solutions that empower businesses to achieve efficiency, scalability, and sustainable growth." },
                                 { name: "Mr. Rashmika Perera", title: "Director — Global Soft Solutions (Private) Limited", image: "/images/directers/rashmika.png", linkedin: "https://www.linkedin.com/in/rashmika-perera-640639149/", bio: "Drives the company's commitment to quality and forward-thinking strategies, transforming ideas into impactful digital solutions for clients across Sri Lanka." },
                             ].map((director, i) => (
-                                <motion.div key={director.name} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.7, delay: i * 0.1 }} className="h-full">
+                                <motion.div key={director.name} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0 }} transition={{ duration: 0.7, delay: i * 0.1 }} className="h-full">
                                     <div className="h-full bg-white rounded-3xl border border-gray-100 shadow-sm p-6 sm:p-8 flex flex-col sm:flex-row items-center gap-6">
                                         <div className="flex-shrink-0">
                                             <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-gray-200">
