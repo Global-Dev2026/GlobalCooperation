@@ -7,6 +7,7 @@ import CompanyHero from "@/components/sections/CompanyHero";
 import CompanyFeatures from "@/components/sections/CompanyFeatures";
 import CompanyStats from "@/components/sections/CompanyStats";
 import CompanyCTA from "@/components/sections/CompanyCTA";
+import CompanyDirector from "@/components/sections/CompanyDirector";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -87,6 +88,14 @@ export default async function CompanyPage({ params }: Props) {
 
         {/* Statistics Section */}
         <CompanyStats stats={company.stats} companyColor={company.color} />
+
+        {/* Director Section */}
+        {"directors" in company && company.directors && (
+          <CompanyDirector
+            directorIds={company.directors}
+            companyColor={company.color}
+          />
+        )}
 
         {/* Call to Action Section */}
         <CompanyCTA

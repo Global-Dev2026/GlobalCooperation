@@ -164,6 +164,7 @@ export const COMPANIES = [
       buttonText: "Start Your Project",
     },
     image: "/images/companies/software.webp",
+    directors: ["sumudu", "rashmika"],
   },
   {
     slug: "global-tech",
@@ -214,6 +215,7 @@ export const COMPANIES = [
       buttonText: "Contact Us Today",
     },
     image: "/images/companies/tech.jpg",
+    directors: ["pasan"],
   },
   {
     slug: "global-advisory-services",
@@ -278,6 +280,7 @@ export const COMPANIES = [
       buttonText: "Schedule Consultation",
     },
     image: "/images/companies/advisory.webp",
+    directors: ["lakshitha"],
   },
   {
     slug: "global-sleek",
@@ -341,6 +344,7 @@ export const COMPANIES = [
       buttonText: "Start Design Project",
     },
     image: "/images/companies/sleek.webp",
+    directors: ["channa"],
   },
 ] as const;
 
