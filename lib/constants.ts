@@ -155,8 +155,8 @@ export const COMPANIES = [
       { label: "Success Rate", value: 98, suffix: "%" },
       { label: "Team Members", value: 120, suffix: "+" },
     ],
-    color: "#800000",
-    gradient: "from-maroon-dark via-maroon to-maroon-light",
+    color: "#841818",
+    gradient: "from-burgundy-950 via-burgundy to-burgundy-700",
     cta: {
       title: "Ready to Transform Your Business?",
       description:
@@ -299,8 +299,8 @@ export const COMPANIES = [
       { label: "ROI Improvement", value: 45, suffix: "%" },
       { label: "Consultants", value: 50, suffix: "+" },
     ],
-    color: "#047857",
-    gradient: "from-emerald-900 via-emerald-700 to-emerald-600",
+    color: "#841818",
+    gradient: "from-burgundy-950 via-burgundy to-burgundy-700",
     cta: {
       title: "Transform Your Business Strategy",
       description:
@@ -362,8 +362,8 @@ export const COMPANIES = [
       { label: "User Satisfaction", value: 96, suffix: "%" },
       { label: "Designers", value: 45, suffix: "+" },
     ],
-    color: "#c026d3",
-    gradient: "from-fuchsia-900 via-fuchsia-700 to-fuchsia-600",
+    color: "#841818",
+    gradient: "from-burgundy-950 via-burgundy to-burgundy-700",
     cta: {
       title: "Create Exceptional User Experiences",
       description:
