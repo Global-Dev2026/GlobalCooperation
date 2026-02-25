@@ -107,22 +107,22 @@ export const COMPANIES = [
     fullDescription:
       "At Global Soft Solutions, we combine technical excellence with business acumen to deliver software solutions that drive real results. Our team of expert engineers and architects work closely with clients to understand their unique challenges and craft custom solutions using cutting-edge technologies. From initial concept to post-deployment support, we ensure your digital transformation journey is smooth and successful.",
     focus: [
-      "Custom Software Development",
-      "Cloud Architecture",
+      "Software Development",
+      "Website & Mobile Solutions",
       "POS System & Services",
     ],
     features: [
       {
-        title: "Full-Stack Development",
+        title: "Software Development",
         description:
-          "End-to-end software development using modern frameworks and technologies to build scalable, performant applications.",
+          "End-to-end software development using modern frameworks and technologies to build scalable, performant applications tailored to your business.",
         icon: "Code2",
       },
       {
-        title: "Cloud-Native Solutions",
+        title: "Website Development",
         description:
-          "Design and deploy applications optimized for cloud environments with auto-scaling, high availability, and cost efficiency.",
-        icon: "Cloud",
+          "Design and develop responsive, high-performance websites that establish a strong digital presence and drive user engagement.",
+        icon: "Globe",
       },
       {
         title: "POS System & Services",
@@ -137,10 +137,10 @@ export const COMPANIES = [
         icon: "Building2",
       },
       {
-        title: "API Development",
+        title: "Mobile Development",
         description:
-          "Create RESTful and GraphQL APIs that power modern applications with performance and security in mind.",
-        icon: "Workflow",
+          "Build feature-rich, intuitive mobile applications for iOS and Android platforms that provide seamless user experiences.",
+        icon: "Smartphone",
       },
       {
         title: "24/7 Support",

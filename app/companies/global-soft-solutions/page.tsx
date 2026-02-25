@@ -6,11 +6,12 @@ import Link from "next/link";
 import {
     ChevronDown,
     Code2,
-    Cloud,
+    Globe,
     MonitorSmartphone,
     ShoppingCart,
     Building2,
-    Workflow,
+    Smartphone,
+    Layers,
     Headphones,
     Phone,
     Mail,
@@ -29,17 +30,17 @@ import Footer from "@/components/layout/Footer";
 const services = [
     {
         icon: Code2,
-        title: "Full-Stack Development",
+        title: "Software Development",
         description:
-            "End-to-end software development using modern frameworks and technologies to build scalable, performant applications.",
-        highlights: ["Web Applications", "Mobile Apps", "Desktop Software"],
+            "End-to-end software development using modern frameworks and technologies to build scalable, performant applications tailored to your business.",
+        highlights: ["Web Applications", "Backend Systems", "Desktop Software"],
     },
     {
-        icon: Cloud,
-        title: "Cloud-Native Solutions",
+        icon: Globe,
+        title: "Website Development",
         description:
-            "Design and deploy applications optimized for cloud environments with auto-scaling, high availability, and cost efficiency.",
-        highlights: ["AWS & Azure", "Auto-scaling", "High Availability"],
+            "Design and develop responsive, high-performance websites that establish a strong digital presence and drive user engagement.",
+        highlights: ["Corporate Websites", "E-commerce", "Landing Pages"],
     },
     {
         icon: ShoppingCart,
@@ -56,11 +57,11 @@ const services = [
         highlights: ["System Integration", "Security", "Microservices"],
     },
     {
-        icon: Workflow,
-        title: "API Development",
+        icon: Smartphone,
+        title: "Mobile Development",
         description:
-            "Create RESTful and GraphQL APIs that power modern applications with performance and security in mind.",
-        highlights: ["REST & GraphQL", "API Gateway", "Documentation"],
+            "Build feature-rich, intuitive mobile applications for iOS and Android platforms that provide seamless user experiences.",
+        highlights: ["iOS & Android", "React Native", "Native Apps"],
     },
     {
         icon: Headphones,
@@ -84,12 +85,12 @@ const whyChooseUs = [
         description: "Over 15 years of delivering reliable software solutions to businesses of all sizes.",
     },
     {
-        title: "Full-Stack Expertise",
-        description: "From database design to UI/UX — our team covers the complete development lifecycle.",
+        title: "Software Expertise",
+        description: "From database design to frontend — our team covers the complete development lifecycle.",
     },
     {
-        title: "Cloud-First Approach",
-        description: "We design scalable, cloud-native architectures built for performance and resilience.",
+        title: "Modern Web Solutions",
+        description: "We design scalable, user-centric web architectures built for performance and resilience.",
     },
     {
         title: "Global POS — Our Flagship Product",
@@ -146,7 +147,7 @@ export default function GlobalSoftSolutionsPage() {
                                 className="h-px w-20 bg-white/40 mx-auto" />
                             <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.7 }}
                                 className="text-base sm:text-lg text-white/80 max-w-2xl mx-auto leading-relaxed">
-                                Custom software development, cloud architecture, and POS solutions — empowering businesses to achieve efficiency, scalability, and sustainable growth.
+                                Custom software development, website solutions, and mobile applications — empowering businesses to achieve efficiency, scalability, and sustainable growth.
                             </motion.p>
                         </div>
                         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 1.1 }} className="absolute bottom-10">
@@ -253,7 +254,7 @@ export default function GlobalSoftSolutionsPage() {
                                     We are not just a vendor. We are a long-term technology partner committed to your business success — from first line of code to post-deployment support.
                                 </p>
                                 <div className="rounded-2xl border border-gray-100 bg-gray-50 p-8 space-y-3">
-                                    <Workflow className="w-8 h-8 text-burgundy" />
+                                    <Layers className="w-8 h-8 text-burgundy" />
                                     <h3 className="font-bold text-gray-900 text-lg">Delivering Software That Works</h3>
                                     <p className="text-sm text-gray-500 leading-relaxed">
                                         Since 2009, we have delivered 250+ software projects across industries — from small business tools to enterprise platforms — always on time and within budget.
