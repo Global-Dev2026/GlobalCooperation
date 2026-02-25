@@ -169,29 +169,17 @@ export const COMPANIES = [
     slug: "global-tech",
     name: "Global Tech (Private) Limited",
     short:
-      "End-to-end technology solutions — POS systems, hardware, CCTV, software development, and supermarket advisory.",
+      "Expert technology solutions — CCTV security systems, AC solutions, and comprehensive IT support.",
     description:
-      "Global Tech (Private) Limited is a leading Sri Lanka-based technology company delivering comprehensive IT solutions to businesses of all sizes. From POS systems and computer hardware to CCTV installations, custom software development, and website solutions, we are a one-stop technology partner. Under the strategic leadership of Director Pasan Wickramathanthri, we empower businesses to innovate, optimize operations, and grow through practical, high-impact digital solutions.",
+      "Global Tech (Private) Limited is a leading Sri Lanka-based technology company delivering professional IT infrastructure and security solutions. We specialize in CCTV installations, air conditioning services, and ongoing IT maintenance. Under the strategic leadership of Director Pasan Wickramathanthri, we empower businesses to secure and optimize their physical and digital environments.",
     fullDescription:
-      "Global Tech (Private) Limited stands at the forefront of Sri Lanka's technology landscape, offering a wide spectrum of IT products and services. We specialize in deploying point-of-sale (POS) systems for retail and supermarket environments, supplying quality computer hardware and peripherals, installing and maintaining CCTV security systems and air conditioning units, developing custom software tailored to unique business needs, building professional websites, and providing expert advisory services to the supermarket and retail sectors. Our mission is to bridge the gap between technology and business operations, ensuring every client benefits from reliable, scalable, and cost-effective solutions. Led by an experienced team and backed by the Global Cooperation Group, we bring global-standard technology to the local market.",
+      "Global Tech (Private) Limited stands at the forefront of Sri Lanka's technical services landscape, offering specialized solutions for business infrastructure. We specialize in installing and maintaining professional CCTV security systems to protect assets, supplying and servicing energy-efficient air conditioning units, and providing rapid-response IT support and maintenance. Our mission is to ensure your business environments are safe, comfortable, and technologically sound. Led by an experienced team and backed by the Global Cooperation Group, we bring reliability and technical excellence to every client project.",
     focus: [
-      "POS & Retail Technology",
-      "Hardware & Infrastructure",
-      "Software & Web Development",
+      "CCTV & Security Systems",
+      "AC Solutions & Maintenance",
+      "IT Support & Infrastructure",
     ],
     features: [
-      {
-        title: "POS System Solutions",
-        description:
-          "Comprehensive point-of-sale systems tailored for retail stores, supermarkets, and restaurants — streamlining billing, inventory, and customer management.",
-        icon: "ShoppingCart",
-      },
-      {
-        title: "Computer Hardware Supply",
-        description:
-          "Quality computers, laptops, peripherals, and networking equipment to build reliable IT infrastructure for your business.",
-        icon: "Laptop",
-      },
       {
         title: "CCTV & Security Systems",
         description:
@@ -205,24 +193,6 @@ export const COMPANIES = [
         icon: "Wind",
       },
       {
-        title: "Custom Software Development",
-        description:
-          "Bespoke software solutions built to fit your exact business workflows — from inventory systems to enterprise management platforms.",
-        icon: "Code",
-      },
-      {
-        title: "Website Solutions",
-        description:
-          "Professional website design and development to establish your digital presence with modern, responsive, and SEO-optimized sites.",
-        icon: "Globe",
-      },
-      {
-        title: "Supermarket Advisory",
-        description:
-          "Expert consulting for supermarket and retail operations — helping businesses optimize layout, technology, and management practices.",
-        icon: "Store",
-      },
-      {
         title: "IT Support & Maintenance",
         description:
           "Ongoing technical support, preventive maintenance, and rapid-response IT services to keep your operations running smoothly.",
@@ -231,7 +201,7 @@ export const COMPANIES = [
     ],
     stats: [
       { label: "Businesses Served", value: 150, suffix: "+" },
-      { label: "POS Systems Deployed", value: 200, suffix: "+" },
+      { label: "Installations Completed", value: 300, suffix: "+" },
       { label: "Years of Experience", value: 15, suffix: "+" },
       { label: "Client Satisfaction", value: 98, suffix: "%" },
     ],

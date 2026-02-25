@@ -9,9 +9,6 @@ import {
     Laptop,
     Video,
     Wind,
-    Code,
-    Globe,
-    Store,
     Headphones,
     Phone,
     Mail,
@@ -29,20 +26,6 @@ import Footer from "@/components/layout/Footer";
 
 const services = [
     {
-        icon: ShoppingCart,
-        title: "POS System Solutions",
-        description:
-            "Comprehensive point-of-sale systems tailored for retail stores, supermarkets, and restaurants — streamlining billing, inventory, and customer management.",
-        highlights: ["Inventory Management", "Sales Reporting", "Multi-branch Support"],
-    },
-    {
-        icon: Laptop,
-        title: "Computer Hardware Supply",
-        description:
-            "Quality computers, laptops, peripherals, and networking equipment to build reliable IT infrastructure for your business.",
-        highlights: ["Branded Hardware", "Networking Equipment", "Peripherals & Accessories"],
-    },
-    {
         icon: Video,
         title: "CCTV & Security Systems",
         description:
@@ -57,27 +40,6 @@ const services = [
         highlights: ["Commercial AC Units", "Preventive Maintenance", "Energy Efficient Solutions"],
     },
     {
-        icon: Code,
-        title: "Custom Software Development",
-        description:
-            "Bespoke software solutions built to fit your exact business workflows — from inventory systems to enterprise management platforms.",
-        highlights: ["Web Applications", "Desktop Software", "Database Systems"],
-    },
-    {
-        icon: Globe,
-        title: "Website Solutions",
-        description:
-            "Professional website design and development to establish your digital presence with modern, responsive, and SEO-optimized sites.",
-        highlights: ["Responsive Design", "SEO Optimized", "E-commerce Ready"],
-    },
-    {
-        icon: Store,
-        title: "Supermarket Advisory",
-        description:
-            "Expert consulting for supermarket and retail operations — helping businesses optimize layout, technology, and management practices.",
-        highlights: ["Operations Consulting", "Technology Planning", "Staff Training"],
-    },
-    {
         icon: Headphones,
         title: "IT Support & Maintenance",
         description:
@@ -88,7 +50,7 @@ const services = [
 
 const stats = [
     { value: "150+", label: "Businesses Served", icon: Users },
-    { value: "200+", label: "POS Systems Deployed", icon: ShoppingCart },
+    { value: "300+", label: "Installations Completed", icon: Zap },
     { value: "15+", label: "Years of Experience", icon: Award },
     { value: "98%", label: "Client Satisfaction", icon: Star },
 ];
@@ -198,8 +160,8 @@ export default function GlobalTechPage() {
                                 transition={{ duration: 0.8, delay: 0.7 }}
                                 className="text-base sm:text-lg text-white/80 max-w-2xl mx-auto leading-relaxed"
                             >
-                                Sri Lanka&apos;s trusted one-stop technology partner — POS systems, hardware,
-                                CCTV, software, and expert advisory services.
+                                Sri Lanka&apos;s trusted technology infrastructure partner — CCTV systems,
+                                AC solutions, and expert IT support and maintenance.
                             </motion.p>
                         </div>
 
@@ -248,8 +210,8 @@ export default function GlobalTechPage() {
                                     offering a wide spectrum of IT products and services for businesses of all sizes.
                                 </p>
                                 <p className="text-gray-600 leading-relaxed">
-                                    From POS systems and hardware to CCTV, custom software, and expert advisory —
-                                    we bring global-standard solutions to the local market, led by <strong className="text-gray-900">Director Pasan Wickramathanthri</strong> and
+                                    From CCTV and security systems to air conditioning and expert IT support —
+                                    we bring global-standard infrastructure solutions to the local market, led by <strong className="text-gray-900">Director Pasan Wickramathanthri</strong> and
                                     backed by the Global Cooperation Group.
                                 </p>
                                 <div className="flex flex-wrap gap-3 pt-2">
@@ -497,7 +459,7 @@ export default function GlobalTechPage() {
                                     Ready to Upgrade Your Business Technology?
                                 </h2>
                                 <p className="text-gray-500 max-w-xl mx-auto">
-                                    From POS systems to full IT infrastructure — we deliver the right technology solutions for your business.
+                                    From CCTV systems and AC solutions to professional IT maintenance — we deliver the right technology infrastructure for your business.
                                 </p>
                             </div>
 
