@@ -141,7 +141,7 @@ export default function GlobalSoftSolutionsPage() {
                             <motion.h1 initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }}
                                 className="text-3xl sm:text-5xl md:text-7xl font-bold text-white leading-tight">
                                 Global Soft Solutions
-                                <span className="block text-gold font-light">(Private) Limited</span>
+                                <span className="block !text-accent font-light whitespace-nowrap">(Private) Limited</span>
                             </motion.h1>
                             <motion.div initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 0.6, delay: 0.6 }}
                                 className="h-px w-20 bg-white/40 mx-auto" />

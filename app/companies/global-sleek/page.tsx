@@ -103,7 +103,7 @@ export default function GlobalSleekPage() {
                             <motion.p initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.2 }} className="text-xs font-semibold tracking-[0.3em] uppercase text-white/70">Global Cooperation Group</motion.p>
                             <motion.h1 initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.3 }} className="text-3xl sm:text-5xl md:text-7xl font-bold text-white leading-tight">
                                 Global Sleek
-                                <span className="block text-gold font-light">(Private) Limited</span>
+                                <span className="block !text-accent font-light whitespace-nowrap">(Private) Limited</span>
                             </motion.h1>
                             <motion.div initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 0.6, delay: 0.6 }} className="h-px w-20 bg-white/40 mx-auto" />
                             <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.7 }} className="text-base sm:text-lg text-white/80 max-w-2xl mx-auto leading-relaxed">
