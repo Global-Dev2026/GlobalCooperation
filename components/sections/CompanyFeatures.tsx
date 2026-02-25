@@ -47,8 +47,8 @@ export default function CompanyFeatures({
                     </p>
                 </motion.div>
 
-                {/* Grid */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                {/* Cards */}
+                <div className="flex flex-wrap justify-center gap-5">
                     {features.map((feature, index) => {
                         const IconComponent =
                             (LucideIcons as any)[feature.icon] || LucideIcons.Circle;
@@ -60,11 +60,7 @@ export default function CompanyFeatures({
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true, amount: 0.1 }}
                                 transition={{ duration: 0.5, delay: index * 0.06 }}
-                                className="group bg-white rounded-2xl p-6 border border-gray-100 hover:shadow-lg transition-all duration-300"
-                                style={{
-                                    // subtle border tint on hover handled by style injection isn't straightforward,
-                                    // we keep it clean with Tailwind fallback
-                                }}
+                                className="group bg-white rounded-2xl p-6 border border-gray-100 hover:shadow-lg transition-all duration-300 w-full sm:w-[calc(50%-10px)] lg:w-[calc(33.333%-14px)]"
                             >
                                 {/* Icon */}
                                 <div

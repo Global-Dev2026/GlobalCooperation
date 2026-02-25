@@ -85,7 +85,7 @@ export default function CompanyHero({
                         initial={{ opacity: 0, y: 16 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 0.7 }}
-                        className="text-base sm:text-lg text-white/80 max-w-2xl mx-auto leading-relaxed"
+                        className="text-base sm:text-lg text-white/80 max-w-2xl mx-auto leading-relaxed text-justify"
                     >
                         {description}
                     </motion.p>
