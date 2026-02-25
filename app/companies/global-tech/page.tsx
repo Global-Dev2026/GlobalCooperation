@@ -107,7 +107,7 @@ export default function GlobalTechPage() {
                     <motion.div style={{ y }} className="absolute inset-0">
                         <Image
                             src="/images/companies/tech.jpg"
-                            alt="Global Tech (Private) Limited"
+                            alt="Global Tech"
                             fill
                             className="object-cover"
                             priority
@@ -142,7 +142,7 @@ export default function GlobalTechPage() {
                                 className="text-3xl sm:text-5xl md:text-7xl font-bold text-white leading-tight"
                             >
                                 Global Tech
-                                <span className="block !text-accent font-light whitespace-nowrap">(Private) Limited</span>
+                                <span className="block !text-accent font-light whitespace-nowrap">(private limited)</span>
                             </motion.h1>
 
                             {/* Thin divider */}
@@ -499,7 +499,7 @@ export default function GlobalTechPage() {
                     </div>
                 </section>
 
-            </main>
+            </main >
             <Footer />
         </>
     );
