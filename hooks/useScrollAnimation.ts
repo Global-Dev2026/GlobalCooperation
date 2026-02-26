@@ -9,7 +9,7 @@ export interface UseScrollAnimationOptions {
 
 export function useScrollAnimation(
   options: UseScrollAnimationOptions = {},
-): [React.RefObject<HTMLDivElement>, boolean] {
+): [React.RefObject<HTMLDivElement | null>, boolean] {
   const { threshold = 0.1, triggerOnce = false } = options;
   const ref = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);

@@ -117,43 +117,75 @@ export const COMPANIES = [
         description:
           "End-to-end software development using modern frameworks and technologies to build scalable, performant applications tailored to your business.",
         icon: "Code2",
+        highlights: ["Web Applications", "Backend Systems", "Desktop Software"],
       },
       {
         title: "Website Development",
         description:
           "Design and develop responsive, high-performance websites that establish a strong digital presence and drive user engagement.",
         icon: "Globe",
+        highlights: ["Corporate Websites", "E-commerce", "Landing Pages"],
       },
       {
         title: "POS System & Services",
         description:
           "Our flagship product, Global POS, is a comprehensive point-of-sale solution designed to manage supermarkets, retail outlets, and more.",
         icon: "ShoppingCart",
+        highlights: ["Global POS Product", "Supermarket Management", "Maintenance & Support"],
       },
       {
         title: "Enterprise Architecture",
         description:
           "Build robust, secure enterprise systems that integrate seamlessly with your existing technology stack.",
         icon: "Building2",
+        highlights: ["System Integration", "Security", "Microservices"],
       },
       {
         title: "Mobile Development",
         description:
           "Build feature-rich, intuitive mobile applications for iOS and Android platforms that provide seamless user experiences.",
         icon: "Smartphone",
+        highlights: ["iOS & Android", "React Native", "Native Apps"],
       },
       {
         title: "24/7 Support",
         description:
           "Round-the-clock technical support and maintenance to ensure your applications run smoothly at all times.",
         icon: "Headphones",
+        highlights: ["On-call Engineers", "Monitoring", "Rapid Response"],
+      },
+    ],
+    whyChooseUs: [
+      {
+        title: "Established in 2009",
+        description: "Over 15 years of delivering reliable software solutions to businesses of all sizes.",
+      },
+      {
+        title: "Software Expertise",
+        description: "From database design to frontend — our team covers the complete development lifecycle.",
+      },
+      {
+        title: "Modern Web Solutions",
+        description: "We design scalable, user-centric web architectures built for performance and resilience.",
+      },
+      {
+        title: "Global POS — Our Flagship Product",
+        description: "Global POS manages supermarkets and retail businesses end-to-end, backed by our dedicated maintenance and support team.",
+      },
+      {
+        title: "Transparent Communication",
+        description: "Regular updates, clear reporting, and honest timelines — no surprises.",
+      },
+      {
+        title: "Backed by Global Cooperation Group",
+        description: "Part of a diversified holding company, ensuring stability and long-term commitment.",
       },
     ],
     stats: [
-      { label: "Projects Delivered", value: 1800, suffix: "+" },
-      { label: "Active Clients", value: 1500, suffix: "+" },
+      { label: "Projects Delivered", value: 250, suffix: "+" },
+      { label: "Active Clients", value: 85, suffix: "+" },
       { label: "Success Rate", value: 98, suffix: "%" },
-      { label: "Team Members", value: 120, suffix: "+" },
+      { label: "Years Experience", value: 15, suffix: "+" },
     ],
     color: "#841818",
     gradient: "from-burgundy-950 via-burgundy to-burgundy-700",
@@ -164,7 +196,7 @@ export const COMPANIES = [
       buttonText: "Start Your Project",
     },
     image: "/images/companies/software.webp",
-    directors: [],
+    directors: ["sumudu", "rashmika"],
   },
   {
     slug: "global-tech",
@@ -182,75 +214,53 @@ export const COMPANIES = [
     ],
     features: [
       {
-        title: "Wireless CCTV Cameras",
-        description:
-          "Professional wireless CCTV camera installation and monitoring solutions to secure your premises around the clock.",
-        icon: "Camera",
-      },
-      {
-        title: "Air Condition Solutions (AC)",
-        description:
-          "Supply, installation, and servicing of energy-efficient air conditioning systems for commercial and retail environments.",
-        icon: "Wind",
-      },
-      {
-        title: "Burglar Alarm Systems",
-        description:
-          "Advanced burglar alarm installations with real-time alerts and 24/7 monitoring to protect your assets.",
-        icon: "ShieldAlert",
-      },
-      {
-        title: "Access Control Systems",
-        description:
-          "Smart access control solutions including keycard, biometric, and PIN-based systems for secure entry management.",
-        icon: "KeyRound",
-      },
-      {
-        title: "Video & Audio Intercom Systems",
-        description:
-          "Integrated video and audio intercom systems for seamless visitor management and internal communication.",
+        title: "CCTV & Security Systems",
+        description: "Professional installation and maintenance of CCTV surveillance systems to protect your premises and assets.",
         icon: "Video",
+        highlights: ["HD Camera Installation", "Remote Monitoring", "24/7 Recording"],
       },
       {
-        title: "Telephone Systems",
-        description:
-          "Business telephone system installation, configuration, and maintenance for reliable office communication.",
-        icon: "Phone",
+        title: "AC Solutions & Maintenance",
+        description: "Supply, installation, and servicing of air conditioning systems for commercial and retail environments.",
+        icon: "Wind",
+        highlights: ["Commercial AC Units", "Preventive Maintenance", "Energy Efficient Solutions"],
       },
       {
-        title: "PA Systems",
-        description:
-          "Public address system setup and installation for clear, wide-area audio broadcasting in any environment.",
-        icon: "Speaker",
+        title: "IT Support & Maintenance",
+        description: "Ongoing technical support, preventive maintenance, and rapid-response IT services to keep your operations running smoothly.",
+        icon: "Headphones",
+        highlights: ["On-site Support", "Remote Assistance", "Preventive Maintenance"],
+      },
+    ],
+    whyChooseUs: [
+      {
+        title: "One-Stop Technology Partner",
+        description: "Hardware, software, CCTV, and advisory — everything under one roof.",
       },
       {
-        title: "Wi-Fi Solutions",
-        description:
-          "Enterprise-grade Wi-Fi network planning, installation, and support ensuring seamless connectivity throughout your premises.",
-        icon: "Wifi",
+        title: "Local Expertise, Global Standards",
+        description: "Sri Lanka-based team with international-quality solutions and service delivery.",
       },
       {
-        title: "Smart Board Solutions",
-        description:
-          "Interactive smart board installation and configuration for modern meeting rooms, classrooms, and boardrooms.",
-        icon: "Monitor",
+        title: "Tailored Solutions",
+        description: "We don't believe in a one-size-fits-all approach — every solution is custom-built.",
       },
       {
-        title: "Computer Network Solutions",
-        description:
-          "End-to-end computer network design, structured cabling, and infrastructure deployment for businesses of all sizes.",
-        icon: "Network",
+        title: "Proven Track Record",
+        description: "Trusted by 150+ businesses across retail, supermarkets, and commercial sectors.",
       },
       {
-        title: "UPS Solutions",
-        description:
-          "Uninterruptible power supply installation and maintenance to safeguard your equipment from power outages.",
-        icon: "Zap",
+        title: "After-Sales Support",
+        description: "Our relationship doesn't end at delivery — we provide ongoing support and maintenance.",
+      },
+      {
+        title: "Backed by Global Cooperation Group",
+        description: "Part of a diversified holding company, ensuring stability and long-term commitment.",
       },
     ],
     stats: [
-      { label: "Businesses Served", value: 800, suffix: "+" },
-      { label: "Installations Completed", value: 1200, suffix: "+" },
+      { label: "Businesses Served", value: 150, suffix: "+" },
+      { label: "Installations Completed", value: 300, suffix: "+" },
       { label: "Years of Experience", value: 15, suffix: "+" },
       { label: "Client Satisfaction", value: 98, suffix: "%" },
     ],
@@ -263,7 +273,7 @@ export const COMPANIES = [
       buttonText: "Contact Us Today",
     },
     image: "/images/companies/tech.jpg",
-    directors: [],
+    directors: ["pasan"],
   },
   {
     slug: "global-advisory-services",
@@ -337,6 +347,14 @@ export const COMPANIES = [
         icon: "HeadphonesIcon",
       },
     ],
+    whyChooseUs: [
+      { title: "Strategic Depth", description: "We go beyond surface-level advice — delivering strategies grounded in deep industry analysis." },
+      { title: "Data-Driven Decisions", description: "Every recommendation is backed by rigorous data analysis and benchmarking." },
+      { title: "Proven ROI", description: "Our clients see an average 45% improvement in operational ROI within 12 months of engagement." },
+      { title: "Risk-Focused Approach", description: "We identify and mitigate technology risks before they become business problems." },
+      { title: "Industry-Wide Knowledge", description: "With clients across retail, finance, healthcare, and government — our expertise is broad and deep." },
+      { title: "Backed by Global Cooperation Group", description: "Part of a diversified holding company, ensuring stability and long-term commitment." },
+    ],
     stats: [
       { label: "Consulting Projects", value: 180, suffix: "+" },
       { label: "Enterprise Clients", value: 65, suffix: "+" },
@@ -365,47 +383,55 @@ export const COMPANIES = [
     focus: ["Product Design", "UX Research", "Brand Experience"],
     features: [
       {
-        title: "UX Research",
-        description:
-          "Deep user insights through interviews, usability testing, and behavioral analysis to inform design decisions.",
-        icon: "Search",
-      },
-      {
-        title: "Product Design",
-        description:
-          "Create intuitive, beautiful interfaces that delight users and drive business metrics.",
+        title: "Brand Identity Design",
+        description: "Build a cohesive brand identity that communicates your values and resonates with your target audience.",
         icon: "Palette",
+        highlights: ["Logo Design", "Color Systems", "Brand Guidelines"],
       },
       {
-        title: "Brand Identity",
-        description:
-          "Develop cohesive brand systems including logos, color palettes, typography, and visual guidelines.",
-        icon: "Sparkle",
+        title: "UI/UX Design",
+        description: "Design beautiful, intuitive interfaces that delight users and drive conversions across all platforms.",
+        icon: "Monitor",
+        highlights: ["User Research", "Wireframing", "Prototyping"],
       },
       {
-        title: "Prototyping",
-        description:
-          "Rapid prototyping and interactive mockups to validate concepts before development.",
-        icon: "Layers",
+        title: "Mobile Design",
+        description: "Create mobile-first experiences that keep users engaged on iOS and Android platforms.",
+        icon: "Smartphone",
+        highlights: ["iOS & Android", "App Flows", "Interaction Design"],
       },
       {
         title: "Design Systems",
-        description:
-          "Build scalable design systems that ensure consistency across all your digital touchpoints.",
-        icon: "Grid3x3",
+        description: "Build scalable, consistent design systems with reusable components and clear documentation.",
+        icon: "Layers",
+        highlights: ["Component Libraries", "Figma Systems", "Documentation"],
       },
       {
-        title: "Motion Design",
-        description:
-          "Bring interfaces to life with purposeful animations and micro-interactions.",
-        icon: "Wand2",
+        title: "Motion & Animation",
+        description: "Bring your interfaces to life with purposeful animations that enhance user experience.",
+        icon: "Zap",
+        highlights: ["Micro-interactions", "Transition Design", "Lottie Animations"],
       },
+      {
+        title: "UX Research",
+        description: "Uncover user insights through research, testing, and data analysis to inform design decisions.",
+        icon: "SearchSlash",
+        highlights: ["User Testing", "Heatmap Analysis", "A/B Testing"],
+      },
+    ],
+    whyChooseUs: [
+      { title: "User-Centered Design", description: "Every design decision is grounded in real user research and behavioral data." },
+      { title: "Research-Driven Approach", description: "We validate every concept through testing before a single pixel is finalized." },
+      { title: "Multidisciplinary Team", description: "Brand designers, UX researchers, motion artists, and developers — all under one roof." },
+      { title: "Rapid Prototyping", description: "From concept to interactive prototype in days, not weeks — accelerating your feedback cycle." },
+      { title: "Consistent Design Systems", description: "We build scalable design systems that ensure consistency as your product grows." },
+      { title: "Backed by Global Cooperation Group", description: "Part of a diversified holding company, ensuring stability and long-term commitment." },
     ],
     stats: [
       { label: "Design Projects", value: 320, suffix: "+" },
       { label: "Happy Clients", value: 150, suffix: "+" },
-      { label: "User Satisfaction", value: 96, suffix: "%" },
-      { label: "Designers", value: 45, suffix: "+" },
+      { label: "Design Awards", value: 40, suffix: "+" },
+      { label: "Years of Creativity", value: 8, suffix: "+" },
     ],
     color: "#841818",
     gradient: "from-burgundy-950 via-burgundy to-burgundy-700",

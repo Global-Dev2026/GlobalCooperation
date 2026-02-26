@@ -7,6 +7,7 @@ type Feature = {
     title: string;
     description: string;
     icon: string;
+    highlights?: readonly string[];
 };
 
 type CompanyFeaturesProps = {
@@ -79,9 +80,24 @@ export default function CompanyFeatures({
                                 </h3>
 
                                 {/* Description */}
-                                <p className="text-xs text-gray-500 leading-relaxed">
+                                <p className="text-xs text-gray-500 leading-relaxed mb-4">
                                     {feature.description}
                                 </p>
+
+                                {/* Highlights */}
+                                {feature.highlights && feature.highlights.length > 0 && (
+                                    <ul className="space-y-1.5 mt-auto">
+                                        {feature.highlights.map((highlight, hIdx) => (
+                                            <li key={hIdx} className="flex items-center gap-2 text-[10px] text-gray-400">
+                                                <div
+                                                    className="w-1 h-1 rounded-full flex-shrink-0"
+                                                    style={{ backgroundColor: companyColor }}
+                                                />
+                                                {highlight}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                )}
                             </motion.div>
                         );
                     })}

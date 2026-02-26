@@ -8,6 +8,7 @@ import CompanyFeatures from "@/components/sections/CompanyFeatures";
 import CompanyStats from "@/components/sections/CompanyStats";
 import CompanyCTA from "@/components/sections/CompanyCTA";
 import CompanyDirector from "@/components/sections/CompanyDirector";
+import CompanyWhyUs from "@/components/sections/CompanyWhyUs";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -85,6 +86,14 @@ export default async function CompanyPage({ params }: Props) {
           features={company.features}
           companyColor={company.color}
         />
+
+        {/* Why Choose Us Section */}
+        {"whyChooseUs" in company && company.whyChooseUs && (
+          <CompanyWhyUs
+            items={company.whyChooseUs as any}
+            companyColor={company.color}
+          />
+        )}
 
         {/* Statistics Section */}
         <CompanyStats stats={company.stats} companyColor={company.color} />
