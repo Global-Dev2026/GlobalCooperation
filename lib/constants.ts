@@ -462,7 +462,7 @@ export const BOARD_OF_DIRECTORS = [
   },
   {
     id: "sumudu",
-    name: "Mr. Sumudu Masakorala",
+    name: "Sumudu Masakorala",
     position: "Managing Director",
     education: "",
     bio: "Established in 2009, Global Soft Solutions (Private) Limited, led by Director Sumudu, delivers innovative software and IT solutions that empower businesses to achieve efficiency, scalability, and sustainable growth. Committed to excellence and cutting-edge technology, we transform ideas into impactful digital solutions.",
@@ -471,7 +471,7 @@ export const BOARD_OF_DIRECTORS = [
   },
   {
     id: "suranga",
-    name: "Mr. Suranga Perera",
+    name: "Suranga Perera",
     position: "Director",
     education: "",
     bio: "A growth-driven leader overseeing the marketing division, specializing in the import and distribution of high-quality hardware accessories. With a focus on strategic market positioning and supply chain excellence, he plays a key role in expanding the company's product portfolio and market reach.",
@@ -480,7 +480,7 @@ export const BOARD_OF_DIRECTORS = [
   },
   {
     id: "rashmika",
-    name: "Mr. Rashmika Perera",
+    name: "Rashmika Perera",
     position: "Director",
     education: "",
     bio: "Global Soft Solutions (Private) Limited, led by Director Rashmika, delivers innovative software and IT solutions that drive business efficiency and growth. Committed to quality and forward-thinking strategies, the company transforms ideas into impactful digital solutions.",
@@ -489,16 +489,16 @@ export const BOARD_OF_DIRECTORS = [
   },
   {
     id: "channa",
-    name: "Mr. Channa Hapuarachchi",
+    name: "Channa Hapuarachchi",
     position: "Director",
     education: "",
     bio: "Global Sleek (Private) Limited, led by Director Channa, specializes in delivering innovative and efficient solutions that drive business excellence. Committed to quality and forward-thinking strategies, the company transforms challenges into opportunities for sustainable growth.",
     image: "/images/directers/channa.png",
-    linkedin: "#",
+    linkedin: "",
   },
   {
     id: "pasan",
-    name: "Mr. Pasan Wickramathanthri",
+    name: "Pasan Wickramathanthri",
     position: "Director",
     education: "",
     bio: "Global Tech (Private) Limited, under the leadership of Director Pasan, delivers cutting-edge technology solutions that empower businesses to innovate, optimize, and grow. Focused on excellence and innovation, the company transforms ideas into practical, high-impact digital solutions.",
@@ -507,7 +507,7 @@ export const BOARD_OF_DIRECTORS = [
   },
   {
     id: "lakshitha",
-    name: "Mr. Rumesh Lakshitha ",
+    name: "Rumesh Lakshitha ",
     position: "Director",
     education: "B.Sc. Accounting (Special) USJP",
     bio: "Global Advisory Services (Private) Limited, led by Director Rumesh, provides expert advisory solutions to help businesses navigate complex challenges and achieve sustainable growth. Since its inception, the company has been committed to delivering strategic insights, innovative approaches, and measurable results.",
@@ -516,7 +516,7 @@ export const BOARD_OF_DIRECTORS = [
   },
   {
     id: "muditha",
-    name: "Mr. Muditha Hapuarachchi",
+    name: "Muditha Hapuarachchi",
     position: "",
     education: "B.Com(Sp) USJ, CPA, ACMA, CBA, MCPM, SAT",
     bio: "A seasoned Business Analyst and Leader with 25+ years across finance, marketing, and operations. Known for strategic foresight, innovative solutions, and driving growth by uniting diverse functions and challenging conventions to create sustainable competitive advantage",
