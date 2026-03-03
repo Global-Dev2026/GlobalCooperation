@@ -490,7 +490,7 @@ export const BOARD_OF_DIRECTORS = [
   {
     id: "channa",
     name: "Mr. Channa Hapuarachchi",
-    position: "Directer",
+    position: "Director",
     education: "",
     bio: "Global Sleek (Private) Limited, led by Director Channa, specializes in delivering innovative and efficient solutions that drive business excellence. Committed to quality and forward-thinking strategies, the company transforms challenges into opportunities for sustainable growth.",
     image: "/images/directers/channa.png",
@@ -508,7 +508,7 @@ export const BOARD_OF_DIRECTORS = [
   {
     id: "lakshitha",
     name: "Mr. Rumesh Lakshitha ",
-    position: "Directer",
+    position: "Director",
     education: "B.Sc. Accounting (Special) USJP",
     bio: "Global Advisory Services (Private) Limited, led by Director Rumesh, provides expert advisory solutions to help businesses navigate complex challenges and achieve sustainable growth. Since its inception, the company has been committed to delivering strategic insights, innovative approaches, and measurable results.",
     image: "/images/directers/lakshitha.png",
