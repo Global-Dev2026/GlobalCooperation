@@ -210,7 +210,7 @@ export default function About() {
 
             <div className="relative z-10">
               <p className="text-xl md:text-2xl text-slate-700 leading-relaxed text-center md:text-justify italic mb-8 font-light">
-                "At Global Cooperation, we are committed to building sustainable businesses through ethical leadership, strong governance, and long-term strategic growth, working closely with our subsidiaries to ensure accountability and lasting value."
+                &quot;At Global Cooperation, we are committed to building sustainable businesses through ethical leadership, strong governance, and long-term strategic growth, working closely with our subsidiaries to ensure accountability and lasting value.&quot;
               </p>
 
               <div className="flex items-center justify-center md:justify-start gap-4">
