@@ -207,16 +207,23 @@ export const COMPANIES = [
     fullDescription:
       "Global Tech (Private) Limited stands at the forefront of Sri Lanka's technical services landscape, offering specialized solutions for business infrastructure. We specialize in installing and maintaining professional CCTV security systems to protect assets, supplying and servicing energy-efficient air conditioning units, and providing rapid-response IT support and maintenance. Our mission is to ensure your business environments are safe, comfortable, and technologically sound. Led by an experienced team and backed by the Global Cooperation Group, we bring reliability and technical excellence to every client project.",
     focus: [
-      "CCTV & Security Systems",
+      "CCTV Cameras",
+      "Door Locking Systems",
       "AC Solutions & Maintenance",
       "IT Support & Infrastructure",
     ],
     features: [
       {
-        title: "CCTV & Security Systems",
-        description: "Professional installation and maintenance of CCTV surveillance systems to protect your premises and assets.",
+        title: "CCTV Cameras",
+        description: "Professional installation and maintenance of HD CCTV surveillance systems to protect your business and assets with remote monitoring.",
         icon: "Video",
-        highlights: ["HD Camera Installation", "Remote Monitoring", "24/7 Recording"],
+        highlights: ["HD Camera Installation", "Remote Monitoring", "24/7 Digital Recording"],
+      },
+      {
+        title: "Door Locking Systems",
+        description: "Advanced access control and door locking solutions including electronic, biometric, and smart entry systems for enhanced security.",
+        icon: "Lock",
+        highlights: ["Magnetic Locks", "Biometric Access", "Mobile Integration"],
       },
       {
         title: "AC Solutions & Maintenance",
