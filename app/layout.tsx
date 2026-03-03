@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter_Tight, Montserrat } from "next/font/google";
 import "./globals.css";
 import ClientLayout from "@/components/layout/ClientLayout";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const interTight = Inter_Tight({
   subsets: ["latin"],
@@ -55,6 +56,7 @@ export default function RootLayout({
     <html lang="en" className={`${interTight.variable} ${montserrat.variable}`} suppressHydrationWarning>
       <body className="antialiased select-none" suppressHydrationWarning>
         <ClientLayout>{children}</ClientLayout>
+        <SpeedInsights />
       </body>
     </html>
   );
