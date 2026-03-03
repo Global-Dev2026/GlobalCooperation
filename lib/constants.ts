@@ -516,7 +516,7 @@ export const BOARD_OF_DIRECTORS = [
   },
   {
     id: "muditha",
-    name: "Mr. Muditha ",
+    name: "Mr. Muditha Hapuarachchi",
     position: "",
     education: "B.Com(Sp) USJ, CPA, ACMA, CBA, MCPM, SAT",
     bio: "A seasoned Business Analyst and Leader with 25+ years across finance, marketing, and operations. Known for strategic foresight, innovative solutions, and driving growth by uniting diverse functions and challenging conventions to create sustainable competitive advantage",
