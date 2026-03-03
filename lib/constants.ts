@@ -35,7 +35,7 @@ export const SITE_CONFIG = {
   url: "https://globalsoftsolution.com",
   email: "info@globalsoftsl.com",
   phone: "+94 11 216 0252",
-  address: "Sepali Place, 22/20 Yahampath Mawatha, Maharagama 10280",
+  address: "Sepali Place, 22/20 Yahampath Mawatha, Maharagama 10280, Sri Lanka",
   mapUrl: "https://share.google/1aP2fDU4AXd1WB2AJ",
   social: {
     linkedin: "https://www.linkedin.com/company/global-cooperation-pvt-ltd/?viewAsMember=true",
