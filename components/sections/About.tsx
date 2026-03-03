@@ -202,7 +202,7 @@ export default function About() {
           viewport={{ once: true, amount: 0.3 }}
           className="mb-20"
         >
-          <Card className="p-8 md:p-12 bg-gradient-to-br from-burgundy to-burgundy-950 text-white text-center group overflow-hidden relative">
+          <Card className="p-6 md:p-10 max-w-5xl mx-auto bg-gradient-to-br from-burgundy to-burgundy-950 text-white text-center group overflow-hidden relative">
             {/* Grain Texture Overlay */}
             <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
             <motion.div variants={fadeInUp} className="relative z-10">
