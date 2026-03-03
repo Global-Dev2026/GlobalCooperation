@@ -88,7 +88,7 @@ export const SERVICES = [
   },
   {
     id: "supermarket-advisory",
-    title: "Supermarket Advisory Service",
+    title: "Supermarket Advisory & Management",
     description:
       "Expert consulting and advisory services for supermarket operations, management, and optimization.",
     icon: "Store",
