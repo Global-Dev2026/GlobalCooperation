@@ -107,15 +107,17 @@ export default function BoardOfDirectors() {
                       )}
                     </div>
                     {/* LinkedIn icon */}
-                    <a
-                      href={member.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`Visit ${member.name}'s LinkedIn profile`}
-                      className="flex-shrink-0 w-7 h-7 bg-slate-100 rounded-full flex items-center justify-center hover:bg-slate-200 transition-colors"
-                    >
-                      <Linkedin className="w-3.5 h-3.5 text-slate-700" />
-                    </a>
+                    {member.linkedin && !['', '#'].includes(member.linkedin) && (
+                      <a
+                        href={member.linkedin}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`Visit ${member.name}'s LinkedIn profile`}
+                        className="flex-shrink-0 w-7 h-7 bg-slate-100 rounded-full flex items-center justify-center hover:bg-slate-200 transition-colors"
+                      >
+                        <Linkedin className="w-3.5 h-3.5 text-slate-700" />
+                      </a>
+                    )}
                   </div>
                   <p className={`text-[11px] text-slate-500 leading-relaxed mt-1 ${expandedIds.has(member.id) ? '' : 'line-clamp-2'}`}>
                     {member.bio}
@@ -141,15 +143,17 @@ export default function BoardOfDirectors() {
                     sizes="(max-width: 768px) 100vw, (max-width: 1024px) 33vw, 25vw"
                   />
                   {/* LinkedIn Icon */}
-                  <a
-                    href={member.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={`Visit ${member.name}'s LinkedIn profile`}
-                    className="absolute top-4 right-4 w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 hover:bg-white hover:scale-110"
-                  >
-                    <Linkedin className="w-3.5 h-3.5 text-slate-900" />
-                  </a>
+                  {member.linkedin && !['', '#'].includes(member.linkedin) && (
+                    <a
+                      href={member.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`Visit ${member.name}'s LinkedIn profile`}
+                      className="absolute top-4 right-4 w-8 h-8 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 hover:bg-white hover:scale-110"
+                    >
+                      <Linkedin className="w-3.5 h-3.5 text-slate-900" />
+                    </a>
+                  )}
                 </div>
 
                 {/* Member Info */}

@@ -476,7 +476,7 @@ export const BOARD_OF_DIRECTORS = [
     education: "",
     bio: "A growth-driven leader overseeing the marketing division, specializing in the import and distribution of high-quality hardware accessories. With a focus on strategic market positioning and supply chain excellence, he plays a key role in expanding the company's product portfolio and market reach.",
     image: "/images/directers/suranga.png",
-    linkedin: "#",
+    linkedin: "",
   },
   {
     id: "rashmika",
@@ -517,7 +517,7 @@ export const BOARD_OF_DIRECTORS = [
   {
     id: "muditha",
     name: "Muditha Hapuarachchi",
-    position: "",
+    position: "Consultant",
     education: "B.Com(Sp) USJ, CPA, ACMA, CBA, MCPM, SAT",
     bio: "A seasoned Business Analyst and Leader with 25+ years across finance, marketing, and operations. Known for strategic foresight, innovative solutions, and driving growth by uniting diverse functions and challenging conventions to create sustainable competitive advantage",
     image: "/images/directers/muditha.png",
