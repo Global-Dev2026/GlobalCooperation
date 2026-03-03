@@ -194,6 +194,36 @@ export default function About() {
           </div>
         </motion.div>
 
+        {/* Chairman's Message */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.6 }}
+          className="mb-20 max-w-4xl mx-auto"
+        >
+          <div className="relative p-8 md:p-12 bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden">
+            {/* Decorative Quote Mark */}
+            <div className="absolute top-4 left-6 text-8xl text-burgundy/10 font-serif leading-none select-none">
+              &ldquo;
+            </div>
+
+            <div className="relative z-10">
+              <p className="text-xl md:text-2xl text-slate-700 leading-relaxed text-center md:text-justify italic mb-8 font-light">
+                "At Global Cooperation, we are committed to building sustainable businesses through ethical leadership, strong governance, and long-term strategic growth, working closely with our subsidiaries to ensure accountability and lasting value."
+              </p>
+
+              <div className="flex items-center justify-center md:justify-start gap-4">
+                <div className="w-12 h-[2px] bg-gold hidden md:block" />
+                <div className="text-center md:text-left">
+                  <h4 className="text-lg font-bold text-burgundy">Dr. Dharshana Weerakoon, DBA (USA)</h4>
+                  <p className="text-sm text-slate-500 uppercase tracking-wider font-medium">Chairman</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
         {/* Our Approach */}
         <motion.div
           variants={staggerContainer}
