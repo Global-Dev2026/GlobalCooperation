@@ -207,35 +207,66 @@ export const COMPANIES = [
     fullDescription:
       "Global Tech (Private) Limited stands at the forefront of Sri Lanka's technical services landscape, offering specialized solutions for business infrastructure. We specialize in installing and maintaining professional CCTV security systems to protect assets, supplying and servicing energy-efficient air conditioning units, and providing rapid-response IT support and maintenance. Our mission is to ensure your business environments are safe, comfortable, and technologically sound. Led by an experienced team and backed by the Global Cooperation Group, we bring reliability and technical excellence to every client project.",
     focus: [
-      "CCTV Cameras",
-      "Door Locking Systems",
-      "AC Solutions & Maintenance",
-      "IT Support & Infrastructure",
+      "Wireless CCTV Cameras",
+      "Access Control Systems",
+      "Air Condition Solutions (AC)",
+      "Computer Network Solutions",
     ],
     features: [
       {
-        title: "CCTV Cameras",
-        description: "Professional installation and maintenance of HD CCTV surveillance systems to protect your business and assets with remote monitoring.",
+        title: "Wireless CCTV Cameras",
+        description: "Professional installation and maintenance of high-definition wireless CCTV surveillance systems for reliable security.",
         icon: "Video",
-        highlights: ["HD Camera Installation", "Remote Monitoring", "24/7 Digital Recording"],
       },
       {
-        title: "Door Locking Systems",
-        description: "Advanced access control and door locking solutions including electronic, biometric, and smart entry systems for enhanced security.",
-        icon: "Lock",
-        highlights: ["Magnetic Locks", "Biometric Access", "Mobile Integration"],
-      },
-      {
-        title: "AC Solutions & Maintenance",
-        description: "Supply, installation, and servicing of air conditioning systems for commercial and retail environments.",
+        title: "Air Condition Solutions (AC)",
+        description: "Complete supply, installation, and servicing of energy-efficient air conditioning systems for all environments.",
         icon: "Wind",
-        highlights: ["Commercial AC Units", "Preventive Maintenance", "Energy Efficient Solutions"],
       },
       {
-        title: "IT Support & Maintenance",
-        description: "Ongoing technical support, preventive maintenance, and rapid-response IT services to keep your operations running smoothly.",
-        icon: "Headphones",
-        highlights: ["On-site Support", "Remote Assistance", "Preventive Maintenance"],
+        title: "Burglar Alarm Systems",
+        description: "Advanced intrusion detection and burglar alarm systems designed to secure and protect your premises 24/7.",
+        icon: "Bell",
+      },
+      {
+        title: "Access Control Systems",
+        description: "Secure biometric, card, and electronic access control solutions to effectively manage entry to your facilities.",
+        icon: "Lock",
+      },
+      {
+        title: "Video & Audio Intercom Systems",
+        description: "Seamless intercom communication solutions for building entry management, enhancing overall security.",
+        icon: "Mic",
+      },
+      {
+        title: "Telephone Systems",
+        description: "Reliable PBX and IP telephony systems to streamline internal and external communication for your business.",
+        icon: "Phone",
+      },
+      {
+        title: "PA Systems",
+        description: "High-quality Public Address systems for clear and effective announcements in commercial and public spaces.",
+        icon: "Speaker",
+      },
+      {
+        title: "Wi-Fi Solutions",
+        description: "High-speed, secure, and broad-coverage wireless networking solutions to keep your business fully connected.",
+        icon: "Wifi",
+      },
+      {
+        title: "Smart Board Solutions",
+        description: "Interactive smart boards to elevate collaboration and presentations in modern classrooms and boardrooms.",
+        icon: "Monitor",
+      },
+      {
+        title: "Computer Network Solutions",
+        description: "Comprehensive end-to-end IT infrastructure and computer networking services to build a robust digital backbone.",
+        icon: "Network",
+      },
+      {
+        title: "UPS Solutions",
+        description: "Uninterruptible Power Supply (UPS) systems to protect your critical technology and ensure continuous operation.",
+        icon: "Battery",
       },
     ],
     whyChooseUs: [
@@ -253,7 +284,7 @@ export const COMPANIES = [
       },
       {
         title: "Proven Track Record",
-        description: "Trusted by 150+ businesses across retail, supermarkets, and commercial sectors.",
+        description: "Trusted by 700+ businesses across retail, supermarkets, and commercial sectors.",
       },
       {
         title: "After-Sales Support",
@@ -265,8 +296,8 @@ export const COMPANIES = [
       },
     ],
     stats: [
-      { label: "Businesses Served", value: 150, suffix: "+" },
-      { label: "Installations Completed", value: 300, suffix: "+" },
+      { label: "Businesses Served", value: 700, suffix: "+" },
+      { label: "Installations Completed", value: 1300, suffix: "+" },
       { label: "Years of Experience", value: 15, suffix: "+" },
       { label: "Client Satisfaction", value: 98, suffix: "%" },
     ],
