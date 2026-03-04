@@ -182,10 +182,10 @@ export const COMPANIES = [
       },
     ],
     stats: [
-      { label: "Projects Delivered", value: 250, suffix: "+" },
-      { label: "Active Clients", value: 85, suffix: "+" },
+      { label: "Projects Delivered", value: 1600, suffix: "+" },
+      { label: "Active Clients", value: 1200, suffix: "+" },
       { label: "Success Rate", value: 98, suffix: "%" },
-      { label: "Years Experience", value: 15, suffix: "+" },
+      { label: "Years Experience", value: 18, suffix: "+" },
     ],
     color: "#841818",
     gradient: "from-burgundy-950 via-burgundy to-burgundy-700",
