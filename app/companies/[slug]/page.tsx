@@ -45,8 +45,27 @@ export default async function CompanyPage({ params }: Props) {
     notFound();
   }
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: company.name,
+    description: company.description,
+    image: `https://globalsoftsl.com${company.image}`,
+    url: `https://globalsoftsl.com/companies/${company.slug}`,
+    logo: "https://globalsoftsl.com/images/companies/logo.png",
+    parentOrganization: {
+      "@type": "Organization",
+      name: "Global Cooperation (Private) Limited",
+      url: "https://globalsoftsl.com",
+    },
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <Navbar />
       <main className="min-h-screen">
         {/* Hero Section */}

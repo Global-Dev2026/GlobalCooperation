@@ -18,7 +18,10 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "Global Cooperation (Private) Limited",
+  title: {
+    template: "%s | Global Cooperation (Private) Limited",
+    default: "Global Cooperation (Private) Limited",
+  },
   description:
     "Expert software development, cloud solutions, and AI services for modern businesses.",
   keywords: [
@@ -27,8 +30,27 @@ export const metadata: Metadata = {
     "AI",
     "machine learning",
     "digital transformation",
+    "Sri Lanka",
+    "POS Systems",
+    "enterprise software",
+    "IT consulting",
+    "web development",
   ],
   authors: [{ name: "Global Cooperation (Private) Limited" }],
+  creator: "Global Cooperation (Private) Limited",
+  publisher: "Global Cooperation (Private) Limited",
+  metadataBase: new URL("https://globalsoftsl.com"),
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
   icons: {
     icon: "/images/companies/logo.png",
   },
@@ -38,10 +60,15 @@ export const metadata: Metadata = {
       "A group of companies providing software development, cloud, AI, and advisory services.",
     url: "https://globalsoftsl.com",
     siteName: "Global Cooperation (Private) Limited",
+    locale: "en_US",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Global Cooperation (Private) Limited",
+    description: "Expert software development, cloud solutions, and AI services.",
+  },
   // Industry-level metadata for search engines and social
-  metadataBase: new URL("https://globalsoftsl.com"),
   other: {
     industry: "Software & IT Support",
   },
