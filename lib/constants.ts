@@ -345,12 +345,6 @@ export const COMPANIES = [
           "Proactive risk identification, assessment, and compliance advisory to safeguard your business from operational and regulatory threats.",
         icon: "Shield",
       },
-      {
-        title: "Ongoing Advisory & Support Packages",
-        description:
-          "Flexible retainer-based advisory and support packages providing continuous expert guidance tailored to your evolving business needs.",
-        icon: "HeadphonesIcon",
-      },
     ],
     whyChooseUs: [
       { title: "Strategic Depth", description: "We go beyond surface-level advice — delivering strategies grounded in deep industry analysis." },
