@@ -25,6 +25,9 @@ export const metadata: Metadata = {
   description:
     "Expert software development, cloud solutions, and AI services for modern businesses.",
   keywords: [
+    "Global Cooperation", // Keyword #1 priority
+    "Global Cooperation Private Limited",
+    "Global Cooperation Sri Lanka",
     "software development",
     "cloud solutions",
     "AI",

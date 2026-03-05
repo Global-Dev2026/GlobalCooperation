@@ -8,8 +8,8 @@ import Companies from "@/components/sections/Companies";
 import BoardOfDirectors from "@/components/sections/BoardOfDirectors";
 
 export const metadata: Metadata = {
-  title: "Global Cooperation (Private) Limited",
-  description: "Global Cooperation provides innovative software, AI, CCTV security, and comprehensive consulting services across Sri Lanka.",
+  title: "Global Cooperation (Private) Limited | Sri Lanka",
+  description: "Global Cooperation is a diversified holding company providing innovative software, AI, CCTV security, and comprehensive consulting services across Sri Lanka.",
 };
 
 export default function Home() {
@@ -17,6 +17,7 @@ export default function Home() {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
     name: "Global Cooperation (Private) Limited",
+    alternateName: "Global Cooperation",
     image: "https://globalsoftsl.com/images/companies/logo.png",
     "@id": "https://globalsoftsl.com",
     url: "https://globalsoftsl.com",
