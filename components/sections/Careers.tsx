@@ -149,71 +149,73 @@ export default function Careers() {
                 </div>
 
                 {/* Filters */}
-                <div className="mb-12 space-y-6">
-                    {/* Department Filter */}
-                    <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wider">
-                            Department
-                        </label>
-                        <div className="flex flex-wrap gap-2">
-                            {departments.map((dept) => (
-                                <button
-                                    key={dept}
-                                    onClick={() => setSelectedDepartment(dept)}
-                                    className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${selectedDepartment === dept
-                                        ? "bg-gray-900 text-white"
-                                        : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"
-                                        }`}
-                                >
-                                    {dept.charAt(0).toUpperCase() + dept.slice(1)}
-                                </button>
-                            ))}
-                        </div>
-                    </div>
-
-                    {/* Location & Type Filters */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {jobs.length > 0 && (
+                    <div className="mb-12 space-y-6">
+                        {/* Department Filter */}
                         <div>
                             <label className="block text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wider">
-                                Location
+                                Department
                             </label>
                             <div className="flex flex-wrap gap-2">
-                                {locations.map((loc) => (
+                                {departments.map((dept) => (
                                     <button
-                                        key={loc}
-                                        onClick={() => setSelectedLocation(loc)}
-                                        className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${selectedLocation === loc
+                                        key={dept}
+                                        onClick={() => setSelectedDepartment(dept)}
+                                        className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${selectedDepartment === dept
                                             ? "bg-gray-900 text-white"
                                             : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"
                                             }`}
                                     >
-                                        {loc.charAt(0).toUpperCase() + loc.slice(1)}
+                                        {dept.charAt(0).toUpperCase() + dept.slice(1)}
                                     </button>
                                 ))}
                             </div>
                         </div>
 
-                        <div>
-                            <label className="block text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wider">
-                                Job Type
-                            </label>
-                            <div className="flex flex-wrap gap-2">
-                                {types.map((t) => (
-                                    <button
-                                        key={t}
-                                        onClick={() => setSelectedType(t)}
-                                        className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${selectedType === t
-                                            ? "bg-gray-900 text-white"
-                                            : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"
-                                            }`}
-                                    >
-                                        {t.charAt(0).toUpperCase() + t.slice(1)}
-                                    </button>
-                                ))}
+                        {/* Location & Type Filters */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div>
+                                <label className="block text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wider">
+                                    Location
+                                </label>
+                                <div className="flex flex-wrap gap-2">
+                                    {locations.map((loc) => (
+                                        <button
+                                            key={loc}
+                                            onClick={() => setSelectedLocation(loc)}
+                                            className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${selectedLocation === loc
+                                                ? "bg-gray-900 text-white"
+                                                : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"
+                                                }`}
+                                        >
+                                            {loc.charAt(0).toUpperCase() + loc.slice(1)}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+
+                            <div>
+                                <label className="block text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wider">
+                                    Job Type
+                                </label>
+                                <div className="flex flex-wrap gap-2">
+                                    {types.map((t) => (
+                                        <button
+                                            key={t}
+                                            onClick={() => setSelectedType(t)}
+                                            className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${selectedType === t
+                                                ? "bg-gray-900 text-white"
+                                                : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"
+                                                }`}
+                                        >
+                                            {t.charAt(0).toUpperCase() + t.slice(1)}
+                                        </button>
+                                    ))}
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                )}
 
                 {/* Job Grid */}
                 {loading ? (
