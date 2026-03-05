@@ -96,11 +96,10 @@ export default function Navbar() {
         }}
         className={cn(
           "fixed top-2 lg:top-4 left-1/2 z-[100] flex items-center justify-between px-3 lg:px-8 max-w-7xl transition-[background-color,border-color,box-shadow] duration-700 w-[95%] lg:w-[var(--nav-width)] pt-4 pb-4 lg:pt-[var(--nav-padding)] lg:pb-[var(--nav-padding)]",
-          isScrolled
+          isScrolled || pathname !== "/"
             ? "bg-black/40 backdrop-blur-2xl rounded-full lg:rounded-[3rem] border border-white/10 shadow-[0_0_40px_rgba(0,0,0,0.5)]"
             : "bg-black/20 lg:bg-transparent backdrop-blur-xl lg:backdrop-blur-none rounded-full lg:rounded-none border border-white/10 lg:border-transparent"
-        )
-        }
+        )}
       >
         {/* Futuristic Brand Logo */}
         <div className="flex justify-start">

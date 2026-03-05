@@ -1,6 +1,6 @@
 "use client";
 
-import { NAV_LINKS, SITE_CONFIG } from "@/lib/constants";
+import { FOOTER_LINKS, SITE_CONFIG } from "@/lib/constants";
 import { Linkedin, Twitter, Github, Mail, Phone, MapPin } from "lucide-react";
 import { motion } from "framer-motion";
 import NextImage from "next/image";
@@ -93,7 +93,7 @@ export default function Footer() {
             className="flex flex-wrap items-center justify-center gap-4 text-sm"
             variants={itemVariants}
           >
-            {NAV_LINKS.map((link) => (
+            {FOOTER_LINKS.map((link) => (
               <motion.a
                 key={link.href}
                 href={link.href}

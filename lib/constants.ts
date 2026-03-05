@@ -49,6 +49,14 @@ export const NAV_LINKS = [
   { label: "About", href: "/#about" },
 ] as const;
 
+// Footer Links
+export const FOOTER_LINKS = [
+  { label: "Home", href: "/#home" },
+  { label: "Services", href: "/#services" },
+  { label: "About", href: "/#about" },
+  { label: "Careers", href: "/careers" },
+] as const;
+
 // Service Offerings
 export const SERVICES = [
   {
