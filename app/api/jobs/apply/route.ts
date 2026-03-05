@@ -72,6 +72,15 @@ export async function POST(request: NextRequest) {
             );
         }
 
+        // Check if Supabase is configured
+        if (!supabase) {
+            console.error("Supabase client is not initialized. Check environment variables.");
+            return NextResponse.json(
+                { success: false, message: "Server configuration error: Document storage not available" },
+                { status: 500 }
+            );
+        }
+
         // Upload resume to Supabase Storage
         const resumeBuffer = Buffer.from(await resume.arrayBuffer());
         const fileName = `${Date.now()}-${resume.name.replace(/[^a-zA-Z0-9.-]/g, "_")}`;
