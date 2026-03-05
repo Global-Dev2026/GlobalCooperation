@@ -8,7 +8,7 @@ import Companies from "@/components/sections/Companies";
 import BoardOfDirectors from "@/components/sections/BoardOfDirectors";
 
 export const metadata: Metadata = {
-  title: "Software & Technology Solutions",
+  title: "Global Cooperation (Private) Limited",
   description: "Global Cooperation provides innovative software, AI, CCTV security, and comprehensive consulting services across Sri Lanka.",
 };
 
