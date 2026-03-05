@@ -293,7 +293,7 @@ export default function Careers() {
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             onClick={() => setSelectedJob(null)}
-                            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50"
+                            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[110]"
                         />
 
                         {/* Modal */}
@@ -301,7 +301,7 @@ export default function Careers() {
                             initial={{ opacity: 0, scale: 0.9, y: 50 }}
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.9, y: 50 }}
-                            className="fixed inset-0 flex items-center justify-center z-50 p-4"
+                            className="fixed inset-0 flex items-center justify-center z-[110] p-4"
                             onClick={() => setSelectedJob(null)}
                         >
                             <div
@@ -425,13 +425,13 @@ export default function Careers() {
                             animate={{ opacity: 1 }}
                             exit={{ opacity: 0 }}
                             onClick={() => setIsApplying(false)}
-                            className="fixed inset-0 bg-black/60 backdrop-blur-md z-[60]"
+                            className="fixed inset-0 bg-black/60 backdrop-blur-md z-[120]"
                         />
                         <motion.div
                             initial={{ opacity: 0, scale: 0.95, y: 20 }}
                             animate={{ opacity: 1, scale: 1, y: 0 }}
                             exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                            className="fixed inset-0 flex items-center justify-center z-[70] p-4 pointer-events-none"
+                            className="fixed inset-0 flex items-center justify-center z-[120] p-4 pointer-events-none"
                         >
                             <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl pointer-events-auto flex flex-col">
                                 <div className="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
