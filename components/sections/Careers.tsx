@@ -38,7 +38,7 @@ export default function Careers() {
     const [applicationForm, setApplicationForm] = useState({
         name: "",
         email: "",
-        resumeUrl: "",
+        resume: null as File | null,
         coverLetter: ""
     });
     const [submitStatus, setSubmitStatus] = useState<{ success: boolean; message: string } | { success: false; message: "" }>({ success: false, message: "" });
@@ -49,13 +49,18 @@ export default function Careers() {
         setSubmitStatus({ success: false, message: "" });
 
         try {
+            const formData = new FormData();
+            formData.append("jobId", selectedJob?.id || "");
+            formData.append("name", applicationForm.name);
+            formData.append("email", applicationForm.email);
+            formData.append("coverLetter", applicationForm.coverLetter);
+            if (applicationForm.resume) {
+                formData.append("resume", applicationForm.resume);
+            }
+
             const response = await fetch("/api/jobs/apply", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    jobId: selectedJob?.id,
-                    ...applicationForm
-                })
+                body: formData
             });
 
             const data = await response.json();
@@ -65,7 +70,7 @@ export default function Careers() {
                 setTimeout(() => {
                     setIsApplying(false);
                     setSelectedJob(null);
-                    setApplicationForm({ name: "", email: "", resumeUrl: "", coverLetter: "" });
+                    setApplicationForm({ name: "", email: "", resume: null, coverLetter: "" });
                     setSubmitStatus({ success: false, message: "" });
                 }, 2000);
             } else {
@@ -340,194 +345,170 @@ export default function Careers() {
                                     </div>
                                 </div>
 
-                                {/* Modal Body */}
+                                {/* Modal Body - Dynamic Content */}
                                 <div className="p-8 space-y-8">
-                                    {/* Description */}
-                                    <div>
-                                        <h3 className="text-lg font-bold text-gray-900 mb-3">
-                                            About This Role
-                                        </h3>
-                                        <p className="text-gray-700 leading-relaxed text-sm">
-                                            {selectedJob.description}
-                                        </p>
-                                    </div>
-
-                                    {/* Responsibilities */}
-                                    <div>
-                                        <h3 className="text-lg font-bold text-gray-900 mb-3">
-                                            Key Responsibilities
-                                        </h3>
-                                        <ul className="space-y-2">
-                                            {selectedJob.responsibilities.map((resp, idx) => (
-                                                <li key={idx} className="flex gap-3 text-sm text-gray-700">
-                                                    <Check className="w-4 h-4 text-gray-400 flex-shrink-0 mt-0.5" />
-                                                    <span>{resp}</span>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-
-                                    {/* Requirements */}
-                                    <div>
-                                        <h3 className="text-lg font-bold text-gray-900 mb-3">
-                                            Requirements
-                                        </h3>
-                                        <ul className="space-y-2">
-                                            {selectedJob.requirements.map((req, idx) => (
-                                                <li key={idx} className="flex gap-3 text-sm text-gray-700">
-                                                    <Check className="w-4 h-4 text-gray-400 flex-shrink-0 mt-0.5" />
-                                                    <span>{req}</span>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-
-                                    {/* Benefits */}
-                                    <div>
-                                        <h3 className="text-lg font-bold text-gray-900 mb-3">
-                                            What We Offer
-                                        </h3>
-                                        <ul className="space-y-2">
-                                            {selectedJob.benefits.map((benefit, idx) => (
-                                                <li key={idx} className="flex gap-3 text-sm text-gray-700">
-                                                    <Check className="w-4 h-4 text-gray-400 flex-shrink-0 mt-0.5" />
-                                                    <span>{benefit}</span>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-
-                                    {/* Apply Button */}
-                                    <div className="pt-6">
-                                        <button
-                                            onClick={() => setIsApplying(true)}
-                                            className="block w-full py-3.5 bg-gray-900 hover:bg-black text-white rounded-xl transition-colors font-semibold text-center"
-                                        >
-                                            Apply Now
-                                        </button>
-                                        <p className="text-xs text-gray-500 text-center mt-3">
-                                            Applications are reviewed on a rolling basis
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </motion.div>
-                    </>
-                )}
-            </AnimatePresence>
-
-            {/* Application Modal */}
-            <AnimatePresence>
-                {isApplying && selectedJob && (
-                    <>
-                        <motion.div
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            onClick={() => setIsApplying(false)}
-                            className="fixed inset-0 bg-black/60 backdrop-blur-md z-[120]"
-                        />
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                            animate={{ opacity: 1, scale: 1, y: 0 }}
-                            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                            className="fixed inset-0 flex items-center justify-center z-[120] p-4 pointer-events-none"
-                        >
-                            <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl pointer-events-auto flex flex-col">
-                                <div className="p-6 border-b border-gray-100 flex justify-between items-center bg-gray-50/50">
-                                    <div>
-                                        <h3 className="text-2xl font-bold text-gray-900">Apply for Position</h3>
-                                        <p className="text-gray-500 text-sm mt-1">
-                                            Applying for <span className="font-semibold text-burgundy">{selectedJob.title}</span>
-                                        </p>
-                                    </div>
-                                    <button
-                                        onClick={() => setIsApplying(false)}
-                                        className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-                                    >
-                                        <X className="w-6 h-6 text-gray-400" />
-                                    </button>
-                                </div>
-
-                                <div className="p-8">
-                                    <form onSubmit={handleApplicationSubmit} className="space-y-6">
-                                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                            <div className="space-y-2">
-                                                <label className="text-sm font-medium text-gray-700">Full Name</label>
-                                                <input
-                                                    type="text"
-                                                    required
-                                                    value={applicationForm.name}
-                                                    onChange={(e) => setApplicationForm({ ...applicationForm, name: e.target.value })}
-                                                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-burgundy focus:ring-2 focus:ring-burgundy/20 outline-none transition-all"
-                                                    placeholder="John Doe"
-                                                />
+                                    {!isApplying ? (
+                                        <>
+                                            {/* Description */}
+                                            <div>
+                                                <h3 className="text-lg font-bold text-gray-900 mb-3">
+                                                    About This Role
+                                                </h3>
+                                                <p className="text-gray-700 leading-relaxed text-sm">
+                                                    {selectedJob.description}
+                                                </p>
                                             </div>
-                                            <div className="space-y-2">
-                                                <label className="text-sm font-medium text-gray-700">Email Address</label>
-                                                <input
-                                                    type="email"
-                                                    required
-                                                    value={applicationForm.email}
-                                                    onChange={(e) => setApplicationForm({ ...applicationForm, email: e.target.value })}
-                                                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-burgundy focus:ring-2 focus:ring-burgundy/20 outline-none transition-all"
-                                                    placeholder="john@example.com"
-                                                />
+
+                                            {/* Responsibilities */}
+                                            <div>
+                                                <h3 className="text-lg font-bold text-gray-900 mb-3">
+                                                    Key Responsibilities
+                                                </h3>
+                                                <ul className="space-y-2">
+                                                    {selectedJob.responsibilities.map((resp, idx) => (
+                                                        <li key={idx} className="flex gap-3 text-sm text-gray-700">
+                                                            <Check className="w-4 h-4 text-gray-400 flex-shrink-0 mt-0.5" />
+                                                            <span>{resp}</span>
+                                                        </li>
+                                                    ))}
+                                                </ul>
                                             </div>
-                                        </div>
 
-                                        <div className="space-y-2">
-                                            <label className="text-sm font-medium text-gray-700">Resume / Portfolio URL</label>
-                                            <input
-                                                type="url"
-                                                required
-                                                value={applicationForm.resumeUrl}
-                                                onChange={(e) => setApplicationForm({ ...applicationForm, resumeUrl: e.target.value })}
-                                                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-burgundy focus:ring-2 focus:ring-burgundy/20 outline-none transition-all"
-                                                placeholder="https://linkedin.com/in/johndoe"
-                                            />
-                                            <p className="text-xs text-gray-500">Please provide a link to your LinkedIn profile, Portfolio, or Google Drive file.</p>
-                                        </div>
-
-                                        <div className="space-y-2">
-                                            <label className="text-sm font-medium text-gray-700">Cover Letter</label>
-                                            <textarea
-                                                rows={4}
-                                                value={applicationForm.coverLetter}
-                                                onChange={(e) => setApplicationForm({ ...applicationForm, coverLetter: e.target.value })}
-                                                className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-burgundy focus:ring-2 focus:ring-burgundy/20 outline-none transition-all resize-none"
-                                                placeholder="Tell us why you're a great fit..."
-                                            />
-                                        </div>
-
-                                        {submitStatus.message && (
-                                            <div className={`p-4 rounded-xl text-sm font-medium ${submitStatus.success ? 'bg-green-50 text-green-700 border border-green-100' : 'bg-red-50 text-red-700 border border-red-100'
-                                                }`}>
-                                                {submitStatus.message}
+                                            {/* Requirements */}
+                                            <div>
+                                                <h3 className="text-lg font-bold text-gray-900 mb-3">
+                                                    Requirements
+                                                </h3>
+                                                <ul className="space-y-2">
+                                                    {selectedJob.requirements.map((req, idx) => (
+                                                        <li key={idx} className="flex gap-3 text-sm text-gray-700">
+                                                            <Check className="w-4 h-4 text-gray-400 flex-shrink-0 mt-0.5" />
+                                                            <span>{req}</span>
+                                                        </li>
+                                                    ))}
+                                                </ul>
                                             </div>
-                                        )}
 
-                                        <div className="pt-4 flex gap-4">
-                                            <button
-                                                type="button"
-                                                onClick={() => setIsApplying(false)}
-                                                className="flex-1 px-6 py-3 rounded-xl border border-gray-200 text-gray-600 font-medium hover:bg-gray-50 transition-colors"
-                                            >
-                                                Cancel
-                                            </button>
-                                            <button
-                                                type="submit"
-                                                disabled={isSubmitting}
-                                                className="flex-1 px-6 py-3 rounded-xl bg-gray-900 text-white font-medium hover:bg-black transition-colors disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                                            >
-                                                {isSubmitting ? (
-                                                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                                                ) : (
-                                                    <>Submit Application <Check className="w-4 h-4" /></>
+                                            {/* Benefits */}
+                                            <div>
+                                                <h3 className="text-lg font-bold text-gray-900 mb-3">
+                                                    What We Offer
+                                                </h3>
+                                                <ul className="space-y-2">
+                                                    {selectedJob.benefits.map((benefit, idx) => (
+                                                        <li key={idx} className="flex gap-3 text-sm text-gray-700">
+                                                            <Check className="w-4 h-4 text-gray-400 flex-shrink-0 mt-0.5" />
+                                                            <span>{benefit}</span>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+
+                                            {/* Apply Button */}
+                                            <div className="pt-6">
+                                                <button
+                                                    onClick={() => setIsApplying(true)}
+                                                    className="block w-full py-3.5 bg-gray-900 hover:bg-black text-white rounded-xl transition-colors font-semibold text-center mt-4"
+                                                >
+                                                    Apply Now
+                                                </button>
+                                                <p className="text-xs text-gray-500 text-center mt-3">
+                                                    Applications are reviewed on a rolling basis
+                                                </p>
+                                            </div>
+                                        </>
+                                    ) : (
+                                        <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+                                            <h3 className="text-2xl font-bold text-gray-900 mb-6 border-b border-gray-100 pb-4">Submit Your Application</h3>
+                                            <form onSubmit={handleApplicationSubmit} className="space-y-6">
+                                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                                    <div className="space-y-2">
+                                                        <label className="text-sm font-medium text-gray-700">Full Name</label>
+                                                        <input
+                                                            type="text"
+                                                            required
+                                                            value={applicationForm.name}
+                                                            onChange={(e) => setApplicationForm({ ...applicationForm, name: e.target.value })}
+                                                            className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-burgundy focus:ring-2 focus:ring-burgundy/20 outline-none transition-all"
+                                                            placeholder="John Doe"
+                                                        />
+                                                    </div>
+                                                    <div className="space-y-2">
+                                                        <label className="text-sm font-medium text-gray-700">Email Address</label>
+                                                        <input
+                                                            type="email"
+                                                            required
+                                                            value={applicationForm.email}
+                                                            onChange={(e) => setApplicationForm({ ...applicationForm, email: e.target.value })}
+                                                            className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-burgundy focus:ring-2 focus:ring-burgundy/20 outline-none transition-all"
+                                                            placeholder="john@example.com"
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                <div className="space-y-2 relative">
+                                                    <label className="text-sm font-medium text-gray-700">Upload CV (PDF Only)</label>
+                                                    <div className="relative group">
+                                                        <input
+                                                            type="file"
+                                                            accept=".pdf,application/pdf"
+                                                            required
+                                                            onChange={(e) => {
+                                                                const file = e.target.files?.[0];
+                                                                if (file && file.size > 2 * 1024 * 1024) {
+                                                                    alert("File is too large. Maximum size is 2MB.");
+                                                                    e.target.value = '';
+                                                                    return;
+                                                                }
+                                                                setApplicationForm({ ...applicationForm, resume: file || null })
+                                                            }}
+                                                            className="w-full px-4 py-3 rounded-xl border border-gray-200 bg-gray-50 text-gray-700 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-gray-200 file:text-gray-700 hover:file:bg-gray-300 transition-all cursor-pointer"
+                                                        />
+                                                    </div>
+                                                    <p className="text-xs text-gray-500 mt-1">Maximum file size: 2MB.</p>
+                                                </div>
+
+                                                <div className="space-y-2">
+                                                    <label className="text-sm font-medium text-gray-700">Cover Letter</label>
+                                                    <textarea
+                                                        rows={4}
+                                                        value={applicationForm.coverLetter}
+                                                        onChange={(e) => setApplicationForm({ ...applicationForm, coverLetter: e.target.value })}
+                                                        className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-burgundy focus:ring-2 focus:ring-burgundy/20 outline-none transition-all resize-none"
+                                                        placeholder="Tell us why you're a great fit..."
+                                                    />
+                                                </div>
+
+                                                {submitStatus.message && (
+                                                    <div className={`p-4 rounded-xl text-sm font-medium ${submitStatus.success ? 'bg-green-50 text-green-700 border border-green-100' : 'bg-red-50 text-red-700 border border-red-100'
+                                                        }`}>
+                                                        {submitStatus.message}
+                                                    </div>
                                                 )}
-                                            </button>
+
+                                                <div className="pt-4 flex gap-4">
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setIsApplying(false)}
+                                                        className="flex-1 px-6 py-3 rounded-xl border border-gray-200 text-gray-600 font-medium hover:bg-gray-50 transition-colors"
+                                                    >
+                                                        Back to Details
+                                                    </button>
+                                                    <button
+                                                        type="submit"
+                                                        disabled={isSubmitting}
+                                                        className="flex-1 px-6 py-3 rounded-xl bg-gray-900 text-white font-medium hover:bg-black transition-colors disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                                                    >
+                                                        {isSubmitting ? (
+                                                            <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                                        ) : (
+                                                            <>Submit Application <Check className="w-4 h-4" /></>
+                                                        )}
+                                                    </button>
+                                                </div>
+                                            </form>
                                         </div>
-                                    </form>
+                                    )}
                                 </div>
                             </div>
                         </motion.div>

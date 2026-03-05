@@ -96,20 +96,34 @@ d:\Projects\GlobalSoftSolutionOfficialWebsite
 3. **Configure Environment Variables**
    Create a `.env` file in the root directory:
    ```env
-   # Database (Supabase Connection Pooling & Direct)
-   DATABASE_URL="postgresql://user:password@host:5432/db?pgbouncer=true"
-   DIRECT_URL="postgresql://user:password@host:5432/db"
+    # Database (Supabase Connection Pooling & Direct)
+    DATABASE_URL="postgresql://user:password@host:6543/postgres"
+    
+    # Supabase (Storage & API)
+    # Find these in Supabase Dashboard > Settings > API
+    NEXT_PUBLIC_SUPABASE_URL="https://your-project.supabase.co"
+    # Find this in API > Legacy anon, service_role API keys
+    SUPABASE_SERVICE_ROLE_KEY="your_service_role_secret_key"
 
-   # Authentication & Security
-   AUTH_SECRET="your_generated_secret_key" # Generate with: openssl rand -base64 32
-   NEXT_PUBLIC_TURNSTILE_SITE_KEY="your_site_key"
-   TURNSTILE_SECRET_KEY="your_secret_key"
+    # Authentication & Security
+    AUTH_SECRET="your_generated_secret_key" # Generate with: openssl rand -base64 32
+    NEXT_PUBLIC_TURNSTILE_SITE_KEY="your_site_key"
+    TURNSTILE_SECRET_KEY="your_secret_key"
 
-   # Email (Resend)
-   RESEND_API_KEY="re_..."
-   EMAIL_FROM="onboarding@resend.dev"
-   EMAIL_TO="admin@company.com"
-   ```
+    # Email (Resend)
+    RESEND_API_KEY="re_..."
+    EMAIL_FROM="onboarding@resend.dev"
+    EMAIL_TO="admin@company.com"
+    ```
+
+### 📦 Supabase Storage Setup (Critical for Resumes)
+The platform uses Supabase Storage to handle job seeker CVs/Resumes securely.
+
+1. **Create Bucket**: Log into Supabase Dashboard -> **Storage**.
+2. **New Bucket**: Create a bucket named exactly `resumes`.
+3. **Public Access**: Toggle **Public Bucket** to **ON**. This allows the resume links to be accessible in notification emails.
+4. **CORS (Optional)**: If you face upload issues, ensure your CORS policy allows your domain.
+
 
 4. **Initialize Database**
    ```bash
