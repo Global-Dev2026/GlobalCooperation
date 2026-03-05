@@ -135,54 +135,34 @@ export default function Careers() {
     const types = ["all", ...Array.from(new Set(jobs.map((j) => j.type)))];
 
     return (
-        <section id="careers" className="py-24 bg-whisper relative overflow-hidden">
-            {/* Decorative background elements */}
-            <div className="absolute top-20 left-10 w-32 h-32 rounded-full bg-burgundy/5" />
-            <div className="absolute top-40 right-20 w-24 h-24 bg-gold/20 rotate-45" />
-            <div className="absolute bottom-40 left-1/4 w-20 h-20 rounded-full bg-burgundy/10" />
-
-            <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section id="careers" className="py-20 bg-gray-50 border-t border-gray-100">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 {/* Hero Header */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6 }}
-                    className="text-center mb-16"
-                >
-                    <div className="inline-block px-6 py-2 bg-burgundy/10 text-burgundy rounded-full text-sm font-medium mb-6">
-                        We&apos;re Hiring
-                    </div>
-                    <h2 className="text-5xl md:text-6xl font-bold text-slate-900 mb-6">
+                <div className="text-center mb-16">
+                    <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4 tracking-tight">
                         Join Our Team
                     </h2>
-                    <p className="text-xl text-slate-600 max-w-2xl mx-auto">
+                    <p className="text-lg text-gray-600 max-w-2xl mx-auto">
                         Build the future with Global Cooperation. We&apos;re looking for
                         talented individuals to join our growing team.
                     </p>
-                </motion.div>
+                </div>
 
                 {/* Filters */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.6, delay: 0.2 }}
-                    className="mb-12 space-y-4"
-                >
+                <div className="mb-12 space-y-6">
                     {/* Department Filter */}
                     <div>
-                        <label className="block text-sm font-medium text-slate-700 mb-3">
+                        <label className="block text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wider">
                             Department
                         </label>
-                        <div className="flex flex-wrap gap-3">
+                        <div className="flex flex-wrap gap-2">
                             {departments.map((dept) => (
                                 <button
                                     key={dept}
                                     onClick={() => setSelectedDepartment(dept)}
-                                    className={`px-6 py-2 rounded-full font-medium transition-all ${selectedDepartment === dept
-                                        ? "bg-burgundy text-white shadow-lg"
-                                        : "bg-white border-2 border-burgundy/20 text-burgundy hover:border-burgundy hover:shadow-md"
+                                    className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${selectedDepartment === dept
+                                        ? "bg-gray-900 text-white"
+                                        : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"
                                         }`}
                                 >
                                     {dept.charAt(0).toUpperCase() + dept.slice(1)}
@@ -192,19 +172,19 @@ export default function Careers() {
                     </div>
 
                     {/* Location & Type Filters */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-3">
+                            <label className="block text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wider">
                                 Location
                             </label>
-                            <div className="flex flex-wrap gap-3">
+                            <div className="flex flex-wrap gap-2">
                                 {locations.map((loc) => (
                                     <button
                                         key={loc}
                                         onClick={() => setSelectedLocation(loc)}
-                                        className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${selectedLocation === loc
-                                            ? "bg-gold text-pure-black shadow-lg"
-                                            : "bg-white border border-gold/30 text-slate-700 hover:border-gold hover:shadow-md"
+                                        className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${selectedLocation === loc
+                                            ? "bg-gray-900 text-white"
+                                            : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"
                                             }`}
                                     >
                                         {loc.charAt(0).toUpperCase() + loc.slice(1)}
@@ -214,17 +194,17 @@ export default function Careers() {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-slate-700 mb-3">
+                            <label className="block text-sm font-semibold text-gray-700 mb-3 uppercase tracking-wider">
                                 Job Type
                             </label>
-                            <div className="flex flex-wrap gap-3">
+                            <div className="flex flex-wrap gap-2">
                                 {types.map((t) => (
                                     <button
                                         key={t}
                                         onClick={() => setSelectedType(t)}
-                                        className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${selectedType === t
-                                            ? "bg-gold text-pure-black shadow-lg"
-                                            : "bg-white border border-gold/30 text-slate-700 hover:border-gold hover:shadow-md"
+                                        className={`px-4 py-2 rounded-md text-sm font-medium transition-colors ${selectedType === t
+                                            ? "bg-gray-900 text-white"
+                                            : "bg-white border border-gray-200 text-gray-700 hover:bg-gray-50"
                                             }`}
                                     >
                                         {t.charAt(0).toUpperCase() + t.slice(1)}
@@ -233,7 +213,7 @@ export default function Careers() {
                             </div>
                         </div>
                     </div>
-                </motion.div>
+                </div>
 
                 {/* Job Grid */}
                 {loading ? (
@@ -255,52 +235,47 @@ export default function Careers() {
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                         {filteredJobs.map((job, index) => (
-                            <motion.div
+                            <div
                                 key={job.id}
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ duration: 0.5, delay: index * 0.1 }}
-                                whileHover={{ y: -8, scale: 1.02 }}
                                 onClick={() => setSelectedJob(job)}
-                                className="group relative bg-white/80 backdrop-blur-lg rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all border border-burgundy/10 cursor-pointer"
+                                className="group bg-white rounded-xl p-6 border border-gray-200 hover:border-gray-300 hover:shadow-md transition-all cursor-pointer flex flex-col h-full"
                             >
                                 {/* Department Badge */}
-                                <div className="absolute top-6 right-6">
-                                    <span className="px-4 py-1 bg-burgundy text-white text-sm rounded-full">
+                                <div className="mb-4">
+                                    <span className="inline-block px-3 py-1 bg-gray-100 text-gray-700 text-xs font-semibold tracking-wide uppercase rounded-md">
                                         {job.department}
                                     </span>
                                 </div>
 
                                 {/* Job Title */}
-                                <h3 className="text-2xl font-bold text-burgundy mb-4 pr-8">
+                                <h3 className="text-xl font-bold text-gray-900 mb-4 group-hover:text-burgundy transition-colors">
                                     {job.title}
                                 </h3>
 
                                 {/* Job Meta */}
-                                <div className="space-y-3 mb-6">
-                                    <div className="flex items-center gap-2 text-sm text-slate-600">
-                                        <MapPin className="w-4 h-4 text-gold" />
+                                <div className="space-y-2 mb-8 flex-grow">
+                                    <div className="flex items-center gap-2 text-sm text-gray-600">
+                                        <MapPin className="w-4 h-4 text-gray-400" />
                                         {job.location}
                                     </div>
-                                    <div className="flex items-center gap-2 text-sm text-slate-600">
-                                        <Clock className="w-4 h-4 text-gold" />
+                                    <div className="flex items-center gap-2 text-sm text-gray-600">
+                                        <Clock className="w-4 h-4 text-gray-400" />
                                         {job.type}
                                     </div>
                                     {job.salary && (
-                                        <div className="flex items-center gap-2 text-sm text-slate-600">
-                                            <DollarSign className="w-4 h-4 text-gold" />
+                                        <div className="flex items-center gap-2 text-sm text-gray-600">
+                                            <DollarSign className="w-4 h-4 text-gray-400" />
                                             {job.salary}
                                         </div>
                                     )}
                                 </div>
 
                                 {/* View Details Button */}
-                                <button className="w-full py-3 bg-burgundy hover:bg-gold text-white hover:text-pure-black rounded-full transition-all duration-300 font-medium flex items-center justify-center gap-2 group-hover:shadow-lg">
+                                <div className="flex items-center text-burgundy font-medium text-sm group-hover:underline">
                                     View Details
-                                    <ChevronRight className="w-4 h-4" />
-                                </button>
-                            </motion.div>
+                                    <ChevronRight className="w-4 h-4 ml-1" />
+                                </div>
+                            </div>
                         ))}
                     </div>
                 )}
@@ -332,31 +307,31 @@ export default function Careers() {
                                 className="bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl"
                             >
                                 {/* Modal Header */}
-                                <div className="sticky top-0 bg-gradient-to-br from-burgundy to-burgundy-900 p-8 text-white rounded-t-3xl">
+                                <div className="sticky top-0 bg-white p-8 border-b border-gray-100 z-10 rounded-t-3xl">
                                     <button
                                         onClick={() => setSelectedJob(null)}
-                                        className="absolute top-6 right-6 w-10 h-10 bg-white/20 hover:bg-white/30 rounded-full flex items-center justify-center transition-all"
+                                        className="absolute top-6 right-6 w-10 h-10 bg-gray-50 hover:bg-gray-100 text-gray-500 rounded-full flex items-center justify-center transition-all"
                                     >
                                         <X className="w-5 h-5" />
                                     </button>
 
-                                    <h2 className="text-4xl font-bold mb-4 pr-12">{selectedJob.title}</h2>
-                                    <div className="flex flex-wrap gap-4 text-gold-100">
-                                        <div className="flex items-center gap-2">
-                                            <Briefcase className="w-5 h-5" />
+                                    <h2 className="text-3xl font-bold text-gray-900 mb-4 pr-12">{selectedJob.title}</h2>
+                                    <div className="flex flex-wrap gap-4 text-gray-600">
+                                        <div className="flex items-center gap-2 bg-gray-50 px-3 py-1.5 rounded-md text-sm font-medium">
+                                            <Briefcase className="w-4 h-4 text-gray-400" />
                                             {selectedJob.department}
                                         </div>
-                                        <div className="flex items-center gap-2">
-                                            <MapPin className="w-5 h-5" />
+                                        <div className="flex items-center gap-2 bg-gray-50 px-3 py-1.5 rounded-md text-sm font-medium">
+                                            <MapPin className="w-4 h-4 text-gray-400" />
                                             {selectedJob.location}
                                         </div>
-                                        <div className="flex items-center gap-2">
-                                            <Clock className="w-5 h-5" />
+                                        <div className="flex items-center gap-2 bg-gray-50 px-3 py-1.5 rounded-md text-sm font-medium">
+                                            <Clock className="w-4 h-4 text-gray-400" />
                                             {selectedJob.type}
                                         </div>
                                         {selectedJob.salary && (
-                                            <div className="flex items-center gap-2">
-                                                <DollarSign className="w-5 h-5" />
+                                            <div className="flex items-center gap-2 bg-gray-50 px-3 py-1.5 rounded-md text-sm font-medium">
+                                                <DollarSign className="w-4 h-4 text-gray-400" />
                                                 {selectedJob.salary}
                                             </div>
                                         )}
@@ -367,24 +342,24 @@ export default function Careers() {
                                 <div className="p-8 space-y-8">
                                     {/* Description */}
                                     <div>
-                                        <h3 className="text-2xl font-bold text-burgundy mb-4">
+                                        <h3 className="text-lg font-bold text-gray-900 mb-3">
                                             About This Role
                                         </h3>
-                                        <p className="text-slate-700 leading-relaxed">
+                                        <p className="text-gray-700 leading-relaxed text-sm">
                                             {selectedJob.description}
                                         </p>
                                     </div>
 
                                     {/* Responsibilities */}
                                     <div>
-                                        <h3 className="text-2xl font-bold text-burgundy mb-4">
+                                        <h3 className="text-lg font-bold text-gray-900 mb-3">
                                             Key Responsibilities
                                         </h3>
-                                        <ul className="space-y-3">
+                                        <ul className="space-y-2">
                                             {selectedJob.responsibilities.map((resp, idx) => (
-                                                <li key={idx} className="flex gap-3">
-                                                    <Check className="w-5 h-5 text-gold flex-shrink-0 mt-0.5" />
-                                                    <span className="text-slate-700">{resp}</span>
+                                                <li key={idx} className="flex gap-3 text-sm text-gray-700">
+                                                    <Check className="w-4 h-4 text-gray-400 flex-shrink-0 mt-0.5" />
+                                                    <span>{resp}</span>
                                                 </li>
                                             ))}
                                         </ul>
@@ -392,14 +367,14 @@ export default function Careers() {
 
                                     {/* Requirements */}
                                     <div>
-                                        <h3 className="text-2xl font-bold text-burgundy mb-4">
+                                        <h3 className="text-lg font-bold text-gray-900 mb-3">
                                             Requirements
                                         </h3>
-                                        <ul className="space-y-3">
+                                        <ul className="space-y-2">
                                             {selectedJob.requirements.map((req, idx) => (
-                                                <li key={idx} className="flex gap-3">
-                                                    <Check className="w-5 h-5 text-gold flex-shrink-0 mt-0.5" />
-                                                    <span className="text-slate-700">{req}</span>
+                                                <li key={idx} className="flex gap-3 text-sm text-gray-700">
+                                                    <Check className="w-4 h-4 text-gray-400 flex-shrink-0 mt-0.5" />
+                                                    <span>{req}</span>
                                                 </li>
                                             ))}
                                         </ul>
@@ -407,14 +382,14 @@ export default function Careers() {
 
                                     {/* Benefits */}
                                     <div>
-                                        <h3 className="text-2xl font-bold text-burgundy mb-4">
+                                        <h3 className="text-lg font-bold text-gray-900 mb-3">
                                             What We Offer
                                         </h3>
-                                        <ul className="space-y-3">
+                                        <ul className="space-y-2">
                                             {selectedJob.benefits.map((benefit, idx) => (
-                                                <li key={idx} className="flex gap-3">
-                                                    <Check className="w-5 h-5 text-gold flex-shrink-0 mt-0.5" />
-                                                    <span className="text-slate-700">{benefit}</span>
+                                                <li key={idx} className="flex gap-3 text-sm text-gray-700">
+                                                    <Check className="w-4 h-4 text-gray-400 flex-shrink-0 mt-0.5" />
+                                                    <span>{benefit}</span>
                                                 </li>
                                             ))}
                                         </ul>
@@ -424,11 +399,11 @@ export default function Careers() {
                                     <div className="pt-6">
                                         <button
                                             onClick={() => setIsApplying(true)}
-                                            className="block w-full py-4 bg-burgundy hover:bg-gold text-white hover:text-pure-black rounded-full transition-all duration-300 font-bold text-lg text-center shadow-lg hover:shadow-xl"
+                                            className="block w-full py-3.5 bg-gray-900 hover:bg-black text-white rounded-xl transition-colors font-semibold text-center"
                                         >
                                             Apply Now
                                         </button>
-                                        <p className="text-sm text-slate-500 text-center mt-3">
+                                        <p className="text-xs text-gray-500 text-center mt-3">
                                             Applications are reviewed on a rolling basis
                                         </p>
                                     </div>
@@ -534,14 +509,14 @@ export default function Careers() {
                                             <button
                                                 type="button"
                                                 onClick={() => setIsApplying(false)}
-                                                className="flex-1 px-6 py-3 rounded-full border border-gray-200 text-gray-600 font-medium hover:bg-gray-50 transition-colors"
+                                                className="flex-1 px-6 py-3 rounded-xl border border-gray-200 text-gray-600 font-medium hover:bg-gray-50 transition-colors"
                                             >
                                                 Cancel
                                             </button>
                                             <button
                                                 type="submit"
                                                 disabled={isSubmitting}
-                                                className="flex-1 px-6 py-3 rounded-full bg-burgundy text-white font-medium hover:bg-burgundy-dark transition-all shadow-lg hover:shadow-xl disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                                                className="flex-1 px-6 py-3 rounded-xl bg-gray-900 text-white font-medium hover:bg-black transition-colors disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                                             >
                                                 {isSubmitting ? (
                                                     <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
