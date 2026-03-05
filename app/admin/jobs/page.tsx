@@ -219,11 +219,13 @@ export default function AdminJobsPage() {
                                         required
                                         className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-burgundy/20 focus:border-burgundy outline-none"
                                     >
-                                        <option value="Engineering">Engineering</option>
-                                        <option value="Design">Design</option>
-                                        <option value="Product">Product</option>
-                                        <option value="Marketing">Marketing</option>
-                                        <option value="Sales">Sales</option>
+                                        <option value="Operations">Operations</option>
+                                        <option value="Sales & Marketing">Sales & Marketing</option>
+                                        <option value="Human Resources">Human Resources</option>
+                                        <option value="Technical Support">Technical Support</option>
+                                        <option value="Administration">Administration</option>
+                                        <option value="Finance & Accounts">Finance & Accounts</option>
+                                        <option value="Management">Management</option>
                                     </select>
                                 </div>
                                 <div>
@@ -234,10 +236,31 @@ export default function AdminJobsPage() {
                                         required
                                         className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-burgundy/20 focus:border-burgundy outline-none"
                                     >
-                                        <option value="Remote">Remote</option>
-                                        <option value="Sri Lanka">Sri Lanka</option>
-                                        <option value="USA">USA</option>
-                                        <option value="UK">UK</option>
+                                        <option value="Ampara">Ampara</option>
+                                        <option value="Anuradhapura">Anuradhapura</option>
+                                        <option value="Badulla">Badulla</option>
+                                        <option value="Batticaloa">Batticaloa</option>
+                                        <option value="Colombo">Colombo</option>
+                                        <option value="Galle">Galle</option>
+                                        <option value="Gampaha">Gampaha</option>
+                                        <option value="Hambantota">Hambantota</option>
+                                        <option value="Jaffna">Jaffna</option>
+                                        <option value="Kalutara">Kalutara</option>
+                                        <option value="Kandy">Kandy</option>
+                                        <option value="Kegalle">Kegalle</option>
+                                        <option value="Kilinochchi">Kilinochchi</option>
+                                        <option value="Kurunegala">Kurunegala</option>
+                                        <option value="Mannar">Mannar</option>
+                                        <option value="Matale">Matale</option>
+                                        <option value="Matara">Matara</option>
+                                        <option value="Monaragala">Monaragala</option>
+                                        <option value="Mullaitivu">Mullaitivu</option>
+                                        <option value="Nuwara Eliya">Nuwara Eliya</option>
+                                        <option value="Polonnaruwa">Polonnaruwa</option>
+                                        <option value="Puttalam">Puttalam</option>
+                                        <option value="Ratnapura">Ratnapura</option>
+                                        <option value="Trincomalee">Trincomalee</option>
+                                        <option value="Vavuniya">Vavuniya</option>
                                     </select>
                                 </div>
                             </div>

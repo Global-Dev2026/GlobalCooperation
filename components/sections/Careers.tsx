@@ -157,7 +157,7 @@ export default function Careers() {
                         Join Our Team
                     </h2>
                     <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-                        Build the future with Global Soft Solution. We&apos;re looking for
+                        Build the future with Global Cooperation. We&apos;re looking for
                         talented individuals to join our growing team.
                     </p>
                 </motion.div>
@@ -247,8 +247,10 @@ export default function Careers() {
                         className="text-center py-20 bg-white/50 backdrop-blur-sm rounded-3xl border border-burgundy/10"
                     >
                         <Briefcase className="w-16 h-16 text-burgundy/30 mx-auto mb-4" />
-                        <p className="text-xl text-slate-600">No jobs found matching your criteria.</p>
-                        <p className="text-slate-500 mt-2">Try adjusting your filters.</p>
+                        <p className="text-xl text-slate-600 font-medium">No open positions at the moment.</p>
+                        <p className="text-slate-500 mt-2 max-w-md mx-auto">
+                            We are constantly growing and will have exciting opportunities coming very soon. Please check back later!
+                        </p>
                     </motion.div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
