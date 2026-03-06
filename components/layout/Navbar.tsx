@@ -77,10 +77,6 @@ export default function Navbar() {
   return (
     <>
       <motion.nav
-        style={{
-          "--nav-width": navWidth,
-          "--nav-padding": navPadding,
-        } as any}
         initial={{ y: -100, x: "-50%", opacity: 0 }}
         animate={{
           y: isVisible ? 0 : -150,
@@ -95,10 +91,10 @@ export default function Navbar() {
           stiffness: 100
         }}
         className={cn(
-          "fixed top-2 lg:top-4 left-1/2 z-[100] flex items-center justify-between px-3 lg:px-8 max-w-7xl transition-[background-color,border-color,box-shadow] duration-700 w-[95%] lg:w-[var(--nav-width)] pt-4 pb-4 lg:pt-[var(--nav-padding)] lg:pb-[var(--nav-padding)]",
-          isScrolled || pathname !== "/"
-            ? "bg-black/40 backdrop-blur-2xl rounded-full lg:rounded-[3rem] border border-white/10 shadow-[0_0_40px_rgba(0,0,0,0.5)]"
-            : "bg-black/20 lg:bg-transparent backdrop-blur-xl lg:backdrop-blur-none rounded-full lg:rounded-none border border-white/10 lg:border-transparent"
+          "fixed top-4 left-1/2 z-[100] flex items-center justify-between px-6 lg:px-10 w-[95%] lg:w-[85%] max-w-7xl transition-all duration-500 rounded-full py-4 lg:py-5",
+          isScrolled
+            ? "bg-black/40 backdrop-blur-2xl border border-white/10 shadow-[0_0_40px_rgba(0,0,0,0.5)]"
+            : "bg-transparent border-transparent backdrop-blur-none"
         )}
       >
         {/* Futuristic Brand Logo */}
@@ -174,70 +170,72 @@ export default function Navbar() {
 
         {/* HUD Border Glow Mask */}
         <div className="absolute inset-0 rounded-[3rem] pointer-events-none border border-white/0 hover:border-white/10 transition-colors opacity-20" />
-      </motion.nav>
+      </motion.nav >
 
       {/* Holographic Mobile Menu Overlay */}
       <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[90] bg-black/60 backdrop-blur-[100px] flex items-center justify-center p-8"
-          >
-            {/* Background HUD accents */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
-              <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-blue-500/20 blur-[150px] rounded-full" />
-              <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-purple-500/20 blur-[150px] rounded-full" />
-            </div>
-
+        {
+          isOpen && (
             <motion.div
-              initial={{ scale: 0.9, opacity: 0, y: 20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.9, opacity: 0, y: 20 }}
-              className="w-full max-w-lg space-y-8 lg:space-y-12 relative px-4"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-[90] bg-black/60 backdrop-blur-[100px] flex items-center justify-center p-8"
             >
-              <div className="grid gap-4 lg:gap-6">
-                {NAV_LINKS.map((link, i) => (
-                  <motion.button
-                    key={link.href}
-                    initial={{ x: -20, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: i * 0.1 + 0.2 }}
-                    onClick={() => handleLinkClick(link.href)}
-                    className="group flex items-center justify-between p-5 lg:p-6 rounded-2xl lg:rounded-3xl bg-white/[0.03] border border-white/5 hover:bg-white/[0.08] hover:border-white/10 active:scale-[0.98] transition-all text-left"
-                  >
-                    <div className="flex items-center gap-4 lg:gap-6">
-                      <span className="text-xs font-medium text-white/20 tracking-tighter">0{i + 1}</span>
-                      <span className="text-xl lg:text-2xl font-light tracking-[0.15em] lg:tracking-[0.2em] text-white uppercase group-hover:tracking-[0.25em] lg:group-hover:tracking-[0.3em] transition-all">
-                        {link.label}
-                      </span>
-                    </div>
-                    <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-full border border-white/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                      <Globe size={14} className="lg:hidden text-white" />
-                      <Globe size={16} className="hidden lg:block text-white" />
-                    </div>
-                  </motion.button>
-                ))}
+              {/* Background HUD accents */}
+              <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
+                <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-blue-500/20 blur-[150px] rounded-full" />
+                <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-purple-500/20 blur-[150px] rounded-full" />
               </div>
 
-              <div className="flex flex-col items-center gap-6 pb-4">
-                <motion.button
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.8 }}
-                  onClick={() => setIsOpen(false)}
-                  className="w-14 h-14 lg:w-16 lg:h-16 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-black active:scale-95 transition-all"
-                  aria-label="Close menu"
-                >
-                  <X size={24} className="lg:hidden" />
-                  <X size={32} className="hidden lg:block" />
-                </motion.button>
-              </div>
+              <motion.div
+                initial={{ scale: 0.9, opacity: 0, y: 20 }}
+                animate={{ scale: 1, opacity: 1, y: 0 }}
+                exit={{ scale: 0.9, opacity: 0, y: 20 }}
+                className="w-full max-w-lg space-y-8 lg:space-y-12 relative px-4"
+              >
+                <div className="grid gap-4 lg:gap-6">
+                  {NAV_LINKS.map((link, i) => (
+                    <motion.button
+                      key={link.href}
+                      initial={{ x: -20, opacity: 0 }}
+                      animate={{ x: 0, opacity: 1 }}
+                      transition={{ delay: i * 0.1 + 0.2 }}
+                      onClick={() => handleLinkClick(link.href)}
+                      className="group flex items-center justify-between p-5 lg:p-6 rounded-2xl lg:rounded-3xl bg-white/[0.03] border border-white/5 hover:bg-white/[0.08] hover:border-white/10 active:scale-[0.98] transition-all text-left"
+                    >
+                      <div className="flex items-center gap-4 lg:gap-6">
+                        <span className="text-xs font-medium text-white/20 tracking-tighter">0{i + 1}</span>
+                        <span className="text-xl lg:text-2xl font-light tracking-[0.15em] lg:tracking-[0.2em] text-white uppercase group-hover:tracking-[0.25em] lg:group-hover:tracking-[0.3em] transition-all">
+                          {link.label}
+                        </span>
+                      </div>
+                      <div className="w-8 h-8 lg:w-10 lg:h-10 rounded-full border border-white/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                        <Globe size={14} className="lg:hidden text-white" />
+                        <Globe size={16} className="hidden lg:block text-white" />
+                      </div>
+                    </motion.button>
+                  ))}
+                </div>
+
+                <div className="flex flex-col items-center gap-6 pb-4">
+                  <motion.button
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.8 }}
+                    onClick={() => setIsOpen(false)}
+                    className="w-14 h-14 lg:w-16 lg:h-16 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-black active:scale-95 transition-all"
+                    aria-label="Close menu"
+                  >
+                    <X size={24} className="lg:hidden" />
+                    <X size={32} className="hidden lg:block" />
+                  </motion.button>
+                </div>
+              </motion.div>
             </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          )
+        }
+      </AnimatePresence >
     </>
   );
 }
