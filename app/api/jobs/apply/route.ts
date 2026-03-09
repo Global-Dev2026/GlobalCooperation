@@ -119,23 +119,44 @@ export async function POST(request: NextRequest) {
         });
 
         // Send email to HR
-        const hrEmail = process.env.HR_EMAIL || "hr@globalsoftsolution.com";
+        const hrEmail = process.env.HR_EMAIL || "jobs@globalsoftsl.com";
 
         try {
             if (resend) {
+                // Email to HR/Recruitment team
                 await resend.emails.send({
-                    from: 'Global Soft Solution <careers@globalsoftsolution.com>',
+                    from: `${name} <jobs@globalsoftsl.com>`,
                     to: hrEmail,
+                    replyTo: email,
                     subject: `New Application for ${job.title}: ${name}`,
                     html: `
-            <h1>New Job Application</h1>
-            <p><strong>Job:</strong> ${job.title}</p>
-            <p><strong>Candidate:</strong> ${name}</p>
-            <p><strong>Email:</strong> ${email}</p>
-            <hr />
-            <h3>Cover Letter:</h3>
-            <p>${coverLetter || "No cover letter provided."}</p>
-            <p><em>Resume attached as PDF.</em></p>
+            <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; padding: 20px; border-radius: 10px;">
+                <h1 style="color: #841818; margin-bottom: 20px;">New Job Application</h1>
+                
+                <div style="background-color: #f9f9f9; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                    <h3 style="margin-top: 0; color: #333;">Position Details</h3>
+                    <p><strong>Job Title:</strong> ${job.title}</p>
+                    <p><strong>Department:</strong> ${job.department}</p>
+                    <p><strong>Location:</strong> ${job.location}</p>
+                    <p><strong>Type:</strong> ${job.type}</p>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <h3 style="border-bottom: 2px solid #841818; padding-bottom: 5px; color: #333;">Candidate Information</h3>
+                    <p><strong>Name:</strong> ${name}</p>
+                    <p><strong>Email:</strong> ${email}</p>
+                </div>
+
+                <div style="margin-bottom: 20px;">
+                    <h3 style="border-bottom: 2px solid #841818; padding-bottom: 5px; color: #333;">Cover Letter</h3>
+                    <p style="white-space: pre-wrap; background-color: #fff; padding: 10px; border: 1px border #eee; border-radius: 5px;">${coverLetter || "No cover letter provided."}</p>
+                </div>
+
+                <div style="padding-top: 15px; border-top: 1px solid #eee; font-size: 0.9em; color: #666;">
+                    <p><em>Note: The candidate's resume (${resume.name}) is attached to this email as a PDF.</em></p>
+                    <p>You can also view the resume online here: <a href="${resumeUrl}" style="color: #841818;">View Online Resume</a></p>
+                </div>
+            </div>
           `,
                     attachments: [
                         {
@@ -145,19 +166,24 @@ export async function POST(request: NextRequest) {
                     ]
                 });
 
-                // Send confirmation to applicant
+                // Confirmation email to applicant
                 await resend.emails.send({
-                    from: 'Global Soft Solution <careers@globalsoftsolution.com>',
+                    from: 'Global Cooperation <jobs@globalsoftsl.com>',
                     to: email,
                     subject: `Application Received: ${job.title}`,
                     html: `
-            <h1>Application Received</h1>
-            <p>Dear ${name},</p>
-            <p>Thank you for applying for the <strong>${job.title}</strong> position at Global Soft Solution.</p>
-            <p>We have received your application and resume successfully. If your qualifications match our needs, we will contact you for an interview.</p>
-            <br />
-            <p>Best regards,</p>
-            <p>Global Soft Solution HR Team</p>
+            <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; padding: 20px; border-radius: 10px;">
+                <h1 style="color: #841818; margin-bottom: 20px;">Application Received</h1>
+                <p>Dear ${name},</p>
+                <p>Thank you for applying for the <strong>${job.title}</strong> position at <strong>Global Cooperation</strong>.</p>
+                <p>We have successfully received your application and resume. Our recruitment team will review your qualifications, and if they match our needs, we will contact you for an interview.</p>
+                <p>Thank you for your interest in joining our team.</p>
+                <br />
+                <div style="border-top: 1px solid #eee; padding-top: 15px; margin-top: 20px;">
+                    <p style="margin: 0; font-weight: bold; color: #841818;">Global Cooperation HR Team</p>
+                    <p style="margin: 0; color: #666; font-size: 0.9em;">Sri Lanka</p>
+                </div>
+            </div>
           `,
                 });
             } else {
