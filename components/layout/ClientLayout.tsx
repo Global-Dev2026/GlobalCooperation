@@ -18,7 +18,7 @@ export default function ClientLayout({
     // Show loader for initial page load
     const timer = setTimeout(() => {
       setIsLoading(false);
-    }, 2500);
+    }, 400);
 
     return () => clearTimeout(timer);
   }, []);

@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 
 const slides = [
   {
@@ -79,11 +80,17 @@ export default function Hero() {
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 1.05 }}
           transition={{ duration: 1.5, ease: "easeInOut" }}
-          className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage: `url('${slides[currentSlide].image}')`,
-          }}
+          className="absolute inset-0"
         >
+          <Image
+            src={slides[currentSlide].image}
+            alt={slides[currentSlide].title}
+            fill
+            priority={currentSlide === 0}
+            className="object-cover"
+            sizes="100vw"
+            quality={90}
+          />
           {/* Layers of Overlays for Depth */}
           <div className="absolute inset-0 bg-gradient-to-br from-black/80 via-black/40 to-black/80" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_transparent_0%,_rgba(0,0,0,0.4)_100%)]" />

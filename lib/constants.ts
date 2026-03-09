@@ -496,7 +496,7 @@ export const BOARD_OF_DIRECTORS = [
     name: "Sumudu Masakorala",
     position: "Managing Director",
     education: "",
-    bio: "Established in 2009, Global Soft Solutions (Private) Limited, led by Director Sumudu, delivers innovative software and IT solutions that empower businesses to achieve efficiency, scalability, and sustainable growth. Committed to excellence and cutting-edge technology, we transform ideas into impactful digital solutions.",
+    bio: "Established in 2009, Global Soft Solutions (Private) Limited was founded by Sumudu, with a vision to deliver innovative software and IT solutions that help businesses improve efficiency, achieve scalability, and drive sustainable growth. The company is committed to excellence and the use of cutting-edge technology to transform ideas into impactful digital solutions.",
     image: "/images/directers/sumudu.png",
     linkedin: "https://www.linkedin.com/in/sumudu-masakorala/",
   },
