@@ -502,7 +502,7 @@ export const BOARD_OF_DIRECTORS = [
   },
   {
     id: "suranga",
-    name: "Suranga Perera",
+    name: "Suranga Sajeewa",
     position: "Director",
     education: "",
     bio: "A growth-driven leader overseeing the marketing division, specializing in the import and distribution of high-quality hardware accessories. With a focus on strategic market positioning and supply chain excellence, he plays a key role in expanding the company's product portfolio and market reach.",
