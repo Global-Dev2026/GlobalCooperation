@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { resend } from "@/lib/resend";
 import { z } from "zod";
-
 import { supabase } from "@/lib/supabase";
 
 // Validator for application data
@@ -23,36 +22,28 @@ export async function POST(request: NextRequest) {
         const coverLetter = formData.get("coverLetter") as string;
         const resume = formData.get("resume") as File | null;
 
-        const body = { jobId, name, email, coverLetter };
-
-        // Validate input
-        const validation = applicationSchema.safeParse(body);
-
+        // ── Validate text fields ──────────────────────────────────────
+        const validation = applicationSchema.safeParse({ jobId, name, email, coverLetter });
         if (!validation.success) {
             return NextResponse.json(
-                {
-                    success: false,
-                    message: "Validation failed",
-                    errors: validation.error.format()
-                },
+                { success: false, message: "Validation failed", errors: validation.error.format() },
                 { status: 400 }
             );
         }
 
+        // ── Validate resume file ──────────────────────────────────────
         if (!resume) {
             return NextResponse.json(
                 { success: false, message: "Resume file is required" },
                 { status: 400 }
             );
         }
-
         if (resume.size > 2 * 1024 * 1024) {
             return NextResponse.json(
                 { success: false, message: "Resume file size must be less than 2MB" },
                 { status: 400 }
             );
         }
-
         if (resume.type !== "application/pdf") {
             return NextResponse.json(
                 { success: false, message: "Resume must be a PDF file" },
@@ -60,11 +51,8 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        // Check if job exists
-        const job = await prisma.job.findUnique({
-            where: { id: jobId },
-        });
-
+        // ── Check if job exists ───────────────────────────────────────
+        const job = await prisma.job.findUnique({ where: { id: jobId } });
         if (!job) {
             return NextResponse.json(
                 { success: false, message: "Job not found" },
@@ -72,146 +60,154 @@ export async function POST(request: NextRequest) {
             );
         }
 
-        // Check if Supabase is configured
-        if (!supabase) {
-            console.error("Supabase client is not initialized. Check environment variables.");
-            return NextResponse.json(
-                { success: false, message: "Server configuration error: Document storage not available" },
-                { status: 500 }
-            );
-        }
-
-        // Upload resume to Supabase Storage
+        // ── Read resume into buffer (used for email attachment) ───────
         const resumeBuffer = Buffer.from(await resume.arrayBuffer());
-        const fileName = `${Date.now()}-${resume.name.replace(/[^a-zA-Z0-9.-]/g, "_")}`;
 
-        const { data: uploadData, error: uploadError } = await supabase.storage
-            .from("resumes")
-            .upload(fileName, resumeBuffer, {
-                contentType: "application/pdf",
-                upsert: false
-            });
+        // ── Upload resume to Supabase (best-effort, non-blocking) ─────
+        let resumeUrl = "";
+        try {
+            if (supabase) {
+                const fileName = `${Date.now()}-${resume.name.replace(/[^a-zA-Z0-9.-]/g, "_")}`;
+                const { data: uploadData, error: uploadError } = await supabase.storage
+                    .from("resumes")
+                    .upload(fileName, resumeBuffer, { contentType: "application/pdf", upsert: false });
 
-        if (uploadError) {
-            console.error("Supabase upload error:", uploadError);
-            return NextResponse.json(
-                { success: false, message: "Failed to upload resume document" },
-                { status: 500 }
-            );
+                if (uploadError) {
+                    console.warn("[Supabase] Resume upload failed (non-fatal):", uploadError.message);
+                } else {
+                    const { data: publicUrlData } = supabase.storage
+                        .from("resumes")
+                        .getPublicUrl(uploadData.path);
+                    resumeUrl = publicUrlData.publicUrl;
+                    console.log("[Supabase] Resume uploaded:", resumeUrl);
+                }
+            } else {
+                console.warn("[Supabase] Client not initialised — skipping cloud storage.");
+            }
+        } catch (storageErr) {
+            console.warn("[Supabase] Unexpected storage error (non-fatal):", storageErr);
         }
 
-        // Get public URL
-        const { data: publicUrlData } = supabase.storage
-            .from("resumes")
-            .getPublicUrl(uploadData.path);
-
-        const resumeUrl = publicUrlData.publicUrl;
-
-        // Create application in database
+        // ── Save application to database ──────────────────────────────
         const application = await prisma.application.create({
-            data: {
-                jobId,
-                name,
-                email,
-                resumeUrl,
-                coverLetter,
-            },
+            data: { jobId, name, email, resumeUrl, coverLetter },
         });
+        console.log("[DB] Application saved, id:", application.id);
 
-        // Send email to HR
+        // ── Send emails via Resend ────────────────────────────────────
         const hrEmail = process.env.HR_EMAIL || "jobs@globalsoftsl.com";
-        // Use verified domain sender — must match a verified domain in Resend
-        const emailFrom = "jobs@globalsoftsl.com";
+        const emailFrom = "jobs@globalsoftsl.com"; // Must be a Resend-verified domain
 
-        let emailError: string | null = null;
-
-        try {
-            if (resend) {
-                // Email to HR/Recruitment team with resume attached
+        if (!resend) {
+            console.warn("[Email] RESEND_API_KEY is not set — skipping emails.");
+        } else {
+            // 1️⃣  Email to HR team with CV attached
+            try {
                 const hrResult = await resend.emails.send({
                     from: `Global Cooperation Careers <${emailFrom}>`,
                     to: hrEmail,
                     replyTo: email,
                     subject: `New Job Application: ${job.title} — ${name}`,
                     html: `
-            <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; padding: 20px; border-radius: 10px;">
-                <h1 style="color: #841818; margin-bottom: 20px;">New Job Application</h1>
+                        <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden;">
+                            <div style="background:#841818;padding:24px 28px;">
+                                <h1 style="margin:0;color:#fff;font-size:22px;">New Job Application</h1>
+                                <p style="margin:4px 0 0;color:rgba(255,255,255,0.75);font-size:14px;">via globalsoftsl.com Careers Portal</p>
+                            </div>
+                            <div style="padding:24px 28px;">
+                                <table style="width:100%;border-collapse:collapse;margin-bottom:20px;background:#f9fafb;border-radius:8px;">
+                                    <tr><td colspan="2" style="padding:10px 14px;font-weight:700;color:#374151;border-bottom:1px solid #e5e7eb;">Position Details</td></tr>
+                                    <tr>
+                                        <td style="padding:8px 14px;color:#6b7280;width:40%;">Job Title</td>
+                                        <td style="padding:8px 14px;font-weight:600;color:#111827;">${job.title}</td>
+                                    </tr>
+                                    <tr style="background:#fff;">
+                                        <td style="padding:8px 14px;color:#6b7280;">Department</td>
+                                        <td style="padding:8px 14px;font-weight:600;color:#111827;">${job.department}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding:8px 14px;color:#6b7280;">Location</td>
+                                        <td style="padding:8px 14px;font-weight:600;color:#111827;">${job.location}</td>
+                                    </tr>
+                                    <tr style="background:#fff;">
+                                        <td style="padding:8px 14px;color:#6b7280;">Type</td>
+                                        <td style="padding:8px 14px;font-weight:600;color:#111827;">${job.type}</td>
+                                    </tr>
+                                </table>
 
-                <div style="background-color: #f9f9f9; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
-                    <h3 style="margin-top: 0; color: #333;">Position Details</h3>
-                    <p><strong>Job Title:</strong> ${job.title}</p>
-                    <p><strong>Department:</strong> ${job.department}</p>
-                    <p><strong>Location:</strong> ${job.location}</p>
-                    <p><strong>Type:</strong> ${job.type}</p>
-                </div>
+                                <table style="width:100%;border-collapse:collapse;margin-bottom:20px;background:#f9fafb;border-radius:8px;">
+                                    <tr><td colspan="2" style="padding:10px 14px;font-weight:700;color:#374151;border-bottom:1px solid #e5e7eb;">Candidate Information</td></tr>
+                                    <tr>
+                                        <td style="padding:8px 14px;color:#6b7280;width:40%;">Full Name</td>
+                                        <td style="padding:8px 14px;font-weight:600;color:#111827;">${name}</td>
+                                    </tr>
+                                    <tr style="background:#fff;">
+                                        <td style="padding:8px 14px;color:#6b7280;">Email</td>
+                                        <td style="padding:8px 14px;"><a href="mailto:${email}" style="color:#841818;font-weight:600;">${email}</a></td>
+                                    </tr>
+                                </table>
 
-                <div style="margin-bottom: 20px;">
-                    <h3 style="border-bottom: 2px solid #841818; padding-bottom: 5px; color: #333;">Candidate Information</h3>
-                    <p><strong>Name:</strong> ${name}</p>
-                    <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
-                </div>
+                                <div style="margin-bottom:20px;">
+                                    <p style="margin:0 0 8px;font-weight:700;color:#374151;">Cover Letter</p>
+                                    <div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:14px;white-space:pre-wrap;color:#374151;font-size:14px;line-height:1.6;">
+                                        ${coverLetter || "<em style='color:#9ca3af;'>No cover letter provided.</em>"}
+                                    </div>
+                                </div>
 
-                <div style="margin-bottom: 20px;">
-                    <h3 style="border-bottom: 2px solid #841818; padding-bottom: 5px; color: #333;">Cover Letter</h3>
-                    <p style="white-space: pre-wrap; background-color: #fff; padding: 10px; border: 1px solid #eee; border-radius: 5px;">${coverLetter || "No cover letter provided."}</p>
-                </div>
-
-                <div style="padding-top: 15px; border-top: 1px solid #eee; font-size: 0.9em; color: #666;">
-                    <p><em>The candidate&apos;s resume (${resume.name}) is attached to this email as a PDF.</em></p>
-                    <p>View online: <a href="${resumeUrl}" style="color: #841818;">Open Resume</a></p>
-                    <p><strong>Reply to this email</strong> to contact the candidate directly at ${email}.</p>
-                </div>
-            </div>
-          `,
-                    attachments: [
-                        {
-                            filename: resume.name,
-                            content: resumeBuffer,
-                        }
-                    ]
+                                <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;padding:14px;font-size:13px;color:#374151;">
+                                    <p style="margin:0 0 6px;"><strong>📎 Resume attached:</strong> ${resume.name}</p>
+                                    ${resumeUrl ? `<p style="margin:0;"><strong>🔗 Online copy:</strong> <a href="${resumeUrl}" style="color:#841818;">Open Resume</a></p>` : ""}
+                                    <p style="margin:8px 0 0;color:#6b7280;font-size:12px;">Hit <strong>Reply</strong> to contact this candidate directly at ${email}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `,
+                    attachments: [{ filename: resume.name, content: resumeBuffer }],
                 });
 
                 if (hrResult.error) {
-                    console.error("[Resend] HR email error:", hrResult.error);
-                    emailError = hrResult.error.message;
+                    console.error("[Resend] HR email FAILED:", hrResult.error);
                 } else {
-                    console.log("[Resend] HR email sent, id:", hrResult.data?.id);
+                    console.log("[Resend] HR email sent successfully, id:", hrResult.data?.id);
                 }
+            } catch (hrEmailErr) {
+                console.error("[Resend] HR email exception:", hrEmailErr);
+            }
 
-                // Confirmation email to applicant
+            // 2️⃣  Confirmation email to the applicant
+            try {
                 const applicantResult = await resend.emails.send({
                     from: `Global Cooperation <${emailFrom}>`,
                     to: email,
                     subject: `Application Received: ${job.title}`,
                     html: `
-            <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; padding: 20px; border-radius: 10px;">
-                <h1 style="color: #841818; margin-bottom: 20px;">Application Received</h1>
-                <p>Dear ${name},</p>
-                <p>Thank you for applying for the <strong>${job.title}</strong> position at <strong>Global Cooperation</strong>.</p>
-                <p>We have successfully received your application and resume. Our recruitment team will review your qualifications, and if they match our needs, we will contact you for an interview.</p>
-                <p>Thank you for your interest in joining our team.</p>
-                <br />
-                <div style="border-top: 1px solid #eee; padding-top: 15px; margin-top: 20px;">
-                    <p style="margin: 0; font-weight: bold; color: #841818;">Global Cooperation HR Team</p>
-                    <p style="margin: 0; color: #666; font-size: 0.9em;">Sri Lanka | jobs@globalsoftsl.com</p>
-                </div>
-            </div>
-          `,
+                        <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden;">
+                            <div style="background:#841818;padding:24px 28px;">
+                                <h1 style="margin:0;color:#fff;font-size:22px;">Application Received ✓</h1>
+                                <p style="margin:4px 0 0;color:rgba(255,255,255,0.75);font-size:14px;">Global Cooperation Careers</p>
+                            </div>
+                            <div style="padding:24px 28px;">
+                                <p style="color:#374151;">Dear <strong>${name}</strong>,</p>
+                                <p style="color:#374151;">Thank you for applying for the <strong>${job.title}</strong> position at <strong>Global Cooperation</strong>.</p>
+                                <p style="color:#374151;">We have successfully received your application and resume. Our team will review your qualifications, and if they match our needs, we will be in touch to arrange an interview.</p>
+                                <p style="color:#6b7280;font-size:13px;">If you have any questions, feel free to reply to this email.</p>
+                                <div style="border-top:1px solid #e5e7eb;margin-top:24px;padding-top:16px;">
+                                    <p style="margin:0;font-weight:700;color:#841818;">Global Cooperation HR Team</p>
+                                    <p style="margin:4px 0 0;color:#6b7280;font-size:13px;">Sri Lanka &nbsp;|&nbsp; jobs@globalsoftsl.com</p>
+                                </div>
+                            </div>
+                        </div>
+                    `,
                 });
 
                 if (applicantResult.error) {
-                    console.error("[Resend] Applicant confirmation email error:", applicantResult.error);
+                    console.error("[Resend] Applicant confirmation FAILED:", applicantResult.error);
                 } else {
                     console.log("[Resend] Applicant confirmation sent, id:", applicantResult.data?.id);
                 }
-            } else {
-                console.warn("[Email] RESEND_API_KEY is not set — skipping email sending.");
-                emailError = "Email service not configured";
+            } catch (applicantEmailErr) {
+                console.error("[Resend] Applicant email exception:", applicantEmailErr);
             }
-        } catch (err) {
-            console.error("[Email] Unexpected error sending emails:", err);
-            emailError = err instanceof Error ? err.message : "Unknown error";
-            // We do NOT fail the request — the application is already saved in DB
         }
 
         return NextResponse.json({
@@ -221,12 +217,9 @@ export async function POST(request: NextRequest) {
         });
 
     } catch (error) {
-        console.error("Error submitting application:", error);
+        console.error("[Apply] Fatal error:", error);
         return NextResponse.json(
-            {
-                success: false,
-                message: "Failed to submit application",
-            },
+            { success: false, message: "Failed to submit application" },
             { status: 500 }
         );
     }
