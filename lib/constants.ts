@@ -516,7 +516,7 @@ export const BOARD_OF_DIRECTORS = [
     education: "",
     bio: "Global Soft Solutions (Private) Limited, led by Director Rashmika, delivers innovative software and IT solutions that drive business efficiency and growth. Committed to quality and forward-thinking strategies, the company transforms ideas into impactful digital solutions.",
     image: "/images/directers/rashmika.png",
-    linkedin: "https://www.linkedin.com/in/rashmika-perera-640639149/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app",
+    linkedin: "https://www.linkedin.com/in/rashmika-perera-640639149/",
   },
   {
     id: "channa",
