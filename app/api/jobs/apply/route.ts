@@ -120,20 +120,23 @@ export async function POST(request: NextRequest) {
 
         // Send email to HR
         const hrEmail = process.env.HR_EMAIL || "jobs@globalsoftsl.com";
-        const emailFrom = process.env.EMAIL_FROM || "onboarding@resend.dev";
+        // Use verified domain sender — must match a verified domain in Resend
+        const emailFrom = "jobs@globalsoftsl.com";
+
+        let emailError: string | null = null;
 
         try {
             if (resend) {
-                // Email to HR/Recruitment team
-                await resend.emails.send({
-                    from: `${name} <${emailFrom}>`,
+                // Email to HR/Recruitment team with resume attached
+                const hrResult = await resend.emails.send({
+                    from: `Global Cooperation Careers <${emailFrom}>`,
                     to: hrEmail,
                     replyTo: email,
-                    subject: `New Application for ${job.title}: ${name}`,
+                    subject: `New Job Application: ${job.title} — ${name}`,
                     html: `
             <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; border: 1px solid #eee; padding: 20px; border-radius: 10px;">
                 <h1 style="color: #841818; margin-bottom: 20px;">New Job Application</h1>
-                
+
                 <div style="background-color: #f9f9f9; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
                     <h3 style="margin-top: 0; color: #333;">Position Details</h3>
                     <p><strong>Job Title:</strong> ${job.title}</p>
@@ -145,17 +148,18 @@ export async function POST(request: NextRequest) {
                 <div style="margin-bottom: 20px;">
                     <h3 style="border-bottom: 2px solid #841818; padding-bottom: 5px; color: #333;">Candidate Information</h3>
                     <p><strong>Name:</strong> ${name}</p>
-                    <p><strong>Email:</strong> ${email}</p>
+                    <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
                 </div>
 
                 <div style="margin-bottom: 20px;">
                     <h3 style="border-bottom: 2px solid #841818; padding-bottom: 5px; color: #333;">Cover Letter</h3>
-                    <p style="white-space: pre-wrap; background-color: #fff; padding: 10px; border: 1px border #eee; border-radius: 5px;">${coverLetter || "No cover letter provided."}</p>
+                    <p style="white-space: pre-wrap; background-color: #fff; padding: 10px; border: 1px solid #eee; border-radius: 5px;">${coverLetter || "No cover letter provided."}</p>
                 </div>
 
                 <div style="padding-top: 15px; border-top: 1px solid #eee; font-size: 0.9em; color: #666;">
-                    <p><em>Note: The candidate's resume (${resume.name}) is attached to this email as a PDF.</em></p>
-                    <p>You can also view the resume online here: <a href="${resumeUrl}" style="color: #841818;">View Online Resume</a></p>
+                    <p><em>The candidate&apos;s resume (${resume.name}) is attached to this email as a PDF.</em></p>
+                    <p>View online: <a href="${resumeUrl}" style="color: #841818;">Open Resume</a></p>
+                    <p><strong>Reply to this email</strong> to contact the candidate directly at ${email}.</p>
                 </div>
             </div>
           `,
@@ -167,8 +171,15 @@ export async function POST(request: NextRequest) {
                     ]
                 });
 
+                if (hrResult.error) {
+                    console.error("[Resend] HR email error:", hrResult.error);
+                    emailError = hrResult.error.message;
+                } else {
+                    console.log("[Resend] HR email sent, id:", hrResult.data?.id);
+                }
+
                 // Confirmation email to applicant
-                await resend.emails.send({
+                const applicantResult = await resend.emails.send({
                     from: `Global Cooperation <${emailFrom}>`,
                     to: email,
                     subject: `Application Received: ${job.title}`,
@@ -182,17 +193,25 @@ export async function POST(request: NextRequest) {
                 <br />
                 <div style="border-top: 1px solid #eee; padding-top: 15px; margin-top: 20px;">
                     <p style="margin: 0; font-weight: bold; color: #841818;">Global Cooperation HR Team</p>
-                    <p style="margin: 0; color: #666; font-size: 0.9em;">Sri Lanka</p>
+                    <p style="margin: 0; color: #666; font-size: 0.9em;">Sri Lanka | jobs@globalsoftsl.com</p>
                 </div>
             </div>
           `,
                 });
+
+                if (applicantResult.error) {
+                    console.error("[Resend] Applicant confirmation email error:", applicantResult.error);
+                } else {
+                    console.log("[Resend] Applicant confirmation sent, id:", applicantResult.data?.id);
+                }
             } else {
-                console.log("RESEND_API_KEY not set, skipping emails", { attachments: resume.name });
+                console.warn("[Email] RESEND_API_KEY is not set — skipping email sending.");
+                emailError = "Email service not configured";
             }
-        } catch (emailError) {
-            console.error("Failed to send emails:", emailError);
-            // Continue execution, don't fail the request just because email failed
+        } catch (err) {
+            console.error("[Email] Unexpected error sending emails:", err);
+            emailError = err instanceof Error ? err.message : "Unknown error";
+            // We do NOT fail the request — the application is already saved in DB
         }
 
         return NextResponse.json({
