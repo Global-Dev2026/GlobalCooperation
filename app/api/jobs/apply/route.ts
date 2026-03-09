@@ -120,12 +120,13 @@ export async function POST(request: NextRequest) {
 
         // Send email to HR
         const hrEmail = process.env.HR_EMAIL || "jobs@globalsoftsl.com";
+        const emailFrom = process.env.EMAIL_FROM || "onboarding@resend.dev";
 
         try {
             if (resend) {
                 // Email to HR/Recruitment team
                 await resend.emails.send({
-                    from: `${name} <jobs@globalsoftsl.com>`,
+                    from: `${name} <${emailFrom}>`,
                     to: hrEmail,
                     replyTo: email,
                     subject: `New Application for ${job.title}: ${name}`,
@@ -168,7 +169,7 @@ export async function POST(request: NextRequest) {
 
                 // Confirmation email to applicant
                 await resend.emails.send({
-                    from: 'Global Cooperation <jobs@globalsoftsl.com>',
+                    from: `Global Cooperation <${emailFrom}>`,
                     to: email,
                     subject: `Application Received: ${job.title}`,
                     html: `
