@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import {
     Plus, Trash2, Users, Briefcase, X, Search,
-    MapPin, Clock, CheckCircle2, XCircle, Pencil, ChevronRight
+    MapPin, Clock, CheckCircle2, XCircle, Pencil, ChevronRight, ToggleLeft, ToggleRight
 } from "lucide-react";
 
 interface Job {
@@ -75,6 +75,26 @@ export default function AdminJobsPage() {
     const openAdd = () => { setEditingJob(null); setShowModal(true); };
     const openEdit = (j: Job) => { setEditingJob(j); setShowModal(true); };
     const closeModal = () => { setShowModal(false); setEditingJob(null); };
+
+    const handleToggleActive = async (job: Job) => {
+        const newStatus = !job.isActive;
+        // Optimistic UI update
+        setJobs(prev => prev.map(j => j.id === job.id ? { ...j, isActive: newStatus } : j));
+        try {
+            const res = await fetch(`/api/admin/jobs/${job.id}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ isActive: newStatus }),
+            });
+            if (!res.ok) {
+                // Revert on failure
+                setJobs(prev => prev.map(j => j.id === job.id ? { ...j, isActive: job.isActive } : j));
+            }
+        } catch (e) {
+            console.error(e);
+            setJobs(prev => prev.map(j => j.id === job.id ? { ...j, isActive: job.isActive } : j));
+        }
+    };
 
     const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -205,15 +225,19 @@ export default function AdminJobsPage() {
                                     </span>
                                 </td>
                                 <td className="px-6 py-4">
-                                    {job.isActive ? (
-                                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200">
-                                            <CheckCircle2 size={11} /> Active
-                                        </span>
-                                    ) : (
-                                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-500 ring-1 ring-slate-200">
-                                            <XCircle size={11} /> Inactive
-                                        </span>
-                                    )}
+                                    <button
+                                        onClick={() => handleToggleActive(job)}
+                                        title={job.isActive ? "Click to deactivate" : "Click to activate"}
+                                        className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 border ${job.isActive
+                                                ? "bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100"
+                                                : "bg-slate-100 text-slate-500 border-slate-200 hover:bg-slate-200"
+                                            }`}
+                                    >
+                                        {job.isActive
+                                            ? <><ToggleRight size={16} className="text-emerald-500" /> Active</>
+                                            : <><ToggleLeft size={16} className="text-slate-400" /> Inactive</>
+                                        }
+                                    </button>
                                 </td>
                                 <td className="px-6 py-4">
                                     <a

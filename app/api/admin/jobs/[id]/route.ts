@@ -72,3 +72,34 @@ export async function DELETE(
         return NextResponse.json({ success: false, message: "Failed to delete job" }, { status: 500 });
     }
 }
+
+export async function PATCH(
+    request: NextRequest,
+    { params }: { params: Promise<{ id: string }> }
+) {
+    try {
+        const session = await auth();
+        // @ts-ignore
+        if (!session || session?.user?.role !== 'ADMIN') {
+            return NextResponse.json({ success: false, message: "Unauthorized" }, { status: 401 });
+        }
+
+        const id = (await params).id;
+        const { isActive } = await request.json();
+
+        if (typeof isActive !== "boolean") {
+            return NextResponse.json({ success: false, message: "Invalid value for isActive" }, { status: 400 });
+        }
+
+        const job = await prisma.job.update({
+            where: { id },
+            data: { isActive },
+        });
+
+        return NextResponse.json({ success: true, data: job });
+    } catch (error) {
+        console.error("Failed to toggle job status", error);
+        return NextResponse.json({ success: false, message: "Failed to update job status" }, { status: 500 });
+    }
+}
+
