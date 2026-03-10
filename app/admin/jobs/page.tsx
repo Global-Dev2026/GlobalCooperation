@@ -1,7 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Plus, Trash2, Users, Briefcase, X } from "lucide-react";
+import {
+    Plus, Trash2, Users, Briefcase, X, Search,
+    MapPin, Clock, CheckCircle2, XCircle, Pencil, ChevronRight
+} from "lucide-react";
 
 interface Job {
     id: string;
@@ -14,330 +17,388 @@ interface Job {
     requirements: string[];
     responsibilities: string[];
     benefits: string[];
+    createdAt: string;
     _count?: {
         applications: number;
     };
 }
 
+const DEPARTMENTS = [
+    "Operations", "Sales & Marketing", "Human Resources",
+    "Technical Support", "Administration", "Finance & Accounts", "Management",
+];
+
+const LOCATIONS = [
+    "Ampara", "Anuradhapura", "Badulla", "Batticaloa", "Colombo", "Galle",
+    "Gampaha", "Hambantota", "Jaffna", "Kalutara", "Kandy", "Kegalle",
+    "Kilinochchi", "Kurunegala", "Mannar", "Matale", "Matara", "Monaragala",
+    "Mullaitivu", "Nuwara Eliya", "Polonnaruwa", "Puttalam", "Ratnapura",
+    "Trincomalee", "Vavuniya",
+];
+
+const TYPE_COLORS: Record<string, string> = {
+    "Full-time": "bg-blue-50 text-blue-700 ring-1 ring-blue-200",
+    "Part-time": "bg-purple-50 text-purple-700 ring-1 ring-purple-200",
+    "Contract": "bg-amber-50 text-amber-700 ring-1 ring-amber-200",
+    "Internship": "bg-teal-50 text-teal-700 ring-1 ring-teal-200",
+};
+
 export default function AdminJobsPage() {
     const [jobs, setJobs] = useState<Job[]>([]);
     const [loading, setLoading] = useState(true);
-    const [showAddModal, setShowAddModal] = useState(false);
+    const [showModal, setShowModal] = useState(false);
     const [editingJob, setEditingJob] = useState<Job | null>(null);
+    const [search, setSearch] = useState("");
+    const [saving, setSaving] = useState(false);
+    const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
 
-    useEffect(() => {
-        fetchJobs();
-    }, []);
+    useEffect(() => { fetchJobs(); }, []);
 
     const fetchJobs = async () => {
         try {
-            const response = await fetch("/api/admin/jobs");
-            const data = await response.json();
-            if (data.success) {
-                setJobs(data.data);
-            }
-        } catch (error) {
-            console.error("Failed to fetch jobs", error);
+            const res = await fetch("/api/admin/jobs");
+            const data = await res.json();
+            if (data.success) setJobs(data.data);
+        } catch (e) {
+            console.error(e);
         } finally {
             setLoading(false);
         }
     };
 
-    const handleCreateOrUpdateJob = async (e: React.FormEvent<HTMLFormElement>) => {
+    const filtered = jobs.filter(j =>
+        j.title.toLowerCase().includes(search.toLowerCase()) ||
+        j.department.toLowerCase().includes(search.toLowerCase()) ||
+        j.location.toLowerCase().includes(search.toLowerCase())
+    );
+
+    const openAdd = () => { setEditingJob(null); setShowModal(true); };
+    const openEdit = (j: Job) => { setEditingJob(j); setShowModal(true); };
+    const closeModal = () => { setShowModal(false); setEditingJob(null); };
+
+    const handleSave = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const formData = new FormData(e.currentTarget);
-
-        const jobData = {
-            title: formData.get('title'),
-            department: formData.get('department'),
-            location: formData.get('location'),
-            type: formData.get('type'),
-            description: formData.get('description'),
-            requirements: (formData.get('requirements') as string).split(',').map(s => s.trim()),
-            responsibilities: (formData.get('responsibilities') as string).split(/[\n,]/).map(s => s.trim()).filter(Boolean),
-            benefits: (formData.get('benefits') as string).split(/[\n,]/).map(s => s.trim()).filter(Boolean),
+        setSaving(true);
+        const fd = new FormData(e.currentTarget);
+        const body = {
+            title: fd.get("title"),
+            department: fd.get("department"),
+            location: fd.get("location"),
+            type: fd.get("type"),
+            description: fd.get("description"),
+            requirements: (fd.get("requirements") as string).split(/[\n,]/).map(s => s.trim()).filter(Boolean),
+            responsibilities: (fd.get("responsibilities") as string).split(/[\n,]/).map(s => s.trim()).filter(Boolean),
+            benefits: (fd.get("benefits") as string).split(/[\n,]/).map(s => s.trim()).filter(Boolean),
         };
-
         try {
-            const url = editingJob ? `/api/admin/jobs/${editingJob.id}` : '/api/admin/jobs';
-            const method = editingJob ? 'PUT' : 'POST';
-
+            const url = editingJob ? `/api/admin/jobs/${editingJob.id}` : "/api/admin/jobs";
             const res = await fetch(url, {
-                method: method,
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(jobData)
+                method: editingJob ? "PUT" : "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body),
             });
-
-            if (res.ok) {
-                setShowAddModal(false);
-                setEditingJob(null);
-                fetchJobs();
-            } else {
-                console.error("Failed to save job");
-            }
-        } catch (error) {
-            console.error("Failed to save job", error);
-        }
+            if (res.ok) { closeModal(); fetchJobs(); }
+        } catch (e) { console.error(e); }
+        finally { setSaving(false); }
     };
 
-    const handleDeleteJob = async (id: string) => {
-        if (!confirm("Are you sure you want to delete this job?")) return;
-
+    const handleDelete = async (id: string) => {
         try {
-            const res = await fetch(`/api/admin/jobs/${id}`, {
-                method: 'DELETE',
-            });
-            if (res.ok) {
-                fetchJobs();
-            } else {
-                console.error("Failed to delete job");
-            }
-        } catch (error) {
-            console.error("Failed to delete job", error);
-        }
+            const res = await fetch(`/api/admin/jobs/${id}`, { method: "DELETE" });
+            if (res.ok) { setDeleteConfirm(null); fetchJobs(); }
+        } catch (e) { console.error(e); }
     };
 
-    const openEditModal = (job: Job) => {
-        setEditingJob(job);
-        setShowAddModal(true);
-    };
+    const totalApplicants = jobs.reduce((s, j) => s + (j._count?.applications ?? 0), 0);
+    const activeJobs = jobs.filter(j => j.isActive).length;
 
-    const openAddModal = () => {
-        setEditingJob(null);
-        setShowAddModal(true);
-    };
+    // ── Skeleton ──
+    if (loading) {
+        return (
+            <div className="p-8 max-w-7xl mx-auto animate-pulse space-y-4">
+                <div className="h-8 w-56 bg-slate-200 rounded-lg" />
+                <div className="grid grid-cols-3 gap-4">
+                    {[...Array(3)].map((_, i) => <div key={i} className="h-24 bg-slate-200 rounded-xl" />)}
+                </div>
+                <div className="h-64 bg-slate-200 rounded-xl" />
+            </div>
+        );
+    }
 
     return (
-        <div className="min-h-screen bg-gray-50 p-8">
-            <div className="max-w-7xl mx-auto">
-                <div className="flex justify-between items-center mb-8">
-                    <div>
-                        <h1 className="text-3xl font-bold text-gray-900">Job Management</h1>
-                        <p className="text-gray-500 mt-1">Manage open positions and view applications.</p>
-                    </div>
-                    <button
-                        onClick={openAddModal}
-                        className="flex items-center gap-2 px-4 py-2 bg-burgundy text-white rounded-lg hover:bg-burgundy-dark transition-colors"
-                    >
-                        <Plus size={20} />
-                        Post New Job
-                    </button>
+        <div className="p-8 max-w-7xl mx-auto">
+
+            {/* ── Page Header ── */}
+            <div className="flex items-center justify-between mb-8">
+                <div>
+                    <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Job Management</h1>
+                    <p className="text-slate-500 mt-0.5 text-sm">Create, edit and track all open positions</p>
                 </div>
+                <button
+                    onClick={openAdd}
+                    className="flex items-center gap-2 px-5 py-2.5 bg-burgundy text-white text-sm font-semibold rounded-xl hover:bg-burgundy-800 transition-all shadow-md hover:shadow-lg active:scale-95"
+                >
+                    <Plus size={18} />
+                    Post New Job
+                </button>
+            </div>
 
-                {loading ? (
-                    <div className="text-center py-20">Loading...</div>
-                ) : (
-                    <div className="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-200">
-                        <table className="w-full text-left">
-                            <thead className="bg-gray-50 border-b border-gray-200">
-                                <tr>
-                                    <th className="px-6 py-4 font-semibold text-gray-700">Job Title</th>
-                                    <th className="px-6 py-4 font-semibold text-gray-700">Department</th>
-                                    <th className="px-6 py-4 font-semibold text-gray-700">Location</th>
-                                    <th className="px-6 py-4 font-semibold text-gray-700">Status</th>
-                                    <th className="px-6 py-4 font-semibold text-gray-700">Applicants</th>
-                                    <th className="px-6 py-4 font-semibold text-gray-700 text-right">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-gray-100">
-                                {jobs.map((job) => (
-                                    <tr key={job.id} className="hover:bg-gray-50 transition-colors">
-                                        <td className="px-6 py-4 font-medium text-gray-900">{job.title}</td>
-                                        <td className="px-6 py-4 text-gray-600">{job.department}</td>
-                                        <td className="px-6 py-4 text-gray-600">{job.location}</td>
-                                        <td className="px-6 py-4">
-                                            <span className={`px-2 py-1 rounded-full text-xs font-medium ${job.isActive ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600'}`}>
-                                                {job.isActive ? 'Active' : 'Inactive'}
-                                            </span>
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            <a href={`/admin/jobs/${job.id}/applications`} className="flex items-center gap-1.5 text-burgundy hover:underline">
-                                                <Users size={16} />
-                                                {job._count?.applications || 0}
-                                            </a>
-                                        </td>
-                                        <td className="px-6 py-4 text-right">
-                                            <div className="flex justify-end gap-2">
-                                                <button
-                                                    onClick={() => openEditModal(job)}
-                                                    className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
-                                                    title="Edit Job"
-                                                >
-                                                    <Briefcase size={18} />
-                                                </button>
-                                                <button
-                                                    onClick={() => handleDeleteJob(job.id)}
-                                                    className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                                                    title="Delete Job"
-                                                >
-                                                    <Trash2 size={18} />
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+            {/* ── Stat Cards ── */}
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+                {[
+                    { label: "Total Jobs", value: jobs.length, icon: Briefcase, color: "text-indigo-600", bg: "bg-indigo-50" },
+                    { label: "Active Jobs", value: activeJobs, icon: CheckCircle2, color: "text-emerald-600", bg: "bg-emerald-50" },
+                    { label: "Total Applicants", value: totalApplicants, icon: Users, color: "text-burgundy", bg: "bg-burgundy-50" },
+                ].map(({ label, value, icon: Icon, color, bg }) => (
+                    <div key={label} className="bg-white rounded-xl border border-slate-200 px-5 py-4 flex items-center gap-4 shadow-sm">
+                        <div className={`w-11 h-11 rounded-xl ${bg} flex items-center justify-center`}>
+                            <Icon size={22} className={color} />
+                        </div>
+                        <div>
+                            <p className="text-2xl font-bold text-slate-900">{value}</p>
+                            <p className="text-xs text-slate-500 font-medium">{label}</p>
+                        </div>
+                    </div>
+                ))}
+            </div>
 
-                        {jobs.length === 0 && (
-                            <div className="text-center py-20 text-gray-500">
-                                <Briefcase size={48} className="mx-auto mb-4 text-gray-300" />
-                                No jobs found. Create your first job posting!
-                            </div>
-                        )}
+            {/* ── Search Bar ── */}
+            <div className="relative mb-4">
+                <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+                <input
+                    value={search}
+                    onChange={e => setSearch(e.target.value)}
+                    placeholder="Search by title, department or location…"
+                    className="w-full pl-10 pr-4 py-2.5 text-sm border border-slate-200 rounded-xl bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-burgundy/30 focus:border-burgundy transition-all"
+                />
+            </div>
+
+            {/* ── Jobs Table ── */}
+            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                <table className="w-full text-left text-sm">
+                    <thead>
+                        <tr className="border-b border-slate-100 bg-slate-50/70">
+                            <th className="px-6 py-3.5 font-semibold text-slate-600">Position</th>
+                            <th className="px-6 py-3.5 font-semibold text-slate-600">Department</th>
+                            <th className="px-6 py-3.5 font-semibold text-slate-600">Location</th>
+                            <th className="px-6 py-3.5 font-semibold text-slate-600">Type</th>
+                            <th className="px-6 py-3.5 font-semibold text-slate-600">Status</th>
+                            <th className="px-6 py-3.5 font-semibold text-slate-600">Applicants</th>
+                            <th className="px-6 py-3.5 font-semibold text-slate-600 text-right">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-100">
+                        {filtered.map(job => (
+                            <tr key={job.id} className="hover:bg-slate-50/60 transition-colors group">
+                                <td className="px-6 py-4 font-semibold text-slate-800">{job.title}</td>
+                                <td className="px-6 py-4 text-slate-500">{job.department}</td>
+                                <td className="px-6 py-4">
+                                    <span className="flex items-center gap-1 text-slate-500">
+                                        <MapPin size={13} className="text-slate-400" />
+                                        {job.location}
+                                    </span>
+                                </td>
+                                <td className="px-6 py-4">
+                                    <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium ${TYPE_COLORS[job.type] ?? "bg-gray-100 text-gray-600"}`}>
+                                        <Clock size={11} />
+                                        {job.type}
+                                    </span>
+                                </td>
+                                <td className="px-6 py-4">
+                                    {job.isActive ? (
+                                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200">
+                                            <CheckCircle2 size={11} /> Active
+                                        </span>
+                                    ) : (
+                                        <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-500 ring-1 ring-slate-200">
+                                            <XCircle size={11} /> Inactive
+                                        </span>
+                                    )}
+                                </td>
+                                <td className="px-6 py-4">
+                                    <a
+                                        href={`/admin/jobs/${job.id}/applications`}
+                                        className="inline-flex items-center gap-1.5 font-semibold text-burgundy hover:text-burgundy-700 group/link"
+                                    >
+                                        <Users size={14} />
+                                        {job._count?.applications ?? 0}
+                                        <ChevronRight size={13} className="opacity-0 -ml-1 group-hover/link:opacity-100 transition-opacity" />
+                                    </a>
+                                </td>
+                                <td className="px-6 py-4">
+                                    <div className="flex justify-end gap-1.5">
+                                        <button
+                                            onClick={() => openEdit(job)}
+                                            className="p-2 rounded-lg text-slate-500 hover:text-blue-600 hover:bg-blue-50 transition-colors"
+                                            title="Edit Job"
+                                        >
+                                            <Pencil size={16} />
+                                        </button>
+                                        <button
+                                            onClick={() => setDeleteConfirm(job.id)}
+                                            className="p-2 rounded-lg text-slate-500 hover:text-red-600 hover:bg-red-50 transition-colors"
+                                            title="Delete Job"
+                                        >
+                                            <Trash2 size={16} />
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+
+                {filtered.length === 0 && (
+                    <div className="flex flex-col items-center justify-center py-20 text-center">
+                        <div className="w-16 h-16 rounded-2xl bg-slate-100 flex items-center justify-center mb-4">
+                            <Briefcase size={28} className="text-slate-400" />
+                        </div>
+                        <p className="text-slate-700 font-semibold">No jobs found</p>
+                        <p className="text-slate-400 text-sm mt-1">
+                            {search ? "Try adjusting your search" : "Create your first job posting to get started"}
+                        </p>
                     </div>
                 )}
             </div>
 
-            {/* Add/Edit Job Modal */}
-            {showAddModal && (
-                <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-                    <div className="bg-white rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6">
-                        <div className="flex justify-between items-center mb-6">
-                            <h2 className="text-2xl font-bold">{editingJob ? 'Edit Job' : 'Post New Job'}</h2>
-                            <button onClick={() => setShowAddModal(false)} className="p-2 hover:bg-gray-100 rounded-full">
-                                <X size={20} className="text-gray-500" />
+            {/* ── Add / Edit Modal ── */}
+            {showModal && (
+                <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+                    <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[92vh] overflow-y-auto shadow-2xl">
+                        <div className="sticky top-0 bg-white px-6 pt-6 pb-4 border-b border-slate-100 flex items-center justify-between z-10">
+                            <div>
+                                <h2 className="text-lg font-bold text-slate-900">
+                                    {editingJob ? "Edit Job Posting" : "Post New Job"}
+                                </h2>
+                                <p className="text-xs text-slate-500 mt-0.5">
+                                    {editingJob ? "Update the job details below" : "Fill in the details to create a new listing"}
+                                </p>
+                            </div>
+                            <button onClick={closeModal} className="p-2 hover:bg-slate-100 rounded-xl transition-colors">
+                                <X size={20} className="text-slate-500" />
                             </button>
                         </div>
-                        <form onSubmit={handleCreateOrUpdateJob} className="space-y-4">
+
+                        <form onSubmit={handleSave} className="p-6 space-y-5">
+                            {/* Title */}
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Job Title</label>
+                                <label className="block text-sm font-semibold text-slate-700 mb-1.5">Job Title</label>
                                 <input
                                     name="title"
                                     defaultValue={editingJob?.title}
                                     required
-                                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-burgundy/20 focus:border-burgundy outline-none"
+                                    className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-burgundy/25 focus:border-burgundy transition-all"
                                     placeholder="e.g. Senior Frontend Developer"
                                 />
                             </div>
+
+                            {/* Dept + Location */}
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Department</label>
-                                    <select
-                                        name="department"
-                                        defaultValue={editingJob?.department}
-                                        required
-                                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-burgundy/20 focus:border-burgundy outline-none"
-                                    >
-                                        <option value="Operations">Operations</option>
-                                        <option value="Sales & Marketing">Sales & Marketing</option>
-                                        <option value="Human Resources">Human Resources</option>
-                                        <option value="Technical Support">Technical Support</option>
-                                        <option value="Administration">Administration</option>
-                                        <option value="Finance & Accounts">Finance & Accounts</option>
-                                        <option value="Management">Management</option>
+                                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Department</label>
+                                    <select name="department" defaultValue={editingJob?.department} required
+                                        className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-burgundy/25 focus:border-burgundy transition-all bg-white">
+                                        {DEPARTMENTS.map(d => <option key={d} value={d}>{d}</option>)}
                                     </select>
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Location</label>
-                                    <select
-                                        name="location"
-                                        defaultValue={editingJob?.location}
-                                        required
-                                        className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-burgundy/20 focus:border-burgundy outline-none"
-                                    >
-                                        <option value="Ampara">Ampara</option>
-                                        <option value="Anuradhapura">Anuradhapura</option>
-                                        <option value="Badulla">Badulla</option>
-                                        <option value="Batticaloa">Batticaloa</option>
-                                        <option value="Colombo">Colombo</option>
-                                        <option value="Galle">Galle</option>
-                                        <option value="Gampaha">Gampaha</option>
-                                        <option value="Hambantota">Hambantota</option>
-                                        <option value="Jaffna">Jaffna</option>
-                                        <option value="Kalutara">Kalutara</option>
-                                        <option value="Kandy">Kandy</option>
-                                        <option value="Kegalle">Kegalle</option>
-                                        <option value="Kilinochchi">Kilinochchi</option>
-                                        <option value="Kurunegala">Kurunegala</option>
-                                        <option value="Mannar">Mannar</option>
-                                        <option value="Matale">Matale</option>
-                                        <option value="Matara">Matara</option>
-                                        <option value="Monaragala">Monaragala</option>
-                                        <option value="Mullaitivu">Mullaitivu</option>
-                                        <option value="Nuwara Eliya">Nuwara Eliya</option>
-                                        <option value="Polonnaruwa">Polonnaruwa</option>
-                                        <option value="Puttalam">Puttalam</option>
-                                        <option value="Ratnapura">Ratnapura</option>
-                                        <option value="Trincomalee">Trincomalee</option>
-                                        <option value="Vavuniya">Vavuniya</option>
+                                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Location</label>
+                                    <select name="location" defaultValue={editingJob?.location} required
+                                        className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-burgundy/25 focus:border-burgundy transition-all bg-white">
+                                        {LOCATIONS.map(l => <option key={l} value={l}>{l}</option>)}
                                     </select>
                                 </div>
                             </div>
+
+                            {/* Type */}
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Type</label>
-                                <select
-                                    name="type"
-                                    defaultValue={editingJob?.type}
-                                    required
-                                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-burgundy/20 focus:border-burgundy outline-none"
-                                >
+                                <label className="block text-sm font-semibold text-slate-700 mb-1.5">Employment Type</label>
+                                <select name="type" defaultValue={editingJob?.type} required
+                                    className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-burgundy/25 focus:border-burgundy transition-all bg-white">
                                     <option value="Full-time">Full-time</option>
                                     <option value="Part-time">Part-time</option>
                                     <option value="Contract">Contract</option>
                                     <option value="Internship">Internship</option>
                                 </select>
                             </div>
+
+                            {/* Description */}
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
-                                <textarea
-                                    name="description"
-                                    defaultValue={editingJob?.description} // Note: simplified. In real app might be Job model field if it exists. 
-                                    // Wait, Job model schema in step 348 had description.
-                                    // Wait, page.tsx step 347 interface Job didn't have description?
-                                    // I should check interface Job in step 347.
-                                    // It: id, title, department, location, type, isActive, _count. NO description.
-                                    // But the API HAS description.
-                                    // So the frontend fetchJobs might not satisfy the full job details if I just fetch generic list.
-                                    // The list endpoint returns whatever findMany returns.
-                                    // If findMany selects all fields, then the object HAS description even if TS interface says no.
-                                    // I will update the interface Job to include description and requirements to avoid TS errors.
-                                    required
-                                    rows={4}
-                                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-burgundy/20 focus:border-burgundy outline-none"
-                                    placeholder="Job description..."
-                                ></textarea>
+                                <label className="block text-sm font-semibold text-slate-700 mb-1.5">Description</label>
+                                <textarea name="description" defaultValue={editingJob?.description} required rows={3}
+                                    className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-burgundy/25 focus:border-burgundy transition-all resize-none"
+                                    placeholder="Briefly describe the role…" />
                             </div>
+
+                            {/* Requirements */}
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Requirements (comma separated)</label>
-                                <textarea
-                                    name="requirements"
-                                    defaultValue={(editingJob as any)?.requirements?.join(', ')}
-                                    required
-                                    rows={2}
-                                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-burgundy/20 focus:border-burgundy outline-none"
-                                    placeholder="React, TypeScript, Node.js..."
-                                ></textarea>
+                                <label className="block text-sm font-semibold text-slate-700 mb-1.5">
+                                    Requirements <span className="text-slate-400 font-normal">(one per line or comma separated)</span>
+                                </label>
+                                <textarea name="requirements" defaultValue={(editingJob as any)?.requirements?.join("\n")} required rows={3}
+                                    className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-burgundy/25 focus:border-burgundy transition-all resize-none"
+                                    placeholder="3+ years experience&#10;Proficiency in React&#10;Strong communication skills" />
                             </div>
+
+                            {/* Responsibilities */}
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Key Responsibilities (one per line or comma separated)</label>
-                                <textarea
-                                    name="responsibilities"
-                                    defaultValue={(editingJob as any)?.responsibilities?.join('\n')}
-                                    required
-                                    rows={4}
-                                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-burgundy/20 focus:border-burgundy outline-none"
-                                    placeholder="Lead the frontend team...&#10;Architect scalable solutions..."
-                                ></textarea>
+                                <label className="block text-sm font-semibold text-slate-700 mb-1.5">
+                                    Key Responsibilities <span className="text-slate-400 font-normal">(one per line or comma separated)</span>
+                                </label>
+                                <textarea name="responsibilities" defaultValue={(editingJob as any)?.responsibilities?.join("\n")} required rows={3}
+                                    className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-burgundy/25 focus:border-burgundy transition-all resize-none"
+                                    placeholder="Lead the frontend team&#10;Architect scalable solutions" />
                             </div>
+
+                            {/* Benefits */}
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">What We Offer (one per line or comma separated)</label>
-                                <textarea
-                                    name="benefits"
-                                    defaultValue={(editingJob as any)?.benefits?.join('\n')}
-                                    required
-                                    rows={4}
-                                    className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-burgundy/20 focus:border-burgundy outline-none"
-                                    placeholder="Competitive salary...&#10;Remote work..."
-                                ></textarea>
+                                <label className="block text-sm font-semibold text-slate-700 mb-1.5">
+                                    What We Offer <span className="text-slate-400 font-normal">(one per line or comma separated)</span>
+                                </label>
+                                <textarea name="benefits" defaultValue={(editingJob as any)?.benefits?.join("\n")} required rows={3}
+                                    className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-burgundy/25 focus:border-burgundy transition-all resize-none"
+                                    placeholder="Competitive salary&#10;Flexible working hours" />
                             </div>
-                            <div className="flex justify-end gap-3 pt-4 border-t mt-6">
-                                <button type="button" onClick={() => setShowAddModal(false)} className="px-4 py-2 text-gray-600 hover:bg-gray-50 rounded-lg">Cancel</button>
-                                <button type="submit" className="px-4 py-2 bg-burgundy text-white rounded-lg hover:bg-burgundy-dark shadow-md hover:shadow-lg transition-all">
-                                    {editingJob ? 'Update Job' : 'Create Job'}
+
+                            {/* Footer */}
+                            <div className="flex justify-end gap-3 pt-2 border-t border-slate-100 mt-2">
+                                <button type="button" onClick={closeModal}
+                                    className="px-5 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded-xl transition-colors">
+                                    Cancel
+                                </button>
+                                <button type="submit" disabled={saving}
+                                    className="px-5 py-2.5 text-sm font-semibold bg-burgundy text-white rounded-xl hover:bg-burgundy-800 transition-all shadow-md disabled:opacity-60">
+                                    {saving ? "Saving…" : editingJob ? "Update Job" : "Create Job"}
                                 </button>
                             </div>
                         </form>
+                    </div>
+                </div>
+            )}
+
+            {/* ── Delete Confirmation ── */}
+            {deleteConfirm && (
+                <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+                    <div className="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl">
+                        <div className="flex items-start gap-4 mb-4">
+                            <div className="w-11 h-11 rounded-xl bg-red-50 flex items-center justify-center shrink-0">
+                                <Trash2 size={20} className="text-red-500" />
+                            </div>
+                            <div>
+                                <h3 className="font-bold text-slate-900">Delete Job?</h3>
+                                <p className="text-sm text-slate-500 mt-1">This will permanently delete the job and all its applications. This cannot be undone.</p>
+                            </div>
+                        </div>
+                        <div className="flex justify-end gap-3">
+                            <button onClick={() => setDeleteConfirm(null)}
+                                className="px-4 py-2 text-sm text-slate-600 hover:bg-slate-100 rounded-xl transition-colors font-medium">
+                                Cancel
+                            </button>
+                            <button onClick={() => handleDelete(deleteConfirm)}
+                                className="px-4 py-2 text-sm font-semibold bg-red-600 text-white rounded-xl hover:bg-red-700 transition-colors">
+                                Delete Job
+                            </button>
+                        </div>
                     </div>
                 </div>
             )}
