@@ -174,8 +174,7 @@ export default function BoardOfDirectors() {
                   </p>
                 </div>
 
-                {/* Decorative bottom border */}
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-slate-900 via-slate-600 to-slate-900 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
+
               </div>
             </motion.article>
           ))}
