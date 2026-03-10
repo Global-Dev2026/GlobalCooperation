@@ -48,6 +48,11 @@ export async function GET(request: NextRequest) {
             orderBy: {
                 createdAt: "desc",
             },
+            include: {
+                _count: {
+                    select: { applications: true },
+                },
+            },
         });
 
         return NextResponse.json({ success: true, data: jobs });

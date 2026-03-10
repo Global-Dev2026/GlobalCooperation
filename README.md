@@ -143,8 +143,8 @@ The platform uses Supabase Storage to handle job seeker CVs/Resumes securely.
    ```
    
    > **Default Credentials:**  
-   > **Email:** `admin@global.com`  
-   > **Password:** `password123`
+   > **Email:** `admin@globalsoft.com`  
+   > **Password:** `securepassword123`
 
 6. **Run Development Server**
    ```bash
