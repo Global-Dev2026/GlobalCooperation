@@ -13,8 +13,8 @@ async function main() {
 
     try {
         await client.connect();
-        const email = 'admin@global.com';
-        const password = 'password123';
+        const email = 'kaushi@gmail.com';
+        const password = 'kaushi1234';
         const hashedPassword = await bcrypt.hash(password, 10);
 
         // Check if user exists - Table "users"
@@ -35,7 +35,7 @@ async function main() {
             );
         }
 
-        console.log('✅ Admin user ready: admin@global.com / password123');
+        console.log('✅ Admin user ready: kaushi@gmail.com / kaushi1234');
 
     } catch (err) {
         console.error('❌ Error:', err);

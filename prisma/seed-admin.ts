@@ -13,8 +13,8 @@ const prisma = new PrismaClient({ adapter });
 
 async function main() {
     console.log(`Connecting to database...`);
-    const email = 'admin@globalsoft.com';
-    const password = 'securepassword123';
+    const email = 'kaushi@gmail.com';
+    const password = 'kaushi1234';
 
     try {
         const hashedPassword = await bcrypt.hash(password, 10);

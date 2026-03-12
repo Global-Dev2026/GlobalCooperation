@@ -10,8 +10,8 @@ const prisma = new PrismaClient({ adapter });
 
 async function main() {
     console.log('Checking database connection...');
-    const email = 'admin@globalsoft.com';
-    const password = 'securepassword123';
+    const email = 'kaushi@gmail.com';
+    const password = 'kaushi1234';
     const hashedPassword = await bcrypt.hash(password, 10);
 
     const existingUser = await prisma.user.findUnique({

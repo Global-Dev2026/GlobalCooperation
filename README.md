@@ -139,12 +139,12 @@ The platform uses Supabase Storage to handle job seeker CVs/Resumes securely.
    
    ```bash
    # Reset Admin Credentials
-   node scripts/reset-admin.js
+    node scripts/raw-insert-admin.js
    ```
    
    > **Default Credentials:**  
-   > **Email:** `admin@globalsoft.com`  
-   > **Password:** `securepassword123`
+    > **Email:** `kaushi@gmail.com`  
+    > **Password:** `kaushi1234`
 
 6. **Run Development Server**
    ```bash
