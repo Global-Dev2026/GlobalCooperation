@@ -3,8 +3,9 @@
 import { useState, useEffect } from "react";
 import {
     Plus, Trash2, Users, Briefcase, X, Search,
-    MapPin, Clock, CheckCircle2, XCircle, Pencil, ChevronRight, ToggleLeft, ToggleRight
+    MapPin, Clock, CheckCircle2, Pencil, ChevronRight, ToggleLeft, ToggleRight, Sparkles, Filter
 } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface Job {
     id: string;
@@ -36,11 +37,11 @@ const LOCATIONS = [
     "Trincomalee", "Vavuniya",
 ];
 
-const TYPE_COLORS: Record<string, string> = {
-    "Full-time": "bg-blue-50 text-blue-700 ring-1 ring-blue-200",
-    "Part-time": "bg-purple-50 text-purple-700 ring-1 ring-purple-200",
-    "Contract": "bg-amber-50 text-amber-700 ring-1 ring-amber-200",
-    "Internship": "bg-teal-50 text-teal-700 ring-1 ring-teal-200",
+const TYPE_STYLES: Record<string, string> = {
+    "Full-time": "bg-blue-500/10 text-blue-400 border-blue-500/20",
+    "Part-time": "bg-purple-500/10 text-purple-400 border-purple-500/20",
+    "Contract": "bg-amber-500/10 text-amber-400 border-amber-500/20",
+    "Internship": "bg-teal-500/10 text-teal-400 border-teal-500/20",
 };
 
 export default function AdminJobsPage() {
@@ -78,7 +79,6 @@ export default function AdminJobsPage() {
 
     const handleToggleActive = async (job: Job) => {
         const newStatus = !job.isActive;
-        // Optimistic UI update
         setJobs(prev => prev.map(j => j.id === job.id ? { ...j, isActive: newStatus } : j));
         try {
             const res = await fetch(`/api/admin/jobs/${job.id}`, {
@@ -86,10 +86,7 @@ export default function AdminJobsPage() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ isActive: newStatus }),
             });
-            if (!res.ok) {
-                // Revert on failure
-                setJobs(prev => prev.map(j => j.id === job.id ? { ...j, isActive: job.isActive } : j));
-            }
+            if (!res.ok) setJobs(prev => prev.map(j => j.id === job.id ? { ...j, isActive: job.isActive } : j));
         } catch (e) {
             console.error(e);
             setJobs(prev => prev.map(j => j.id === job.id ? { ...j, isActive: job.isActive } : j));
@@ -132,300 +129,279 @@ export default function AdminJobsPage() {
     const totalApplicants = jobs.reduce((s, j) => s + (j._count?.applications ?? 0), 0);
     const activeJobs = jobs.filter(j => j.isActive).length;
 
-    // ── Skeleton ──
     if (loading) {
         return (
-            <div className="p-8 max-w-7xl mx-auto animate-pulse space-y-4">
-                <div className="h-8 w-56 bg-slate-200 rounded-lg" />
-                <div className="grid grid-cols-3 gap-4">
-                    {[...Array(3)].map((_, i) => <div key={i} className="h-24 bg-slate-200 rounded-xl" />)}
+            <div className="p-10 max-w-7xl mx-auto space-y-8 animate-pulse">
+                <div className="h-10 w-64 bg-white/5 rounded-2xl" />
+                <div className="grid grid-cols-3 gap-6">
+                    {[...Array(3)].map((_, i) => <div key={i} className="h-32 bg-white/5 rounded-3xl" />)}
                 </div>
-                <div className="h-64 bg-slate-200 rounded-xl" />
+                <div className="h-96 bg-white/5 rounded-[40px]" />
             </div>
         );
     }
 
     return (
-        <div className="p-8 max-w-7xl mx-auto">
+        <div className="p-10 max-w-7xl mx-auto space-y-10">
 
             {/* ── Page Header ── */}
-            <div className="flex items-center justify-between mb-8">
-                <div>
-                    <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Job Management</h1>
-                    <p className="text-slate-500 mt-0.5 text-sm">Create, edit and track all open positions</p>
+            <header className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                <div className="space-y-2">
+                    <div className="flex items-center gap-3 text-[#E0BB20]">
+                        <Briefcase size={16} />
+                        <span className="text-[10px] font-bold tracking-[0.3em] uppercase opacity-70">Talent Acquisition</span>
+                    </div>
+                    <h1 className="text-3xl font-extrabold text-white tracking-tight">Job Management</h1>
+                    <p className="text-white/40 text-sm font-medium">Create, publish, and architect your organization&apos;s workforce.</p>
                 </div>
-                <button
+                
+                <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                     onClick={openAdd}
-                    className="flex items-center gap-2 px-5 py-2.5 bg-burgundy text-white text-sm font-semibold rounded-xl hover:bg-burgundy-800 transition-all shadow-md hover:shadow-lg active:scale-95"
+                    className="flex items-center gap-3 px-6 py-4 bg-gradient-to-r from-[#841818] to-[#631212] text-white text-sm font-bold rounded-2xl shadow-xl shadow-[#841818]/20 transition-all hover:shadow-[#841818]/40"
                 >
-                    <Plus size={18} />
-                    Post New Job
-                </button>
-            </div>
+                    <Plus size={20} />
+                    Deploy New Position
+                </motion.button>
+            </header>
 
-            {/* ── Stat Cards ── */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
+            {/* ── Metrics Grid ── */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {[
-                    { label: "Total Jobs", value: jobs.length, icon: Briefcase, color: "text-indigo-600", bg: "bg-indigo-50" },
-                    { label: "Active Jobs", value: activeJobs, icon: CheckCircle2, color: "text-emerald-600", bg: "bg-emerald-50" },
-                    { label: "Total Applicants", value: totalApplicants, icon: Users, color: "text-burgundy", bg: "bg-burgundy-50" },
-                ].map(({ label, value, icon: Icon, color, bg }) => (
-                    <div key={label} className="bg-white rounded-xl border border-slate-200 px-5 py-4 flex items-center gap-4 shadow-sm">
-                        <div className={`w-11 h-11 rounded-xl ${bg} flex items-center justify-center`}>
-                            <Icon size={22} className={color} />
+                    { label: "Total Capacity", value: jobs.length, icon: Briefcase, color: "#E0BB20" },
+                    { label: "Active Nodes", value: activeJobs, icon: CheckCircle2, color: "#10b981" },
+                    { label: "Total Candidates", value: totalApplicants, icon: Users, color: "#841818" },
+                ].map((stat, i) => (
+                    <motion.div 
+                        key={i}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: i * 0.1 }}
+                        className="p-6 rounded-[2rem] border border-white/5 bg-[#111111]/60 backdrop-blur-md flex items-center gap-5"
+                    >
+                        <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center shrink-0">
+                            <stat.icon size={24} style={{ color: stat.color }} />
                         </div>
                         <div>
-                            <p className="text-2xl font-bold text-slate-900">{value}</p>
-                            <p className="text-xs text-slate-500 font-medium">{label}</p>
+                            <p className="text-2xl font-black text-white">{stat.value}</p>
+                            <p className="text-[10px] uppercase tracking-widest text-white/30 font-bold">{stat.label}</p>
                         </div>
-                    </div>
+                    </motion.div>
                 ))}
             </div>
 
-            {/* ── Search Bar ── */}
-            <div className="relative mb-4">
-                <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+            {/* ── Search & Filter ── */}
+            <div className="relative group">
+                <div className="absolute inset-y-0 left-5 flex items-center pointer-events-none text-white/20 group-focus-within:text-[#E0BB20] transition-colors">
+                    <Search size={18} />
+                </div>
                 <input
                     value={search}
                     onChange={e => setSearch(e.target.value)}
-                    placeholder="Search by title, department or location…"
-                    className="w-full pl-10 pr-4 py-2.5 text-sm border border-slate-200 rounded-xl bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-burgundy/30 focus:border-burgundy transition-all"
+                    placeholder="Search parameters: Title, Department, or Location…"
+                    className="w-full pl-14 pr-10 py-5 bg-[#111111]/40 border border-white/5 rounded-[2rem] text-sm text-white placeholder-white/20 outline-none focus:border-[#841818]/40 focus:bg-[#111111]/60 transition-all [color-scheme:dark]"
                 />
             </div>
 
-            {/* ── Jobs Table ── */}
-            <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
-                <table className="w-full text-left text-sm">
-                    <thead>
-                        <tr className="border-b border-slate-100 bg-slate-50/70">
-                            <th className="px-6 py-3.5 font-semibold text-slate-600">Position</th>
-                            <th className="px-6 py-3.5 font-semibold text-slate-600">Department</th>
-                            <th className="px-6 py-3.5 font-semibold text-slate-600">Location</th>
-                            <th className="px-6 py-3.5 font-semibold text-slate-600">Type</th>
-                            <th className="px-6 py-3.5 font-semibold text-slate-600">Status</th>
-                            <th className="px-6 py-3.5 font-semibold text-slate-600">Applicants</th>
-                            <th className="px-6 py-3.5 font-semibold text-slate-600 text-right">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody className="divide-y divide-slate-100">
-                        {filtered.map(job => (
-                            <tr key={job.id} className="hover:bg-slate-50/60 transition-colors group">
-                                <td className="px-6 py-4 font-semibold text-slate-800">{job.title}</td>
-                                <td className="px-6 py-4 text-slate-500">{job.department}</td>
-                                <td className="px-6 py-4">
-                                    <span className="flex items-center gap-1 text-slate-500">
-                                        <MapPin size={13} className="text-slate-400" />
-                                        {job.location}
-                                    </span>
-                                </td>
-                                <td className="px-6 py-4">
-                                    <span className={`inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium ${TYPE_COLORS[job.type] ?? "bg-gray-100 text-gray-600"}`}>
-                                        <Clock size={11} />
-                                        {job.type}
-                                    </span>
-                                </td>
-                                <td className="px-6 py-4">
-                                    <button
-                                        onClick={() => handleToggleActive(job)}
-                                        title={job.isActive ? "Click to deactivate" : "Click to activate"}
-                                        className={`flex items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-semibold transition-all duration-200 border ${job.isActive
-                                                ? "bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100"
-                                                : "bg-slate-100 text-slate-500 border-slate-200 hover:bg-slate-200"
-                                            }`}
-                                    >
-                                        {job.isActive
-                                            ? <><ToggleRight size={16} className="text-emerald-500" /> Active</>
-                                            : <><ToggleLeft size={16} className="text-slate-400" /> Inactive</>
-                                        }
-                                    </button>
-                                </td>
-                                <td className="px-6 py-4">
-                                    <a
-                                        href={`/admin/jobs/${job.id}/applications`}
-                                        className="inline-flex items-center gap-1.5 font-semibold text-burgundy hover:text-burgundy-700 group/link"
-                                    >
-                                        <Users size={14} />
-                                        {job._count?.applications ?? 0}
-                                        <ChevronRight size={13} className="opacity-0 -ml-1 group-hover/link:opacity-100 transition-opacity" />
-                                    </a>
-                                </td>
-                                <td className="px-6 py-4">
-                                    <div className="flex justify-end gap-1.5">
-                                        <button
-                                            onClick={() => openEdit(job)}
-                                            className="p-2 rounded-lg text-slate-500 hover:text-blue-600 hover:bg-blue-50 transition-colors"
-                                            title="Edit Job"
-                                        >
-                                            <Pencil size={16} />
-                                        </button>
-                                        <button
-                                            onClick={() => setDeleteConfirm(job.id)}
-                                            className="p-2 rounded-lg text-slate-500 hover:text-red-600 hover:bg-red-50 transition-colors"
-                                            title="Delete Job"
-                                        >
-                                            <Trash2 size={16} />
-                                        </button>
-                                    </div>
-                                </td>
+            {/* ── Dynamic Job Grid/Table ── */}
+            <div className="relative overflow-hidden rounded-[3rem] border border-white/5 bg-[#111111]/20 backdrop-blur-xl shadow-2xl">
+                <div className="overflow-x-auto">
+                    <table className="w-full text-left border-collapse">
+                        <thead>
+                            <tr className="border-b border-white/5 bg-white/2">
+                                <th className="px-8 py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-white/30">Node / Position</th>
+                                <th className="px-8 py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-white/30">Department</th>
+                                <th className="px-8 py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-white/30">Location</th>
+                                <th className="px-8 py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-white/30">Status</th>
+                                <th className="px-8 py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-white/30">Metrics</th>
+                                <th className="px-8 py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-white/30 text-right">Operations</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody className="divide-y divide-white/5">
+                            {filtered.map((job, i) => (
+                                <motion.tr 
+                                    key={job.id}
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    transition={{ delay: i * 0.05 }}
+                                    className="group hover:bg-white/[0.02] transition-colors"
+                                >
+                                    <td className="px-8 py-6 font-bold text-white tracking-tight">{job.title}</td>
+                                    <td className="px-8 py-6 text-white/50 text-sm">{job.department}</td>
+                                    <td className="px-8 py-6">
+                                        <div className="flex items-center gap-2 text-white/40 text-xs">
+                                            <MapPin size={12} className="text-[#841818]" />
+                                            {job.location}
+                                        </div>
+                                    </td>
+                                    <td className="px-8 py-6">
+                                        <button
+                                            onClick={() => handleToggleActive(job)}
+                                            className={`flex items-center gap-2 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border ${job.isActive
+                                                ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
+                                                : "bg-white/5 text-white/30 border-white/5"
+                                            }`}
+                                        >
+                                            {job.isActive ? <ToggleRight size={18} /> : <ToggleLeft size={18} />}
+                                            {job.isActive ? "Online" : "Offline"}
+                                        </button>
+                                    </td>
+                                    <td className="px-8 py-6">
+                                        <a href={`/admin/jobs/${job.id}/applications`} className="flex items-center gap-3 text-sm font-bold text-white group/link">
+                                            <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center group-hover/link:bg-[#841818]/20 transition-colors">
+                                                <Users size={14} className="group-hover/link:text-[#841818]" />
+                                            </div>
+                                            {job._count?.applications ?? 0}
+                                            <ChevronRight size={12} className="text-white/20 group-hover/link:translate-x-1 transition-all" />
+                                        </a>
+                                    </td>
+                                    <td className="px-8 py-6 text-right">
+                                        <div className="flex justify-end gap-3">
+                                            <button onClick={() => openEdit(job)} className="p-3 rounded-xl bg-white/5 hover:bg-white/10 text-white/40 hover:text-white transition-all">
+                                                <Pencil size={18} />
+                                            </button>
+                                            <button onClick={() => setDeleteConfirm(job.id)} className="p-3 rounded-xl bg-white/5 hover:bg-[#841818]/20 text-white/40 hover:text-[#841818] transition-all">
+                                                <Trash2 size={18} />
+                                            </button>
+                                        </div>
+                                    </td>
+                                </motion.tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
 
                 {filtered.length === 0 && (
-                    <div className="flex flex-col items-center justify-center py-20 text-center">
-                        <div className="w-16 h-16 rounded-2xl bg-slate-100 flex items-center justify-center mb-4">
-                            <Briefcase size={28} className="text-slate-400" />
+                    <div className="flex flex-col items-center justify-center py-24 text-center">
+                        <div className="w-20 h-20 rounded-[2rem] bg-white/5 flex items-center justify-center mb-6">
+                            <Search size={32} className="text-white/10" />
                         </div>
-                        <p className="text-slate-700 font-semibold">No jobs found</p>
-                        <p className="text-slate-400 text-sm mt-1">
-                            {search ? "Try adjusting your search" : "Create your first job posting to get started"}
+                        <h3 className="text-xl font-bold text-white">No nodes detected</h3>
+                        <p className="text-white/30 text-sm mt-2 max-w-xs mx-auto">
+                            The current search parameters returned no results. Adjust your query or deploy a new node.
                         </p>
                     </div>
                 )}
             </div>
 
-            {/* ── Add / Edit Modal ── */}
-            {showModal && (
-                <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-                    <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[92vh] overflow-y-auto shadow-2xl">
-                        <div className="sticky top-0 bg-white px-6 pt-6 pb-4 border-b border-slate-100 flex items-center justify-between z-10">
-                            <div>
-                                <h2 className="text-lg font-bold text-slate-900">
-                                    {editingJob ? "Edit Job Posting" : "Post New Job"}
-                                </h2>
-                                <p className="text-xs text-slate-500 mt-0.5">
-                                    {editingJob ? "Update the job details below" : "Fill in the details to create a new listing"}
-                                </p>
-                            </div>
-                            <button onClick={closeModal} className="p-2 hover:bg-slate-100 rounded-xl transition-colors">
-                                <X size={20} className="text-slate-500" />
-                            </button>
-                        </div>
-
-                        <form onSubmit={handleSave} className="p-6 space-y-5">
-                            {/* Title */}
-                            <div>
-                                <label className="block text-sm font-semibold text-slate-700 mb-1.5">Job Title</label>
-                                <input
-                                    name="title"
-                                    defaultValue={editingJob?.title}
-                                    required
-                                    className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-burgundy/25 focus:border-burgundy transition-all"
-                                    placeholder="e.g. Senior Frontend Developer"
-                                />
-                            </div>
-
-                            {/* Dept + Location */}
-                            <div className="grid grid-cols-2 gap-4">
+            {/* ── Modals & Overlays ── */}
+            <AnimatePresence>
+                {showModal && (
+                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-8">
+                        <motion.div 
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            exit={{ opacity: 0 }}
+                            onClick={closeModal}
+                            className="absolute inset-0 bg-black/80 backdrop-blur-md" 
+                        />
+                        <motion.div 
+                            initial={{ scale: 0.9, opacity: 0, y: 20 }}
+                            animate={{ scale: 1, opacity: 1, y: 0 }}
+                            exit={{ scale: 0.9, opacity: 0, y: 20 }}
+                            className="relative w-full max-w-4xl bg-[#111111] border border-white/5 rounded-[3rem] shadow-2xl flex flex-col max-h-[90vh] overflow-hidden"
+                        >
+                            <header className="flex-none p-10 border-b border-white/5 flex items-center justify-between">
                                 <div>
-                                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Department</label>
-                                    <select name="department" defaultValue={editingJob?.department} required
-                                        className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-burgundy/25 focus:border-burgundy transition-all bg-white">
-                                        {DEPARTMENTS.map(d => <option key={d} value={d}>{d}</option>)}
-                                    </select>
+                                    <div className="flex items-center gap-3 text-[#E0BB20] mb-2">
+                                        <Sparkles size={16} />
+                                        <span className="text-[10px] font-bold tracking-[0.3em] uppercase opacity-70">Configuration Portal</span>
+                                    </div>
+                                    <h2 className="text-2xl font-black text-white">
+                                        {editingJob ? "Modify Node Parameters" : "Deploy New Position"}
+                                    </h2>
                                 </div>
-                                <div>
-                                    <label className="block text-sm font-semibold text-slate-700 mb-1.5">Location</label>
-                                    <select name="location" defaultValue={editingJob?.location} required
-                                        className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-burgundy/25 focus:border-burgundy transition-all bg-white">
-                                        {LOCATIONS.map(l => <option key={l} value={l}>{l}</option>)}
-                                    </select>
+                                <button onClick={closeModal} className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors">
+                                    <X size={20} />
+                                </button>
+                            </header>
+
+                            <form onSubmit={handleSave} className="flex-1 overflow-y-auto p-10 space-y-8 custom-scrollbar">
+                                <section className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                    <div className="md:col-span-2 space-y-3">
+                                        <label className="text-[10px] font-bold uppercase tracking-widest text-white/30">Node Title</label>
+                                        <input name="title" defaultValue={editingJob?.title} required className="w-full bg-white/5 border border-white/5 rounded-2xl px-5 py-4 text-white text-sm outline-none focus:border-[#841818]/40 focus:bg-white/10 transition-all [color-scheme:dark]" placeholder="e.g. System Architect" />
+                                    </div>
+
+                                    <div className="space-y-3">
+                                        <label className="text-[10px] font-bold uppercase tracking-widest text-white/30">Operational Department</label>
+                                        <select name="department" defaultValue={editingJob?.department} required className="w-full bg-white/5 border border-white/5 rounded-2xl px-5 py-4 text-white text-sm outline-none focus:border-[#841818]/40 focus:bg-white/10 transition-all [color-scheme:dark] appearance-none">
+                                            {DEPARTMENTS.map(d => <option key={d} value={d} className="bg-[#111111]">{d}</option>)}
+                                        </select>
+                                    </div>
+
+                                    <div className="space-y-3">
+                                        <label className="text-[10px] font-bold uppercase tracking-widest text-white/30">Physical Location</label>
+                                        <select name="location" defaultValue={editingJob?.location} required className="w-full bg-white/5 border border-white/5 rounded-2xl px-5 py-4 text-white text-sm outline-none focus:border-[#841818]/40 focus:bg-white/10 transition-all [color-scheme:dark] appearance-none">
+                                            {LOCATIONS.map(l => <option key={l} value={l} className="bg-[#111111]">{l}</option>)}
+                                        </select>
+                                    </div>
+
+                                    <div className="space-y-3">
+                                        <label className="text-[10px] font-bold uppercase tracking-widest text-white/30">Contract Model</label>
+                                        <select name="type" defaultValue={editingJob?.type} required className="w-full bg-white/5 border border-white/5 rounded-2xl px-5 py-4 text-white text-sm outline-none focus:border-[#841818]/40 focus:bg-white/10 transition-all [color-scheme:dark] appearance-none">
+                                            <option value="Full-time" className="bg-[#111111]">Full-time</option>
+                                            <option value="Part-time" className="bg-[#111111]">Part-time</option>
+                                            <option value="Contract" className="bg-[#111111]">Contract</option>
+                                            <option value="Internship" className="bg-[#111111]">Internship</option>
+                                        </select>
+                                    </div>
+                                </section>
+
+                                <div className="space-y-3">
+                                    <label className="text-[10px] font-bold uppercase tracking-widest text-white/30">Mission Description</label>
+                                    <textarea name="description" defaultValue={editingJob?.description} required rows={4} className="w-full bg-white/5 border border-white/5 rounded-2xl px-5 py-4 text-white text-sm outline-none focus:border-[#841818]/40 focus:bg-white/10 transition-all resize-none [color-scheme:dark]" placeholder="Describe the core mission of this role…" />
                                 </div>
-                            </div>
 
-                            {/* Type */}
-                            <div>
-                                <label className="block text-sm font-semibold text-slate-700 mb-1.5">Employment Type</label>
-                                <select name="type" defaultValue={editingJob?.type} required
-                                    className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-burgundy/25 focus:border-burgundy transition-all bg-white">
-                                    <option value="Full-time">Full-time</option>
-                                    <option value="Part-time">Part-time</option>
-                                    <option value="Contract">Contract</option>
-                                    <option value="Internship">Internship</option>
-                                </select>
-                            </div>
+                                <section className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                                    <div className="space-y-3">
+                                        <label className="text-[10px] font-bold uppercase tracking-widest text-white/30">Requirements</label>
+                                        <textarea name="requirements" defaultValue={(editingJob as any)?.requirements?.join("\n")} required rows={4} className="w-full bg-white/5 border border-white/5 rounded-2xl px-5 py-4 text-white text-xs outline-none focus:border-[#841818]/40 focus:bg-white/10 transition-all resize-none [color-scheme:dark]" placeholder="Enter one per line…" />
+                                    </div>
+                                    <div className="space-y-3">
+                                        <label className="text-[10px] font-bold uppercase tracking-widest text-white/30">Core Responsibilities</label>
+                                        <textarea name="responsibilities" defaultValue={(editingJob as any)?.responsibilities?.join("\n")} required rows={4} className="w-full bg-white/5 border border-white/5 rounded-2xl px-5 py-4 text-white text-xs outline-none focus:border-[#841818]/40 focus:bg-white/10 transition-all resize-none [color-scheme:dark]" placeholder="Enter one per line…" />
+                                    </div>
+                                    <div className="space-y-3">
+                                        <label className="text-[10px] font-bold uppercase tracking-widest text-white/30">Offer / Benefits</label>
+                                        <textarea name="benefits" defaultValue={(editingJob as any)?.benefits?.join("\n")} required rows={4} className="w-full bg-white/5 border border-white/5 rounded-2xl px-5 py-4 text-white text-xs outline-none focus:border-[#841818]/40 focus:bg-white/10 transition-all resize-none [color-scheme:dark]" placeholder="Enter one per line…" />
+                                    </div>
+                                </section>
 
-                            {/* Description */}
-                            <div>
-                                <label className="block text-sm font-semibold text-slate-700 mb-1.5">Description</label>
-                                <textarea name="description" defaultValue={editingJob?.description} required rows={3}
-                                    className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-burgundy/25 focus:border-burgundy transition-all resize-none"
-                                    placeholder="Briefly describe the role…" />
-                            </div>
-
-                            {/* Requirements */}
-                            <div>
-                                <label className="block text-sm font-semibold text-slate-700 mb-1.5">
-                                    Requirements <span className="text-slate-400 font-normal">(one per line or comma separated)</span>
-                                </label>
-                                <textarea name="requirements" defaultValue={(editingJob as any)?.requirements?.join("\n")} required rows={3}
-                                    className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-burgundy/25 focus:border-burgundy transition-all resize-none"
-                                    placeholder="3+ years experience&#10;Proficiency in React&#10;Strong communication skills" />
-                            </div>
-
-                            {/* Responsibilities */}
-                            <div>
-                                <label className="block text-sm font-semibold text-slate-700 mb-1.5">
-                                    Key Responsibilities <span className="text-slate-400 font-normal">(one per line or comma separated)</span>
-                                </label>
-                                <textarea name="responsibilities" defaultValue={(editingJob as any)?.responsibilities?.join("\n")} required rows={3}
-                                    className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-burgundy/25 focus:border-burgundy transition-all resize-none"
-                                    placeholder="Lead the frontend team&#10;Architect scalable solutions" />
-                            </div>
-
-                            {/* Benefits */}
-                            <div>
-                                <label className="block text-sm font-semibold text-slate-700 mb-1.5">
-                                    What We Offer <span className="text-slate-400 font-normal">(one per line or comma separated)</span>
-                                </label>
-                                <textarea name="benefits" defaultValue={(editingJob as any)?.benefits?.join("\n")} required rows={3}
-                                    className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-burgundy/25 focus:border-burgundy transition-all resize-none"
-                                    placeholder="Competitive salary&#10;Flexible working hours" />
-                            </div>
-
-                            {/* Footer */}
-                            <div className="flex justify-end gap-3 pt-2 border-t border-slate-100 mt-2">
-                                <button type="button" onClick={closeModal}
-                                    className="px-5 py-2.5 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded-xl transition-colors">
-                                    Cancel
-                                </button>
-                                <button type="submit" disabled={saving}
-                                    className="px-5 py-2.5 text-sm font-semibold bg-burgundy text-white rounded-xl hover:bg-burgundy-800 transition-all shadow-md disabled:opacity-60">
-                                    {saving ? "Saving…" : editingJob ? "Update Job" : "Create Job"}
-                                </button>
-                            </div>
-                        </form>
+                                <footer className="pt-8 flex justify-end gap-5">
+                                    <button type="button" onClick={closeModal} className="px-8 py-4 text-sm font-bold text-white/40 hover:text-white transition-colors">Cancel</button>
+                                    <button type="submit" disabled={saving} className="px-10 py-4 bg-white text-black text-sm font-black rounded-2xl hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-50">
+                                        {saving ? "Authorizing..." : editingJob ? "Apply Changes" : "Finalize Deployment"}
+                                    </button>
+                                </footer>
+                            </form>
+                        </motion.div>
                     </div>
-                </div>
-            )}
+                )}
+            </AnimatePresence>
 
-            {/* ── Delete Confirmation ── */}
-            {deleteConfirm && (
-                <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-                    <div className="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl">
-                        <div className="flex items-start gap-4 mb-4">
-                            <div className="w-11 h-11 rounded-xl bg-red-50 flex items-center justify-center shrink-0">
-                                <Trash2 size={20} className="text-red-500" />
+            {/* ── Delete Confirmation Overlay ── */}
+            <AnimatePresence>
+                {deleteConfirm && (
+                    <div className="fixed inset-0 z-[110] flex items-center justify-center p-6">
+                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setDeleteConfirm(null)} className="absolute inset-0 bg-black/90 backdrop-blur-md" />
+                        <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} className="relative w-full max-w-md bg-[#111111] border border-[#841818]/20 rounded-[2.5rem] p-10 flex flex-col items-center text-center shadow-[0_0_80px_rgba(132,24,24,0.15)]">
+                            <div className="w-20 h-20 rounded-[2rem] bg-[#841818]/10 flex items-center justify-center mb-8">
+                                <Trash2 size={32} className="text-[#841818]" />
                             </div>
-                            <div>
-                                <h3 className="font-bold text-slate-900">Delete Job?</h3>
-                                <p className="text-sm text-slate-500 mt-1">This will permanently delete the job and all its applications. This cannot be undone.</p>
+                            <h3 className="text-2xl font-black text-white mb-3">Terminate Node?</h3>
+                            <p className="text-white/40 text-sm leading-relaxed mb-10">
+                                This action will permanently decommission the node and erase all associated applicant data. This procedure is irreversible.
+                            </p>
+                            <div className="flex w-full gap-4">
+                                <button onClick={() => setDeleteConfirm(null)} className="flex-1 py-4 text-sm font-bold text-white/30 hover:text-white transition-colors">Abort</button>
+                                <button onClick={() => handleDelete(deleteConfirm)} className="flex-1 py-4 bg-[#841818] text-white text-sm font-black rounded-2xl hover:bg-[#a31e1e] transition-all">Confirm Termination</button>
                             </div>
-                        </div>
-                        <div className="flex justify-end gap-3">
-                            <button onClick={() => setDeleteConfirm(null)}
-                                className="px-4 py-2 text-sm text-slate-600 hover:bg-slate-100 rounded-xl transition-colors font-medium">
-                                Cancel
-                            </button>
-                            <button onClick={() => handleDelete(deleteConfirm)}
-                                className="px-4 py-2 text-sm font-semibold bg-red-600 text-white rounded-xl hover:bg-red-700 transition-colors">
-                                Delete Job
-                            </button>
-                        </div>
+                        </motion.div>
                     </div>
-                </div>
-            )}
+                )}
+            </AnimatePresence>
         </div>
     );
 }
