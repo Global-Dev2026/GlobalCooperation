@@ -1,11 +1,10 @@
 'use client';
 
-import { Suspense } from 'react';
-import { useActionState } from 'react';
+import { useState, useTransition, Suspense } from 'react';
 import { authenticate } from '@/lib/actions';
 import { useSearchParams } from 'next/navigation';
-import { motion } from 'framer-motion';
-import { Mail, Lock, LogIn, ShieldCheck, ChevronRight } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Mail, Lock, LogIn, ShieldCheck, ChevronRight, Eye, EyeOff, AlertCircle } from 'lucide-react';
 
 /**
  * LoginForm - Premium, Cinematic Design
@@ -13,10 +12,49 @@ import { Mail, Lock, LogIn, ShieldCheck, ChevronRight } from 'lucide-react';
 function LoginForm() {
     const searchParams = useSearchParams();
     const callbackUrl = searchParams.get('callbackUrl') || '/admin/jobs';
-    const [errorMessage, formAction, isPending] = useActionState(
-        authenticate,
-        undefined
-    );
+    const [isPending, startTransition] = useTransition();
+    const [serverError, setServerError] = useState<string | undefined>(undefined);
+    const [showPassword, setShowPassword] = useState(false);
+    
+    const [fieldErrors, setFieldErrors] = useState<{ email?: string; password?: string }>({});
+    
+    const validate = (formData: FormData) => {
+        const errors: { email?: string; password?: string } = {};
+        const email = formData.get('email') as string;
+        const password = formData.get('password') as string;
+        
+        if (!email) {
+            errors.email = 'Email address is required';
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            errors.email = 'Please enter a valid email address';
+        }
+        
+        if (!password) {
+            errors.password = 'Password is required';
+        } else if (password.length < 6) {
+            errors.password = 'Password must be at least 6 characters';
+        }
+        
+        return errors;
+    };
+
+    const handleFormAction = async (formData: FormData) => {
+        setServerError(undefined);
+        const errors = validate(formData);
+        
+        if (Object.keys(errors).length > 0) {
+            setFieldErrors(errors);
+            return;
+        }
+        
+        setFieldErrors({});
+        startTransition(async () => {
+            const result = await authenticate(undefined, formData);
+            if (result) {
+                setServerError(result);
+            }
+        });
+    };
 
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-[#252525] font-sans">
@@ -72,7 +110,7 @@ function LoginForm() {
                         </motion.p>
                     </div>
 
-                    <form action={formAction} className="space-y-5">
+                    <form action={handleFormAction} className="space-y-5">
                         <input type="hidden" name="redirectTo" value={callbackUrl} />
                         
                         {/* Email Input */}
@@ -94,10 +132,23 @@ function LoginForm() {
                                     name="email"
                                     type="email"
                                     placeholder="your@email.com"
-                                    required
-                                    className="block w-full rounded-xl border border-white/5 bg-[#333333] py-3.5 pl-11 pr-4 !text-white !caret-white placeholder-white/20 outline-none transition-all focus:border-[#841818]/50 focus:bg-[#3D3D3D] focus:ring-1 focus:ring-[#841818]/50 sm:text-sm [&:-webkit-autofill]:[WebkitTextFillColor:white] [&:-webkit-autofill]:[transition:background-color_5000s_ease-in-out_0s] [color-scheme:dark]"
+                                    onChange={() => setFieldErrors(prev => ({ ...prev, email: undefined }))}
+                                    className={`block w-full rounded-xl border ${fieldErrors.email ? 'border-red-500/50' : 'border-white/5'} bg-[#333333] py-3.5 pl-11 pr-4 !text-white !caret-white placeholder-white/20 outline-none transition-all focus:border-[#841818]/50 focus:bg-[#3D3D3D] focus:ring-1 focus:ring-[#841818]/50 sm:text-sm [&:-webkit-autofill]:[WebkitTextFillColor:white] [&:-webkit-autofill]:[transition:background-color_5000s_ease-in-out_0s] [color-scheme:dark]`}
                                 />
                             </div>
+                            <AnimatePresence>
+                                {fieldErrors.email && (
+                                    <motion.p 
+                                        initial={{ opacity: 0, height: 0 }}
+                                        animate={{ opacity: 1, height: 'auto' }}
+                                        exit={{ opacity: 0, height: 0 }}
+                                        className="text-[11px] font-medium text-red-500 flex items-center gap-1 mt-1 pl-1"
+                                    >
+                                        <AlertCircle size={12} />
+                                        {fieldErrors.email}
+                                    </motion.p>
+                                )}
+                            </AnimatePresence>
                         </motion.div>
 
                         {/* Password Input */}
@@ -119,24 +170,44 @@ function LoginForm() {
                                 <input
                                     id="password"
                                     name="password"
-                                    type="password"
+                                    type={showPassword ? 'text' : 'password'}
                                     placeholder="••••••••"
-                                    required
-                                    minLength={6}
-                                    className="block w-full rounded-xl border border-white/5 bg-[#333333] py-3.5 pl-11 pr-4 !text-white !caret-white placeholder-white/20 outline-none transition-all focus:border-[#841818]/50 focus:bg-[#3D3D3D] focus:ring-1 focus:ring-[#841818]/50 sm:text-sm [&:-webkit-autofill]:[WebkitTextFillColor:white] [&:-webkit-autofill]:[transition:background-color_5000s_ease-in-out_0s] [color-scheme:dark]"
+                                    onChange={() => setFieldErrors(prev => ({ ...prev, password: undefined }))}
+                                    className={`block w-full rounded-xl border ${fieldErrors.password ? 'border-red-500/50' : 'border-white/5'} bg-[#333333] py-3.5 pl-11 pr-12 !text-white !caret-white placeholder-white/20 outline-none transition-all focus:border-[#841818]/50 focus:bg-[#3D3D3D] focus:ring-1 focus:ring-[#841818]/50 sm:text-sm [&:-webkit-autofill]:[WebkitTextFillColor:white] [&:-webkit-autofill]:[transition:background-color_5000s_ease-in-out_0s] [color-scheme:dark]`}
                                 />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    className="absolute inset-y-0 right-0 flex items-center pr-4 text-white/30 hover:text-[#E0BB20] transition-colors"
+                                >
+                                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                                </button>
                             </div>
+                            <AnimatePresence>
+                                {fieldErrors.password && (
+                                    <motion.p 
+                                        initial={{ opacity: 0, height: 0 }}
+                                        animate={{ opacity: 1, height: 'auto' }}
+                                        exit={{ opacity: 0, height: 0 }}
+                                        className="text-[11px] font-medium text-red-500 flex items-center gap-1 mt-1 pl-1"
+                                    >
+                                        <AlertCircle size={12} />
+                                        {fieldErrors.password}
+                                    </motion.p>
+                                )}
+                            </AnimatePresence>
                         </motion.div>
 
                         <div className="h-6 overflow-hidden">
-                            {errorMessage && (
-                                <motion.p 
+                            {serverError && (
+                                <motion.div 
                                     initial={{ y: -10, opacity: 0 }}
                                     animate={{ y: 0, opacity: 1 }}
-                                    className="text-xs font-medium text-red-500"
+                                    className="text-xs font-medium text-red-500 flex items-center gap-1.5 justify-center"
                                 >
-                                    {errorMessage}
-                                </motion.p>
+                                    <AlertCircle size={14} />
+                                    {serverError}
+                                </motion.div>
                             )}
                         </div>
 

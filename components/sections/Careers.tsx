@@ -84,6 +84,25 @@ export default function Careers({ initialJobs }: { initialJobs: Job[] }) {
             return;
         }
 
+        if (!applicationForm.name.trim()) {
+            setSubmitStatus({ success: false, message: "Full Name is required." });
+            return;
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!applicationForm.email.trim()) {
+            setSubmitStatus({ success: false, message: "Email Address is required." });
+            return;
+        } else if (!emailRegex.test(applicationForm.email)) {
+            setSubmitStatus({ success: false, message: "Please enter a valid email address." });
+            return;
+        }
+
+        if (!applicationForm.resume) {
+            setSubmitStatus({ success: false, message: "Resume file is required." });
+            return;
+        }
+
         setIsSubmitting(true);
         setSubmitStatus({ success: false, message: "" });
         try {
@@ -442,7 +461,7 @@ export default function Careers({ initialJobs }: { initialJobs: Job[] }) {
                                                 <form onSubmit={handleApplicationSubmit} className="space-y-6">
                                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                                                         <div className="space-y-2">
-                                                            <label className="text-sm font-semibold text-gray-700">Full Name</label>
+                                                            <label className="text-sm font-semibold text-gray-700">Full Name <span className="text-red-500">*</span></label>
                                                             <input
                                                                 type="text" required
                                                                 value={applicationForm.name}
@@ -453,7 +472,7 @@ export default function Careers({ initialJobs }: { initialJobs: Job[] }) {
                                                             />
                                                         </div>
                                                         <div className="space-y-2">
-                                                            <label className="text-sm font-semibold text-gray-700">Email Address</label>
+                                                            <label className="text-sm font-semibold text-gray-700">Email Address <span className="text-red-500">*</span></label>
                                                             <input
                                                                 type="email" required
                                                                 value={applicationForm.email}
@@ -465,7 +484,7 @@ export default function Careers({ initialJobs }: { initialJobs: Job[] }) {
                                                     </div>
 
                                                     <div className="space-y-2">
-                                                        <label className="text-sm font-semibold text-gray-700">Resume (PDF, Max 2MB)</label>
+                                                        <label className="text-sm font-semibold text-gray-700">Resume (PDF, Max 2MB) <span className="text-red-500">*</span></label>
                                                         <div className="relative group/file">
                                                             <input
                                                                 type="file" accept=".pdf" required
@@ -490,7 +509,7 @@ export default function Careers({ initialJobs }: { initialJobs: Job[] }) {
                                                     </div>
 
                                                     <div className="space-y-4 pt-2">
-                                                        <label className="text-sm font-semibold text-gray-700 block">Security Verification</label>
+                                                        <label className="text-sm font-semibold text-gray-700 block">Security Verification <span className="text-red-500">*</span></label>
                                                         <div className="flex flex-col sm:flex-row gap-4">
                                                             <Captcha onChange={setCaptchaValue} onRefresh={() => setUserCaptchaInput("")} />
                                                             <div className="flex-1">
