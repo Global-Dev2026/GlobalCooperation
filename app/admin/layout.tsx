@@ -21,7 +21,7 @@ export default function AdminLayout({
                         </div>
                         <div>
                             <p className="text-[11px] font-semibold tracking-widest text-burgundy-400 uppercase">Admin Panel</p>
-                            <h2 className="text-sm font-bold text-white leading-tight">Global Soft Solution</h2>
+                            <h2 className="text-sm font-bold text-white leading-tight">Global Cooperation</h2>
                         </div>
                     </div>
                 </div>
