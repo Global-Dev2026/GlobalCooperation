@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
     Briefcase,
@@ -17,6 +17,7 @@ import {
     TrendingUp,
     Star,
 } from "lucide-react";
+import Captcha from "@/components/ui/Captcha";
 
 interface Job {
     id: string;
@@ -28,7 +29,7 @@ interface Job {
     requirements: string[];
     responsibilities: string[];
     benefits: string[];
-    salary: string | null;
+    salary?: string | null;
 }
 
 /* ── Per-department color palette that complements burgundy + gold ── */
@@ -48,23 +49,41 @@ function getPalette(dept: string) {
 
 
 
-export default function Careers() {
-    const [jobs, setJobs] = useState<Job[]>([]);
-    const [filteredJobs, setFilteredJobs] = useState<Job[]>([]);
+export default function Careers({ initialJobs }: { initialJobs: Job[] }) {
     const [selectedDepartment, setSelectedDepartment] = useState<string>("all");
     const [selectedLocation, setSelectedLocation] = useState<string>("all");
     const [selectedType, setSelectedType] = useState<string>("all");
     const [selectedJob, setSelectedJob] = useState<Job | null>(null);
-    const [loading, setLoading] = useState(true);
     const [isApplying, setIsApplying] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [applicationForm, setApplicationForm] = useState({
         name: "", email: "", resume: null as File | null, coverLetter: ""
     });
+    const [captchaValue, setCaptchaValue] = useState("");
+    const [userCaptchaInput, setUserCaptchaInput] = useState("");
     const [submitStatus, setSubmitStatus] = useState<{ success: boolean; message: string } | { success: false; message: "" }>({ success: false, message: "" });
+
+    // Filter jobs derived from initialJobs — no client-side fetch needed
+    const filteredJobs = useMemo(() => {
+        let filtered = initialJobs;
+        if (selectedDepartment !== "all") filtered = filtered.filter(j => j.department === selectedDepartment);
+        if (selectedLocation !== "all") filtered = filtered.filter(j => j.location === selectedLocation);
+        if (selectedType !== "all") filtered = filtered.filter(j => j.type === selectedType);
+        return filtered;
+    }, [initialJobs, selectedDepartment, selectedLocation, selectedType]);
+
+    const departments = useMemo(() => ["all", ...Array.from(new Set(initialJobs.map(j => j.department)))], [initialJobs]);
+    const locations   = useMemo(() => ["all", ...Array.from(new Set(initialJobs.map(j => j.location)))],   [initialJobs]);
+    const types       = useMemo(() => ["all", ...Array.from(new Set(initialJobs.map(j => j.type)))],       [initialJobs]);
 
     const handleApplicationSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        
+        if (userCaptchaInput.toLowerCase() !== captchaValue.toLowerCase()) {
+            setSubmitStatus({ success: false, message: "Invalid CAPTCHA. Please try again." });
+            return;
+        }
+
         setIsSubmitting(true);
         setSubmitStatus({ success: false, message: "" });
         try {
@@ -84,6 +103,7 @@ export default function Careers() {
                     setIsApplying(false);
                     setSelectedJob(null);
                     setApplicationForm({ name: "", email: "", resume: null, coverLetter: "" });
+                    setUserCaptchaInput("");
                     setSubmitStatus({ success: false, message: "" });
                 }, 2000);
             } else {
@@ -95,32 +115,6 @@ export default function Careers() {
             setIsSubmitting(false);
         }
     };
-
-    useEffect(() => { fetchJobs(); }, []);
-
-    useEffect(() => {
-        let filtered = jobs;
-        if (selectedDepartment !== "all") filtered = filtered.filter(j => j.department === selectedDepartment);
-        if (selectedLocation !== "all") filtered = filtered.filter(j => j.location === selectedLocation);
-        if (selectedType !== "all") filtered = filtered.filter(j => j.type === selectedType);
-        setFilteredJobs(filtered);
-    }, [jobs, selectedDepartment, selectedLocation, selectedType]);
-
-    const fetchJobs = async () => {
-        try {
-            const response = await fetch("/api/jobs");
-            const data = await response.json();
-            if (data.success) setJobs(data.data);
-        } catch (error) {
-            console.error("Error fetching jobs:", error);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const departments = ["all", ...Array.from(new Set(jobs.map(j => j.department)))];
-    const locations = ["all", ...Array.from(new Set(jobs.map(j => j.location)))];
-    const types = ["all", ...Array.from(new Set(jobs.map(j => j.type)))];
 
     return (
         <section id="careers" className="relative overflow-hidden bg-[#FAFAFA]">
@@ -178,7 +172,7 @@ export default function Careers() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
 
                 {/* Department filter tabs */}
-                {jobs.length > 0 && (
+                {initialJobs.length > 0 && (
                     <motion.div
                         initial={{ opacity: 0, y: 14 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -206,15 +200,7 @@ export default function Careers() {
                 )}
 
                 {/* Job grid */}
-                {loading ? (
-                    <div className="text-center py-32">
-                        <div className="relative inline-block w-16 h-16">
-                            <div className="absolute inset-0 rounded-full border-4 border-gray-100" />
-                            <div className="absolute inset-0 rounded-full border-4 border-[#841818] border-t-transparent animate-spin" />
-                        </div>
-                        <p className="text-gray-400 mt-4 text-sm">Loading opportunities…</p>
-                    </div>
-                ) : filteredJobs.length === 0 ? (
+                {filteredJobs.length === 0 ? (
                     <div className="text-center py-32 bg-white rounded-[2.5rem] border border-gray-100 shadow-xl shadow-black/5">
                         <div className="w-20 h-20 bg-[#841818]/5 rounded-3xl flex items-center justify-center mx-auto mb-6">
                             <Briefcase className="w-10 h-10 text-[#841818]/40" />
@@ -501,6 +487,25 @@ export default function Careers() {
                                                             className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 focus:outline-none focus:ring-2 text-sm font-medium resize-none transition-all"
                                                             placeholder="Briefly explain your suitability for the role..."
                                                         />
+                                                    </div>
+
+                                                    <div className="space-y-4 pt-2">
+                                                        <label className="text-sm font-semibold text-gray-700 block">Security Verification</label>
+                                                        <div className="flex flex-col sm:flex-row gap-4">
+                                                            <Captcha onChange={setCaptchaValue} onRefresh={() => setUserCaptchaInput("")} />
+                                                            <div className="flex-1">
+                                                                <input
+                                                                    type="text"
+                                                                    required
+                                                                    value={userCaptchaInput}
+                                                                    onChange={e => setUserCaptchaInput(e.target.value)}
+                                                                    className="w-full px-4 py-3 rounded-xl bg-white border border-gray-200 focus:outline-none focus:ring-2 text-sm font-medium transition-all"
+                                                                    style={{ "--tw-ring-color": `${p.accent}33` } as React.CSSProperties}
+                                                                    placeholder="Enter characters"
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                        <p className="text-[11px] text-gray-400">Please enter the characters exactly as shown above to prove you are human.</p>
                                                     </div>
 
                                                     {submitStatus.message && (
