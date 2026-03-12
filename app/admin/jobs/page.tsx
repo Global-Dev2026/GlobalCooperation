@@ -149,10 +149,10 @@ export default function AdminJobsPage() {
                 <div className="space-y-2">
                     <div className="flex items-center gap-3 text-[#E0BB20]">
                         <Briefcase size={16} />
-                        <span className="text-[10px] font-bold tracking-[0.3em] uppercase opacity-70">Talent Acquisition</span>
+                        <span className="text-[10px] font-bold tracking-[0.3em] uppercase opacity-70">Recruitment</span>
                     </div>
                     <h1 className="text-3xl font-extrabold text-white tracking-tight">Job Management</h1>
-                    <p className="text-white/40 text-sm font-medium">Create, publish, and architect your organization&apos;s workforce.</p>
+                    <p className="text-white/40 text-sm font-medium">Create and manage your organization&apos;s career opportunities.</p>
                 </div>
                 
                 <motion.button
@@ -162,23 +162,23 @@ export default function AdminJobsPage() {
                     className="flex items-center gap-3 px-6 py-4 bg-gradient-to-r from-[#841818] to-[#631212] text-white text-sm font-bold rounded-2xl shadow-xl shadow-[#841818]/20 transition-all hover:shadow-[#841818]/40"
                 >
                     <Plus size={20} />
-                    Deploy New Position
+                    Post New Job
                 </motion.button>
             </header>
 
             {/* ── Metrics Grid ── */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {[
-                    { label: "Total Capacity", value: jobs.length, icon: Briefcase, color: "#E0BB20" },
-                    { label: "Active Nodes", value: activeJobs, icon: CheckCircle2, color: "#10b981" },
-                    { label: "Total Candidates", value: totalApplicants, icon: Users, color: "#841818" },
+                    { label: "Total Jobs", value: jobs.length, icon: Briefcase, color: "#E0BB20" },
+                    { label: "Active Jobs", value: activeJobs, icon: CheckCircle2, color: "#10b981" },
+                    { label: "Total Applicants", value: totalApplicants, icon: Users, color: "#841818" },
                 ].map((stat, i) => (
                     <motion.div 
                         key={i}
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: i * 0.1 }}
-                        className="p-6 rounded-[2rem] border border-white/5 bg-[#111111]/60 backdrop-blur-md flex items-center gap-5"
+                        className="p-6 rounded-[2rem] border border-white/5 bg-[#2D2D2D]/60 backdrop-blur-md flex items-center gap-5"
                     >
                         <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center shrink-0">
                             <stat.icon size={24} style={{ color: stat.color }} />
@@ -200,22 +200,22 @@ export default function AdminJobsPage() {
                     value={search}
                     onChange={e => setSearch(e.target.value)}
                     placeholder="Search parameters: Title, Department, or Location…"
-                    className="w-full pl-14 pr-10 py-5 bg-[#111111]/40 border border-white/5 rounded-[2rem] text-sm text-white placeholder-white/20 outline-none focus:border-[#841818]/40 focus:bg-[#111111]/60 transition-all [color-scheme:dark]"
+                    className="w-full pl-14 pr-10 py-5 bg-[#2D2D2D]/40 border border-white/5 rounded-[2rem] text-sm text-white placeholder-white/20 outline-none focus:border-[#841818]/40 focus:bg-[#2D2D2D]/60 transition-all [color-scheme:dark]"
                 />
             </div>
 
             {/* ── Dynamic Job Grid/Table ── */}
-            <div className="relative overflow-hidden rounded-[3rem] border border-white/5 bg-[#111111]/20 backdrop-blur-xl shadow-2xl">
+            <div className="relative overflow-hidden rounded-[3rem] border border-white/5 bg-[#2D2D2D]/20 backdrop-blur-xl shadow-2xl">
                 <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">
                         <thead>
                             <tr className="border-b border-white/5 bg-white/2">
-                                <th className="px-8 py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-white/30">Node / Position</th>
+                                <th className="px-8 py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-white/30">Job Title</th>
                                 <th className="px-8 py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-white/30">Department</th>
                                 <th className="px-8 py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-white/30">Location</th>
                                 <th className="px-8 py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-white/30">Status</th>
                                 <th className="px-8 py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-white/30">Metrics</th>
-                                <th className="px-8 py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-white/30 text-right">Operations</th>
+                                <th className="px-8 py-6 text-[10px] font-bold uppercase tracking-[0.2em] text-white/30 text-right">Actions</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-white/5">
@@ -244,7 +244,7 @@ export default function AdminJobsPage() {
                                             }`}
                                         >
                                             {job.isActive ? <ToggleRight size={18} /> : <ToggleLeft size={18} />}
-                                            {job.isActive ? "Online" : "Offline"}
+                                            {job.isActive ? "Active" : "Inactive"}
                                         </button>
                                     </td>
                                     <td className="px-8 py-6">
@@ -277,9 +277,9 @@ export default function AdminJobsPage() {
                         <div className="w-20 h-20 rounded-[2rem] bg-white/5 flex items-center justify-center mb-6">
                             <Search size={32} className="text-white/10" />
                         </div>
-                        <h3 className="text-xl font-bold text-white">No nodes detected</h3>
+                        <h3 className="text-xl font-bold text-white">No jobs found</h3>
                         <p className="text-white/30 text-sm mt-2 max-w-xs mx-auto">
-                            The current search parameters returned no results. Adjust your query or deploy a new node.
+                            The current search parameters returned no results. Adjust your search or create a new job.
                         </p>
                     </div>
                 )}
@@ -300,16 +300,16 @@ export default function AdminJobsPage() {
                             initial={{ scale: 0.9, opacity: 0, y: 20 }}
                             animate={{ scale: 1, opacity: 1, y: 0 }}
                             exit={{ scale: 0.9, opacity: 0, y: 20 }}
-                            className="relative w-full max-w-4xl bg-[#111111] border border-white/5 rounded-[3rem] shadow-2xl flex flex-col max-h-[90vh] overflow-hidden"
+                            className="relative w-full max-w-4xl bg-[#1E1E1E] border border-white/5 rounded-[3rem] shadow-2xl flex flex-col max-h-[90vh] overflow-hidden"
                         >
                             <header className="flex-none p-10 border-b border-white/5 flex items-center justify-between">
                                 <div>
                                     <div className="flex items-center gap-3 text-[#E0BB20] mb-2">
                                         <Sparkles size={16} />
-                                        <span className="text-[10px] font-bold tracking-[0.3em] uppercase opacity-70">Configuration Portal</span>
+                                        <span className="text-[10px] font-bold tracking-[0.3em] uppercase opacity-70">Job Editor</span>
                                     </div>
                                     <h2 className="text-2xl font-black text-white">
-                                        {editingJob ? "Modify Node Parameters" : "Deploy New Position"}
+                                        {editingJob ? "Edit Job Details" : "Post New Job"}
                                     </h2>
                                 </div>
                                 <button onClick={closeModal} className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center hover:bg-white/10 transition-colors">
@@ -320,31 +320,31 @@ export default function AdminJobsPage() {
                             <form onSubmit={handleSave} className="flex-1 overflow-y-auto p-10 space-y-8 custom-scrollbar">
                                 <section className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                     <div className="md:col-span-2 space-y-3">
-                                        <label className="text-[10px] font-bold uppercase tracking-widest text-white/30">Node Title</label>
-                                        <input name="title" defaultValue={editingJob?.title} required className="w-full bg-white/5 border border-white/5 rounded-2xl px-5 py-4 text-white text-sm outline-none focus:border-[#841818]/40 focus:bg-white/10 transition-all [color-scheme:dark]" placeholder="e.g. System Architect" />
+                                        <label className="text-[10px] font-bold uppercase tracking-widest text-white/30">Job Title</label>
+                                        <input name="title" defaultValue={editingJob?.title} required className="w-full bg-white/5 border border-white/5 rounded-2xl px-5 py-4 text-white text-sm outline-none focus:border-[#841818]/40 focus:bg-white/10 transition-all [color-scheme:dark]" placeholder="e.g. Software Engineer" />
                                     </div>
 
                                     <div className="space-y-3">
-                                        <label className="text-[10px] font-bold uppercase tracking-widest text-white/30">Operational Department</label>
+                                        <label className="text-[10px] font-bold uppercase tracking-widest text-white/30">Department</label>
                                         <select name="department" defaultValue={editingJob?.department} required className="w-full bg-white/5 border border-white/5 rounded-2xl px-5 py-4 text-white text-sm outline-none focus:border-[#841818]/40 focus:bg-white/10 transition-all [color-scheme:dark] appearance-none">
-                                            {DEPARTMENTS.map(d => <option key={d} value={d} className="bg-[#111111]">{d}</option>)}
+                                            {DEPARTMENTS.map(d => <option key={d} value={d} className="bg-[#1E1E1E]">{d}</option>)}
                                         </select>
                                     </div>
 
                                     <div className="space-y-3">
-                                        <label className="text-[10px] font-bold uppercase tracking-widest text-white/30">Physical Location</label>
+                                        <label className="text-[10px] font-bold uppercase tracking-widest text-white/30">Job Location</label>
                                         <select name="location" defaultValue={editingJob?.location} required className="w-full bg-white/5 border border-white/5 rounded-2xl px-5 py-4 text-white text-sm outline-none focus:border-[#841818]/40 focus:bg-white/10 transition-all [color-scheme:dark] appearance-none">
-                                            {LOCATIONS.map(l => <option key={l} value={l} className="bg-[#111111]">{l}</option>)}
+                                            {LOCATIONS.map(l => <option key={l} value={l} className="bg-[#1E1E1E]">{l}</option>)}
                                         </select>
                                     </div>
 
                                     <div className="space-y-3">
-                                        <label className="text-[10px] font-bold uppercase tracking-widest text-white/30">Contract Model</label>
+                                        <label className="text-[10px] font-bold uppercase tracking-widest text-white/30">Job Type</label>
                                         <select name="type" defaultValue={editingJob?.type} required className="w-full bg-white/5 border border-white/5 rounded-2xl px-5 py-4 text-white text-sm outline-none focus:border-[#841818]/40 focus:bg-white/10 transition-all [color-scheme:dark] appearance-none">
-                                            <option value="Full-time" className="bg-[#111111]">Full-time</option>
-                                            <option value="Part-time" className="bg-[#111111]">Part-time</option>
-                                            <option value="Contract" className="bg-[#111111]">Contract</option>
-                                            <option value="Internship" className="bg-[#111111]">Internship</option>
+                                            <option value="Full-time" className="bg-[#1E1E1E]">Full-time</option>
+                                            <option value="Part-time" className="bg-[#1E1E1E]">Part-time</option>
+                                            <option value="Contract" className="bg-[#1E1E1E]">Contract</option>
+                                            <option value="Internship" className="bg-[#1E1E1E]">Internship</option>
                                         </select>
                                     </div>
                                 </section>
@@ -372,7 +372,7 @@ export default function AdminJobsPage() {
                                 <footer className="pt-8 flex justify-end gap-5">
                                     <button type="button" onClick={closeModal} className="px-8 py-4 text-sm font-bold text-white/40 hover:text-white transition-colors">Cancel</button>
                                     <button type="submit" disabled={saving} className="px-10 py-4 bg-white text-black text-sm font-black rounded-2xl hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-50">
-                                        {saving ? "Authorizing..." : editingJob ? "Apply Changes" : "Finalize Deployment"}
+                                        {saving ? "Saving..." : editingJob ? "Update Job" : "Post Job"}
                                     </button>
                                 </footer>
                             </form>
@@ -390,13 +390,13 @@ export default function AdminJobsPage() {
                             <div className="w-20 h-20 rounded-[2rem] bg-[#841818]/10 flex items-center justify-center mb-8">
                                 <Trash2 size={32} className="text-[#841818]" />
                             </div>
-                            <h3 className="text-2xl font-black text-white mb-3">Terminate Node?</h3>
+                            <h3 className="text-2xl font-black text-white mb-3">Delete Job?</h3>
                             <p className="text-white/40 text-sm leading-relaxed mb-10">
-                                This action will permanently decommission the node and erase all associated applicant data. This procedure is irreversible.
+                                This action will permanently delete this job posting and all its applications. This cannot be undone.
                             </p>
                             <div className="flex w-full gap-4">
-                                <button onClick={() => setDeleteConfirm(null)} className="flex-1 py-4 text-sm font-bold text-white/30 hover:text-white transition-colors">Abort</button>
-                                <button onClick={() => handleDelete(deleteConfirm)} className="flex-1 py-4 bg-[#841818] text-white text-sm font-black rounded-2xl hover:bg-[#a31e1e] transition-all">Confirm Termination</button>
+                                <button onClick={() => setDeleteConfirm(null)} className="flex-1 py-4 text-sm font-bold text-white/30 hover:text-white transition-colors">Cancel</button>
+                                <button onClick={() => handleDelete(deleteConfirm)} className="flex-1 py-4 bg-[#841818] text-white text-sm font-black rounded-2xl hover:bg-[#a31e1e] transition-all">Delete Permanently</button>
                             </div>
                         </motion.div>
                     </div>

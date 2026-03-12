@@ -108,7 +108,7 @@ export default function JobApplicationsPage() {
                 className="flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-white/30 hover:text-[#E0BB20] transition-colors group"
             >
                 <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
-                Back to Fleet Management
+                Back to Jobs
             </motion.button>
 
             {/* ── Header ── */}
@@ -116,14 +116,14 @@ export default function JobApplicationsPage() {
                 <div className="space-y-4">
                     <div className="flex items-center gap-3 text-[#E0BB20]">
                         <Sparkles size={16} className="animate-pulse" />
-                        <span className="text-[10px] font-bold tracking-[0.4em] uppercase">Talent Acquisition Data</span>
+                        <span className="text-[10px] font-bold tracking-[0.4em] uppercase">Applicant Data</span>
                     </div>
                     <h1 className="text-4xl font-extrabold text-white tracking-tight">
-                        Candidate <span className="text-white/40">Inflow</span>
+                        Applications
                     </h1>
                     <p className="text-white/30 text-sm font-medium flex items-center gap-2">
                         <Users size={14} className="text-[#841818]" />
-                        Total indexed entries: <span className="text-white">{applications.length}</span>
+                        Total active applicants: <span className="text-white">{applications.length}</span>
                     </p>
                 </div>
             </header>
@@ -138,9 +138,9 @@ export default function JobApplicationsPage() {
                     <div className="w-20 h-20 rounded-full bg-white/5 flex items-center justify-center mx-auto mb-6">
                         <UserCheck size={32} className="text-white/10" />
                     </div>
-                    <h3 className="text-xl font-bold text-white">No candidates indexed</h3>
+                    <h3 className="text-xl font-bold text-white">No applications found</h3>
                     <p className="text-white/30 text-sm mt-2 max-w-xs mx-auto">
-                        This deployment has not received any external data streams yet. Check system availability.
+                        This job listing has not received any applications yet.
                     </p>
                 </motion.div>
             ) : (
@@ -154,7 +154,7 @@ export default function JobApplicationsPage() {
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: idx * 0.1 }}
-                                className="group relative overflow-hidden rounded-[32px] border border-white/5 bg-[#161616]/60 backdrop-blur-md transition-all duration-500 hover:border-white/10 hover:bg-[#1a1a1a]"
+                                className="group relative overflow-hidden rounded-[32px] border border-white/5 bg-[#2D2D2D]/60 backdrop-blur-md transition-all duration-500 hover:border-white/10 hover:bg-[#333333]"
                             >
                                 <div className="p-8">
                                     <div className="flex flex-col lg:flex-row lg:items-center gap-8">
@@ -225,7 +225,7 @@ export default function JobApplicationsPage() {
                                                     className="flex items-center gap-3 text-[11px] font-black uppercase tracking-[0.2em] text-[#E0BB20] hover:scale-105 origin-left transition-transform"
                                                 >
                                                     <MessageSquareText size={14} />
-                                                    Personal Statement
+                                                    Cover Letter
                                                     {coverExpanded ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
                                                 </button>
 
@@ -237,7 +237,7 @@ export default function JobApplicationsPage() {
                                                             exit={{ height: 0, opacity: 0 }}
                                                             className="overflow-hidden"
                                                         >
-                                                            <div className="p-6 bg-black/40 rounded-2xl border border-white/5 text-sm text-white/50 leading-relaxed whitespace-pre-wrap italic font-medium">
+                                                            <div className="p-6 bg-[#1E1E1E]/40 rounded-2xl border border-white/5 text-sm text-white/50 leading-relaxed whitespace-pre-wrap italic font-medium">
                                                                 &quot;{app.coverLetter}&quot;
                                                             </div>
                                                         </motion.div>
@@ -247,7 +247,7 @@ export default function JobApplicationsPage() {
                                         ) : (
                                             <p className="text-[10px] text-white/10 uppercase font-bold tracking-[0.3em] flex items-center gap-2">
                                                 <MessageSquareText size={14} />
-                                                No additional data streams transmitted
+                                                No cover letter provided
                                             </p>
                                         )}
                                     </div>
@@ -273,7 +273,7 @@ export default function JobApplicationsPage() {
                             initial={{ scale: 0.95, opacity: 0, y: 20 }}
                             animate={{ scale: 1, opacity: 1, y: 0 }}
                             exit={{ scale: 0.95, opacity: 0, y: 20 }}
-                            className="relative w-full max-w-md overflow-hidden rounded-[40px] border border-white/10 bg-[#161616] p-10 shadow-3xl"
+                            className="relative w-full max-w-md overflow-hidden rounded-[40px] border border-white/10 bg-[#2D2D2D] p-10 shadow-3xl"
                         >
                             <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#841818] to-transparent" />
                             
@@ -283,9 +283,9 @@ export default function JobApplicationsPage() {
                                 </div>
                                 
                                 <div className="space-y-2">
-                                    <h2 className="text-2xl font-black text-white">Pruning Protocol</h2>
+                                    <h2 className="text-2xl font-black text-white">Delete Application?</h2>
                                     <p className="text-white/40 text-sm leading-relaxed">
-                                        You are about to permanently erase the records for <span className="text-white font-bold">{confirmDelete.name}</span>. This action is final.
+                                        You are about to permanently delete the application for <span className="text-white font-bold">{confirmDelete.name}</span>. This cannot be undone.
                                     </p>
                                 </div>
 
@@ -295,13 +295,13 @@ export default function JobApplicationsPage() {
                                         disabled={!!deletingId}
                                         className="w-full py-4 rounded-2xl bg-[#841818] text-white text-xs font-black uppercase tracking-[0.2em] shadow-lg shadow-[#841818]/20 hover:scale-[1.02] transition-transform active:scale-95 disabled:opacity-50"
                                     >
-                                        {deletingId ? "Executing..." : "Confirm Deletion"}
+                                        {deletingId ? "Deleting..." : "Delete Permanently"}
                                     </button>
                                     <button
                                         onClick={() => setConfirmDelete(null)}
                                         className="w-full py-4 text-xs font-black uppercase tracking-[0.2em] text-white/30 hover:text-white transition-colors"
                                     >
-                                        Abort
+                                        Cancel
                                     </button>
                                 </div>
                             </div>

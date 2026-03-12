@@ -19,7 +19,7 @@ function LoginForm() {
     );
 
     return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-[#0A0A0A] font-sans">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center overflow-hidden bg-[#252525] font-sans">
             {/* ── Cinematic Background Elements ── */}
             <div className="absolute inset-0 z-0 overflow-hidden">
                 {/* Gradient Mesh */}
@@ -40,7 +40,7 @@ function LoginForm() {
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                 className="relative z-10 w-full max-w-md px-6"
             >
-                <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-[#161616]/80 p-8 shadow-2xl backdrop-blur-xl sm:p-10">
+                <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-[#2D2D2D]/80 p-8 shadow-2xl backdrop-blur-xl sm:p-10">
                     {/* Top Accent Bar */}
                     <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#841818] to-transparent" />
                     
@@ -83,7 +83,7 @@ function LoginForm() {
                             className="space-y-2"
                         >
                             <label htmlFor="email" className="block text-xs font-semibold uppercase tracking-widest text-[#E0BB20]">
-                                Identity
+                                Email Address
                             </label>
                             <div className="group relative">
                                 <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none transition-colors group-focus-within:text-[#E0BB20] text-white/30">
@@ -95,7 +95,7 @@ function LoginForm() {
                                     type="email"
                                     placeholder="your@email.com"
                                     required
-                                    className="block w-full rounded-xl border border-white/5 bg-[#1a1a1a] py-3.5 pl-11 pr-4 !text-white !caret-white placeholder-white/20 outline-none transition-all focus:border-[#841818]/50 focus:bg-[#222] focus:ring-1 focus:ring-[#841818]/50 sm:text-sm [&:-webkit-autofill]:[WebkitTextFillColor:white] [&:-webkit-autofill]:[transition:background-color_5000s_ease-in-out_0s] [color-scheme:dark]"
+                                    className="block w-full rounded-xl border border-white/5 bg-[#333333] py-3.5 pl-11 pr-4 !text-white !caret-white placeholder-white/20 outline-none transition-all focus:border-[#841818]/50 focus:bg-[#3D3D3D] focus:ring-1 focus:ring-[#841818]/50 sm:text-sm [&:-webkit-autofill]:[WebkitTextFillColor:white] [&:-webkit-autofill]:[transition:background-color_5000s_ease-in-out_0s] [color-scheme:dark]"
                                 />
                             </div>
                         </motion.div>
@@ -109,7 +109,7 @@ function LoginForm() {
                         >
                             <div className="flex items-center justify-between">
                                 <label htmlFor="password" className="block text-xs font-semibold uppercase tracking-widest text-[#E0BB20]">
-                                    Access Key
+                                    Password
                                 </label>
                             </div>
                             <div className="group relative">
@@ -123,7 +123,7 @@ function LoginForm() {
                                     placeholder="••••••••"
                                     required
                                     minLength={6}
-                                    className="block w-full rounded-xl border border-white/5 bg-[#1a1a1a] py-3.5 pl-11 pr-4 !text-white !caret-white placeholder-white/20 outline-none transition-all focus:border-[#841818]/50 focus:bg-[#222] focus:ring-1 focus:ring-[#841818]/50 sm:text-sm [&:-webkit-autofill]:[WebkitTextFillColor:white] [&:-webkit-autofill]:[transition:background-color_5000s_ease-in-out_0s] [color-scheme:dark]"
+                                    className="block w-full rounded-xl border border-white/5 bg-[#333333] py-3.5 pl-11 pr-4 !text-white !caret-white placeholder-white/20 outline-none transition-all focus:border-[#841818]/50 focus:bg-[#3D3D3D] focus:ring-1 focus:ring-[#841818]/50 sm:text-sm [&:-webkit-autofill]:[WebkitTextFillColor:white] [&:-webkit-autofill]:[transition:background-color_5000s_ease-in-out_0s] [color-scheme:dark]"
                                 />
                             </div>
                         </motion.div>
@@ -153,11 +153,11 @@ function LoginForm() {
                                 {isPending ? (
                                     <>
                                         <div className="h-4 w-4 animate-spin rounded-full border-2 border-white/20 border-t-white" />
-                                        <span>Authorizing...</span>
+                                        <span>Signing In...</span>
                                     </>
                                 ) : (
                                     <>
-                                        <span>Initialize Session</span>
+                                        <span>Sign In</span>
                                         <ChevronRight size={18} className="transition-transform group-hover:translate-x-1" />
                                     </>
                                 )}
@@ -186,7 +186,7 @@ function LoginForm() {
 export default function LoginPage() {
     return (
         <Suspense fallback={
-            <div className="flex min-h-screen items-center justify-center bg-[#0A0A0A]">
+            <div className="flex min-h-screen items-center justify-center bg-[#252525]">
                 <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#841818] border-t-transparent" />
             </div>
         }>

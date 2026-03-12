@@ -17,11 +17,11 @@ export default function AdminLayout({
     const isLoginPage = pathname === '/admin/login';
 
     return (
-        <div className="flex h-screen bg-[#0A0A0A] font-sans overflow-hidden text-white select-none">
+        <div className="flex h-screen bg-[#252525] font-sans overflow-hidden text-white select-none">
 
             {/* ── Sidebar ── */}
             {!isLoginPage && (
-                <aside className="w-72 flex-none flex flex-col bg-[#111111] border-r border-white/5 shadow-2xl z-20">
+                <aside className="w-72 flex-none flex flex-col bg-[#1E1E1E] border-r border-white/5 shadow-2xl z-20">
 
                     {/* Brand / Logo Section */}
                     <div className="px-8 py-10 border-b border-white/5 relative group">
@@ -31,7 +31,7 @@ export default function AdminLayout({
                                 <Building2 size={20} className="text-white" />
                             </div>
                             <div className="flex flex-col">
-                                <span className="text-[10px] font-bold tracking-[0.3em] text-[#E0BB20] uppercase opacity-70">Admin Core</span>
+                                <span className="text-[10px] font-bold tracking-[0.3em] text-[#E0BB20] uppercase opacity-70">Admin Portal</span>
                                 <h2 className="text-base font-extrabold text-white leading-tight tracking-tight">Global Cooperation</h2>
                             </div>
                         </div>
@@ -39,7 +39,7 @@ export default function AdminLayout({
 
                     {/* Main Navigation */}
                     <nav className="flex-1 overflow-y-auto px-4 py-8 space-y-2 custom-scrollbar">
-                        <p className="px-4 mb-4 text-[10px] uppercase tracking-[0.25em] text-white/30 font-bold">Main Console</p>
+                        <p className="px-4 mb-4 text-[10px] uppercase tracking-[0.25em] text-white/30 font-bold">Navigation</p>
 
                         <Link
                             href="/admin"
@@ -71,7 +71,7 @@ export default function AdminLayout({
                             <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center group-hover:bg-[#841818]/20 transition-colors">
                                 <LogOut size={18} className="group-hover:text-[#841818] transition-colors" />
                             </div>
-                            Terminate Session
+                            Sign Out
                         </button>
                     </div>
                 </aside>
@@ -82,10 +82,10 @@ export default function AdminLayout({
                 
                 {/* Global Top Bar */}
                 {!isLoginPage && (
-                    <header className="h-20 flex-none border-b border-white/5 bg-[#0D0D0D]/50 backdrop-blur-md px-10 flex items-center justify-between z-10">
+                    <header className="h-20 flex-none border-b border-white/5 bg-[#333333]/50 backdrop-blur-md px-10 flex items-center justify-between z-10">
                         <div className="flex items-center gap-4">
                             <div className="w-2 h-2 rounded-full bg-[#E0BB20] animate-pulse" />
-                            <span className="text-[11px] font-bold tracking-widest text-white/40 uppercase">System Active | 2026 Virtualization</span>
+                            <span className="text-[11px] font-bold tracking-widest text-white/40 uppercase">System Status | Online</span>
                         </div>
                     </header>
                 )}
