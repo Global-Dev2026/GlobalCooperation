@@ -229,141 +229,155 @@ export default function InternshipPrograms() {
                 </div>
             </div>
 
-            {/* ── Main Content Grid ── */}
+            {/* ── Main Content Grid: Wrapped in Unified Container ── */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-16">
+                <motion.div 
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    className="bg-[#eceef1]/80 backdrop-blur-xl border border-white/20 rounded-[4rem] p-8 md:p-16 lg:p-20 shadow-2xl shadow-gray-200/40 relative overflow-hidden"
+                >
+                    {/* Subtle Background Glow */}
+                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#841818]/10 to-transparent" />
                     
-                    <div className="lg:col-span-8 space-y-20">
-                        {/* Eligibility */}
-                        <motion.section 
-                            initial="hidden"
-                            whileInView="visible"
-                            viewport={{ once: true }}
-                            variants={containerVariants}
-                        >
-                            <div className="flex items-center gap-4 mb-8">
-                                <div className="w-12 h-12 bg-[#841818]/10 text-[#841818] rounded-xl flex items-center justify-center">
-                                    <GraduationCap className="w-6 h-6" />
-                                </div>
-                                <h3 className="text-3xl font-extrabold text-gray-900">Eligibility Criteria</h3>
-                            </div>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                {[
-                                    "Undergraduate students or recent graduates",
-                                    "Fields such as IT, Software Development, Business Management, Marketing, Accounting, HR or related disciplines",
-                                    "Good communication skills in English",
-                                    "Basic computer literacy"
-                                ].map((req, i) => (
-                                    <motion.div 
-                                        key={i} 
-                                        variants={itemVariants}
-                                        className="flex gap-4 p-5 rounded-2xl bg-white border border-gray-100 shadow-sm hover:border-[#841818]/30 transition-all hover:bg-gray-50"
-                                    >
-                                        <div className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 bg-emerald-50 text-emerald-600">
-                                            <Check className="w-4 h-4" />
-                                        </div>
-                                        <p className="text-gray-700 font-medium text-sm leading-relaxed">{req}</p>
-                                    </motion.div>
-                                ))}
-                            </div>
-                        </motion.section>
-
-                        {/* Internship Areas */}
-                        <motion.section 
-                            initial="hidden"
-                            whileInView="visible"
-                            viewport={{ once: true }}
-                            variants={containerVariants}
-                        >
-                            <div className="flex items-center gap-4 mb-8">
-                                <div className="w-12 h-12 bg-[#E0BB20]/10 text-[#E0BB20] rounded-xl flex items-center justify-center">
-                                    <Search className="w-6 h-6" />
-                                </div>
-                                <h3 className="text-3xl font-extrabold text-gray-900">Internship Areas</h3>
-                            </div>
-                            <div className="flex flex-wrap gap-4">
-                                {[
-                                    "Software Development",
-                                    "Web Development",
-                                    "Digital Marketing",
-                                    "Business Administration",
-                                    "Finance & Accounting",
-                                    "Customer Support / Operations"
-                                ].map((area, i) => (
-                                    <motion.div 
-                                        key={i} 
-                                        variants={itemVariants}
-                                        className="px-6 py-4 bg-white rounded-2xl border border-gray-100 shadow-sm hover:border-[#E0BB20]/50 hover:bg-[#E0BB20]/5 transition-all flex items-center gap-3"
-                                    >
-                                        <div className="w-2 h-2 rounded-full bg-[#E0BB20]" />
-                                        <span className="font-bold text-gray-800">{area}</span>
-                                    </motion.div>
-                                ))}
-                            </div>
-                        </motion.section>
-                    </div>
-
-                    {/* Applications Sidebar */}
-                    <div className="lg:col-span-4">
-                        <motion.div
-                            initial={{ opacity: 0, x: 20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            viewport={{ once: true }}
-                            id="apply-now"
-                            className="sticky top-32 bg-gray-900 rounded-[3rem] p-10 text-white shadow-2xl relative overflow-hidden"
-                        >
-                            <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
-                            <div className="absolute bottom-0 left-0 w-32 h-32 bg-[#E0BB20]/10 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 pointer-events-none" />
-
-                            <h4 className="text-3xl font-extrabold mb-8 italic">Apply Now</h4>
-                            
-                            <div className="space-y-8 mb-10">
-                                <div className="flex gap-4">
-                                    <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0">
-                                        <Calendar className="w-6 h-6 text-[#E0BB20]" />
-                                    </div>
-                                    <div>
-                                        <p className="text-white/50 text-xs uppercase tracking-widest font-bold mb-1">Duration</p>
-                                        <p className="font-bold text-lg">3 – 6 Months</p>
-                                        <p className="text-xs text-white/40">Base on requirements</p>
-                                    </div>
-                                </div>
-
-                                <div className="flex gap-4">
-                                    <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0">
-                                        <MapPin className="w-6 h-6 text-[#E0BB20]" />
-                                    </div>
-                                    <div>
-                                        <p className="text-white/50 text-xs uppercase tracking-widest font-bold mb-1">Location</p>
-                                        <p className="font-bold text-md leading-relaxed">{SITE_CONFIG.address}</p>
-                                    </div>
-                                </div>
-
-                                <div className="flex gap-4">
-                                    <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center flex-shrink-0">
-                                        <Send className="w-6 h-6 text-[#E0BB20]" />
-                                    </div>
-                                    <div>
-                                        <p className="text-white/50 text-xs uppercase tracking-widest font-bold mb-1">Submission</p>
-                                        <p className="font-bold text-lg">Via Email</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <a
-                                href={`mailto:${SITE_CONFIG.email}?subject=Internship Application`}
-                                className="w-full py-5 bg-[#E0BB20] hover:bg-[#c9a71b] text-[#841818] rounded-2xl font-black text-center text-lg shadow-xl shadow-[#E0BB20]/10 transition-all block"
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 relative z-10">
+                        
+                        <div className="lg:col-span-8 space-y-20">
+                            {/* ── Eligibility: Re-imagined ── */}
+                            <motion.section 
+                                initial="hidden"
+                                whileInView="visible"
+                                viewport={{ once: true }}
+                                variants={containerVariants}
+                                className="relative"
                             >
-                                Apply via Email
-                            </a>
-                            
-                            <p className="text-center text-white/40 text-[10px] mt-6 leading-relaxed px-4">
-                                Attach your resume and state your preferred area in the subject line.
-                            </p>
-                        </motion.div>
-                    </div>
+                                <div className="flex items-center gap-5 mb-10">
+                                    <div className="w-14 h-14 bg-gradient-to-br from-[#841818] to-[#5a0f0f] text-white rounded-2xl flex items-center justify-center shadow-lg shadow-[#841818]/20">
+                                        <GraduationCap className="w-7 h-7" />
+                                    </div>
+                                    <div>
+                                        <h3 className="text-3xl font-black text-gray-900 tracking-tight">Eligibility Criteria</h3>
+                                        <p className="text-sm text-gray-500 font-medium">What we look for in our future leaders</p>
+                                    </div>
+                                </div>
 
-                </div>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                                    {[
+                                        { text: "Undergraduate students or recent graduates", icon: <Users /> },
+                                        { text: "Fields such as IT, Software Development, Business, or Marketing", icon: <Briefcase /> },
+                                        { text: "Strong communication skills in English", icon: <Check /> },
+                                        { text: "Basic computer literacy & adaptive mindset", icon: <Sparkles /> }
+                                    ].map((req, i) => (
+                                        <motion.div 
+                                            key={i} 
+                                            variants={itemVariants}
+                                            className="group relative flex gap-5 p-6 rounded-[2rem] bg-white border border-gray-100 shadow-sm hover:shadow-xl hover:shadow-gray-200/50 transition-all duration-500 overflow-hidden"
+                                        >
+                                            <div className="absolute top-0 left-0 w-1 h-full bg-[#841818] opacity-0 group-hover:opacity-100 transition-opacity" />
+                                            <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 bg-gray-50 text-[#841818] group-hover:bg-[#841818] group-hover:text-white transition-all duration-500">
+                                                {req.icon && <div className="w-5 h-5">{req.icon}</div>}
+                                            </div>
+                                            <p className="text-gray-700 font-bold text-sm leading-relaxed pt-1.5">{req.text}</p>
+                                        </motion.div>
+                                    ))}
+                                </div>
+                            </motion.section>
+
+                            {/* ── Internship Areas: Premium Grid ── */}
+                            <motion.section 
+                                initial="hidden"
+                                whileInView="visible"
+                                viewport={{ once: true }}
+                                variants={containerVariants}
+                            >
+                                <div className="flex items-center gap-5 mb-10">
+                                    <div className="w-14 h-14 bg-gradient-to-br from-[#E0BB20] to-[#c9a71b] text-[#841818] rounded-2xl flex items-center justify-center shadow-lg shadow-[#E0BB20]/20">
+                                        <Search className="w-7 h-7" />
+                                    </div>
+                                    <div>
+                                        <h3 className="text-3xl font-black text-gray-900 tracking-tight">Internship Areas</h3>
+                                        <p className="text-sm text-gray-500 font-medium">Explore professional pathways</p>
+                                    </div>
+                                </div>
+
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                    {[
+                                        "Software Development",
+                                        "Web Development",
+                                        "Digital Marketing",
+                                        "Business Administration",
+                                        "Finance & Accounting",
+                                        "Customer Support / Operations"
+                                    ].map((area, i) => (
+                                        <motion.div 
+                                            key={i} 
+                                            variants={itemVariants}
+                                            className="group px-6 py-5 bg-white rounded-2xl border border-gray-100 shadow-sm hover:border-[#E0BB20] hover:bg-gray-50 transition-all flex items-center justify-between"
+                                        >
+                                            <div className="flex items-center gap-4">
+                                                <div className="w-2 h-2 rounded-full bg-[#E0BB20] group-hover:scale-150 transition-transform" />
+                                                <span className="font-extrabold text-gray-800 text-sm">{area}</span>
+                                            </div>
+                                            <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-[#E0BB20] group-hover:translate-x-1 transition-all" />
+                                        </motion.div>
+                                    ))}
+                                </div>
+                            </motion.section>
+                        </div>
+
+                        {/* ── Applications Sidebar: Brand Aligned ── */}
+                        <div className="lg:col-span-4">
+                            <motion.div
+                                initial={{ opacity: 0, x: 20 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                id="apply-now"
+                                className="lg:sticky lg:top-32 bg-gradient-to-br from-[#841818] to-[#5a0f0f] rounded-[3rem] p-10 text-white shadow-2xl relative overflow-hidden border border-white/10"
+                            >
+                                {/* Decorative Elements */}
+                                <div className="absolute top-0 right-0 w-32 h-32 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+                                <div className="absolute bottom-0 left-0 w-32 h-32 bg-[#E0BB20]/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />
+
+                                <div className="relative z-10">
+                                    <h4 className="text-3xl font-black mb-8 italic tracking-tight">Apply Now</h4>
+                                    
+                                    <div className="space-y-6 mb-10">
+                                        {[
+                                            { label: "Duration", val: "3 – 6 Months", sub: "Base on requirements", icon: <Calendar className="w-5 h-5" /> },
+                                            { label: "Location", val: SITE_CONFIG.address, icon: <MapPin className="w-5 h-5" /> },
+                                            { label: "Submission", val: "Via Email", icon: <Send className="w-5 h-5" /> }
+                                        ].map((info, idx) => (
+                                            <div key={idx} className="flex gap-4 group/item">
+                                                <div className="w-12 h-12 rounded-2xl bg-white/10 flex items-center justify-center flex-shrink-0 group-hover/item:bg-[#E0BB20]/20 transition-colors">
+                                                    <div className="text-[#E0BB20]">
+                                                        {info.icon}
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <p className="text-white/40 text-[10px] uppercase font-black tracking-widest mb-1">{info.label}</p>
+                                                    <p className="font-bold text-sm leading-relaxed">{info.val}</p>
+                                                    {info.sub && <p className="text-[10px] text-white/30 mt-1">{info.sub}</p>}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+
+                                    <a
+                                        href="mailto:jobs@globalsoftsl.com?subject=Internship Application"
+                                        className="w-full py-5 bg-[#E0BB20] hover:bg-white text-[#841818] rounded-2xl font-black text-center text-lg shadow-xl shadow-black/20 transition-all block active:scale-95"
+                                    >
+                                        Apply via Email
+                                    </a>
+                                    
+                                    <p className="text-center text-white/40 text-[10px] mt-6 leading-relaxed px-4 font-medium">
+                                        Include your resume and mention your field of interest in the subject.
+                                    </p>
+                                </div>
+                            </motion.div>
+                        </div>
+
+                    </div>
+                </motion.div>
             </div>
 
 
