@@ -55,7 +55,7 @@ export default async function CompanyPage({ params }: Props) {
     logo: "https://globalsoftsl.com/images/companies/logo.png",
     parentOrganization: {
       "@type": "Organization",
-      name: "Global Cooperation (Private) Limited",
+      name: "Global Cooperation (Pvt) Ltd",
       url: "https://globalsoftsl.com",
     },
   };

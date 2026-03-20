@@ -46,10 +46,10 @@ export default function Footer() {
         variants={containerVariants}
       >
         {/* Main Content */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6 items-center w-full">
           {/* Company Info - Compact */}
           <motion.div
-            className="flex items-center gap-6"
+            className="flex items-center justify-start gap-6"
             variants={itemVariants}
           >
             <div className="flex items-center gap-2">
@@ -108,7 +108,7 @@ export default function Footer() {
 
           {/* Contact - Compact */}
           <motion.div
-            className="flex items-center gap-4 text-sm"
+            className="flex items-center justify-center md:justify-end gap-4 text-sm"
             variants={itemVariants}
           >
             <motion.a
@@ -130,19 +130,42 @@ export default function Footer() {
           </motion.div>
         </div>
 
+        {/* Strategic Business Partner */}
+        <motion.div 
+          className="flex flex-col items-center justify-center gap-4 mb-8 pt-8 w-full border-t border-white/10"
+          variants={itemVariants}
+        >
+          <span className="text-sm font-heading font-medium text-white/70 uppercase tracking-widest">
+            Strategic Business Partner
+          </span>
+          <a
+            href="https://mi.com.lk/en/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group relative flex items-center justify-center bg-white rounded-xl p-4 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.2)]"
+            title="Mercantile Investments and Finance PLC"
+          >
+            <img 
+              src="/images/mi.jpg" 
+              alt="Mercantile Investments" 
+              className="h-16 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+            />
+          </a>
+        </motion.div>
+
         {/* Bottom Bar */}
         <motion.div
-          className="border-t border-white/5 pt-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs"
+          className="border-t border-white/5 pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs"
           variants={itemVariants}
         >
           <p className="text-white/50">
             &copy; {currentYear} {SITE_CONFIG.name}. All rights reserved.
           </p>
           <motion.div
-            className="flex items-center gap-1.5 text-white/50"
+            className="flex items-start sm:items-center gap-2 text-white/50"
             whileHover={{ scale: 1.02 }}
           >
-            <MapPin size={14} className="text-gold/70" />
+            <MapPin size={14} className="text-gold/70 shrink-0 mt-0.5 sm:mt-0" />
             <span>{SITE_CONFIG.address}</span>
           </motion.div>
         </motion.div>

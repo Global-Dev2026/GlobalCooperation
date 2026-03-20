@@ -8,7 +8,7 @@ import Companies from "@/components/sections/Companies";
 import BoardOfDirectors from "@/components/sections/BoardOfDirectors";
 
 export const metadata: Metadata = {
-  title: "Global Cooperation (Private) Limited | Sri Lanka",
+  title: "Global Cooperation (Pvt) Ltd | Sri Lanka",
   description: "Global Cooperation is a diversified holding company providing innovative software, AI, CCTV security, and comprehensive consulting services across Sri Lanka.",
 };
 
@@ -16,7 +16,7 @@ export default function Home() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "LocalBusiness",
-    name: "Global Cooperation (Private) Limited",
+    name: "Global Cooperation (Pvt) Ltd",
     alternateName: "Global Cooperation",
     image: "https://globalsoftsl.com/images/companies/logo.png",
     "@id": "https://globalsoftsl.com",

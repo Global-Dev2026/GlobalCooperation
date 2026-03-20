@@ -60,7 +60,7 @@ export function createContactEmailHtml({
   </div>
   
   <div style="text-align: center; margin-top: 20px; color: #999; font-size: 12px;">
-    <p>This email was sent from your Global Cooperation (Private) Limited website contact form.</p>
+    <p>This email was sent from your Global Cooperation (Pvt) Ltd website contact form.</p>
   </div>
 </body>
 </html>

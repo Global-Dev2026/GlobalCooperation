@@ -28,7 +28,7 @@ export const COLORS = {
 
 // Site Configuration
 export const SITE_CONFIG = {
-  name: "Global Cooperation (Private) Limited",
+  name: "Global Cooperation (Pvt) Ltd",
   tagline: "Transforming Ideas into Digital Solutions",
   description:
     "Expert software development, cloud solutions, and AI services for modern businesses.",
@@ -103,7 +103,7 @@ export const SERVICES = [
   },
 ] as const;
 
-// Subsidiaries / Companies under Global Cooperation Private Limited
+// Subsidiaries / Companies under Global Cooperation (Pvt) Ltd
 export const COMPANIES = [
   {
     slug: "global-soft-solutions",

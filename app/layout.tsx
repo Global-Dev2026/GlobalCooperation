@@ -19,14 +19,14 @@ const montserrat = Montserrat({
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Global Cooperation (Private) Limited",
-    default: "Global Cooperation (Private) Limited",
+    template: "%s | Global Cooperation (Pvt) Ltd",
+    default: "Global Cooperation (Pvt) Ltd",
   },
   description:
     "Expert software development, cloud solutions, and AI services for modern businesses.",
   keywords: [
     "Global Cooperation",
-    "Global Cooperation Private Limited",
+    "Global Cooperation (Pvt) Ltd",
     "Global Cooperation Sri Lanka",
     "software development",
     "cloud solutions",
@@ -39,9 +39,9 @@ export const metadata: Metadata = {
     "IT consulting",
     "web development",
   ],
-  authors: [{ name: "Global Cooperation (Private) Limited" }],
-  creator: "Global Cooperation (Private) Limited",
-  publisher: "Global Cooperation (Private) Limited",
+  authors: [{ name: "Global Cooperation (Pvt) Ltd" }],
+  creator: "Global Cooperation (Pvt) Ltd",
+  publisher: "Global Cooperation (Pvt) Ltd",
   metadataBase: new URL("https://globalsoftsl.com"),
   robots: {
     index: true,
@@ -58,17 +58,17 @@ export const metadata: Metadata = {
     icon: "/images/companies/logo.png",
   },
   openGraph: {
-    title: "Global Cooperation (Private) Limited",
+    title: "Global Cooperation (Pvt) Ltd",
     description:
-      "A group of companies providing software development, cloud, AI, and advisory services.",
-    url: "https://globalsoftsl.com",
-    siteName: "Global Cooperation (Private) Limited",
+      "Transforming Your Ideas into Digital Reality with innovative software solutions.",
+    url: "https://globalsoftsolution.com",
+    siteName: "Global Cooperation (Pvt) Ltd",
     locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Global Cooperation (Private) Limited",
+    title: "Global Cooperation (Pvt) Ltd",
     description: "Expert software development, cloud solutions, and AI services.",
   },
   // Industry-level metadata for search engines and social

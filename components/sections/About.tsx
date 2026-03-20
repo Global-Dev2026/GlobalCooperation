@@ -162,19 +162,19 @@ export default function About() {
           className="text-center mb-16"
         >
           <span className="text-sm font-medium tracking-widest uppercase text-slate-600 mb-2 block">
-            Global Cooperation (Private) Limited
+            Global Cooperation (Pvt) Ltd
           </span>
           <h2 className="text-4xl md:text-5xl font-heading font-bold text-burgundy mb-6">
             About Us
           </h2>
           <div className="max-w-4xl mx-auto space-y-4 text-left">
-            <p className="text-lg text-gray-700 leading-relaxed text-justify">
-              Global Cooperation (Private) Limited is a Sri Lanka–based holding
-              company established to build, manage, and scale a diversified
-              portfolio of businesses with long-term growth potential. The Group
-              provides strategic leadership, governance oversight, and
-              disciplined capital stewardship to its subsidiaries, ensuring
-              sustainable value creation and resilient growth.
+            <p className="text-lg text-white/80 max-w-3xl mx-auto leading-relaxed">
+              Global Cooperation (Pvt) Ltd is a Sri Lanka–based holding
+              company that actively manages and develops a diversified portfolio
+              of subsidiaries. With a strategic focus on expanding across multiple
+              industries, we provide the leadership, financial backing, and
+              operational resilience required for our subsidiary companies to
+              thrive in competitive markets.
             </p>
             <p className="text-lg text-gray-700 leading-relaxed text-justify">
               We focus on developing and nurturing businesses across technology,
@@ -240,7 +240,7 @@ export default function About() {
                 Our Approach
               </h3>
               <p className="text-lg text-white/90 leading-relaxed max-w-4xl mx-auto">
-                At Global Cooperation (Private) Limited, we provide strategic oversight, disciplined capital management, and strong governance to empower our subsidiaries. By aligning vision, performance, and long-term planning, we enable sustainable growth, operational excellence, and enduring value creation across our diversified portfolio.
+                At Global Cooperation (Pvt) Ltd, we provide strategic oversight, disciplined capital management, and strong governance to empower our subsidiaries. By aligning vision, performance, and long-term planning, we enable sustainable growth, operational excellence, and enduring value creation across our diversified portfolio.
               </p>
             </motion.div>
           </Card>
