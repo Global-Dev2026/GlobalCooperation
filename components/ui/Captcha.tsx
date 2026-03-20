@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { RefreshCw } from "lucide-react";
 
 interface CaptchaProps {
@@ -12,7 +12,7 @@ export default function Captcha({ onChange, onRefresh }: CaptchaProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [captcha, setCaptcha] = useState("");
 
-    const generateCaptcha = () => {
+    const generateCaptcha = useCallback(() => {
         const chars = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789";
         let result = "";
         for (let i = 0; i < 6; i++) {
@@ -21,9 +21,9 @@ export default function Captcha({ onChange, onRefresh }: CaptchaProps) {
         setCaptcha(result);
         onChange(result);
         if (onRefresh) onRefresh();
-    };
+    }, [onChange, onRefresh]);
 
-    const drawCaptcha = () => {
+    const drawCaptcha = useCallback(() => {
         const canvas = canvasRef.current;
         if (!canvas) return;
         const ctx = canvas.getContext("2d");
@@ -135,17 +135,17 @@ export default function Captcha({ onChange, onRefresh }: CaptchaProps) {
             );
             ctx.fill();
         }
-    };
+    }, [captcha, onChange]);
 
     useEffect(() => {
         generateCaptcha();
-    }, []);
+    }, [generateCaptcha]);
 
     useEffect(() => {
         if (captcha) {
             drawCaptcha();
         }
-    }, [captcha]);
+    }, [captcha, drawCaptcha]);
 
     return (
         <div className="flex items-center gap-4">

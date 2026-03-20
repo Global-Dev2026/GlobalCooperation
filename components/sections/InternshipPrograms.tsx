@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import NextImage from "next/image";
 import { 
     Send, 
     Users, 
@@ -102,13 +103,14 @@ export default function InternshipPrograms() {
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{ duration: 0.8 }}
-                                className="relative rounded-[3rem] overflow-hidden shadow-2xl border-8 border-white group"
+                                className="relative aspect-[4/3] w-full rounded-[3rem] overflow-hidden shadow-2xl border-8 border-white group"
                             >
                                 <div className="absolute inset-0 bg-gradient-to-t from-[#841818]/40 to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                                <img 
+                                <NextImage 
                                     src="/images/intern.png" 
                                     alt="Collaboration at Global" 
-                                    className="w-full h-full object-cover aspect-[4/3] group-hover:scale-110 transition-transform duration-700"
+                                    fill
+                                    className="object-cover group-hover:scale-110 transition-transform duration-700"
                                 />
                             </motion.div>
                             
@@ -178,7 +180,7 @@ export default function InternshipPrograms() {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-16">
                         <h2 className="text-3xl md:text-5xl font-extrabold text-gray-900 mb-4">Why Intern With Us?</h2>
-                        <p className="text-gray-600 max-w-2xl mx-auto">We don't just offer internships; we provide a career-launching pad with hands-on guidance and real impact.</p>
+                        <p className="text-gray-600 max-w-2xl mx-auto">We don&apos;t just offer internships; we provide a career-launching pad with hands-on guidance and real impact.</p>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">

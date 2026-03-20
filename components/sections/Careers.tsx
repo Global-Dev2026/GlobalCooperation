@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import NextImage from "next/image";
 import {
     Briefcase,
     MapPin,
@@ -217,13 +218,14 @@ export default function Careers({ initialJobs }: { initialJobs: Job[] }) {
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{ duration: 0.8 }}
-                                className="relative rounded-[3rem] overflow-hidden shadow-2xl border-8 border-white group"
+                                className="relative aspect-[4/3] w-full rounded-[3rem] overflow-hidden shadow-2xl border-8 border-white group"
                             >
                                 <div className="absolute inset-0 bg-gradient-to-t from-[#841818]/40 to-transparent z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                                <img 
+                                <NextImage 
                                     src="https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&q=80&w=1200" 
                                     alt="Careers at Global" 
-                                    className="w-full h-full object-cover aspect-[4/3] group-hover:scale-110 transition-transform duration-700"
+                                    fill
+                                    className="object-cover group-hover:scale-110 transition-transform duration-700"
                                 />
                             </motion.div>
                             
@@ -475,16 +477,21 @@ export default function Careers({ initialJobs }: { initialJobs: Job[] }) {
                                     >
                                         Explore Programs <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                                     </Link>
-                                    <div className="flex items-center gap-3 text-white/40">
-                                        <div className="flex -space-x-3">
-                                            {[1,2,3].map(i => (
-                                                <div key={i} className="w-8 h-8 rounded-full border border-white/10 overflow-hidden bg-white/5">
-                                                    <img src={`https://i.pravatar.cc/100?img=${i+20}`} alt="user" />
-                                                </div>
-                                            ))}
+                                        <div className="flex items-center gap-3 text-white/40">
+                                            <div className="flex -space-x-3">
+                                                {[1, 2, 3].map(i => (
+                                                    <div key={i} className="w-8 h-8 rounded-full border border-white/10 overflow-hidden bg-white/5 relative">
+                                                        <NextImage 
+                                                            src={`https://i.pravatar.cc/100?img=${i + 20}`} 
+                                                            alt="user" 
+                                                            fill
+                                                            className="object-cover"
+                                                        />
+                                                    </div>
+                                                ))}
+                                            </div>
+                                            <span className="text-xs font-bold">100+ Stories</span>
                                         </div>
-                                        <span className="text-xs font-bold">100+ Stories</span>
-                                    </div>
                                 </div>
                             </div>
 

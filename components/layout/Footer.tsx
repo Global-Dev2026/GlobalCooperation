@@ -132,25 +132,21 @@ export default function Footer() {
 
         {/* Strategic Financing Partner */}
         <motion.div 
-          className="flex flex-col items-start justify-start gap-4 mb-4 pt-4 w-full border-t border-white/10"
+          className="flex flex-col items-start justify-start gap-5 mb-4 pt-4 w-full border-t border-white/10"
           variants={itemVariants}
         >
-          <span className="text-sm font-heading font-medium text-white/70 uppercase tracking-widest">
-            Strategic Financing Partner
-          </span>
-          <a
-            href="https://mi.com.lk/en/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="group relative flex items-center justify-center bg-white rounded-xl p-4 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_30px_rgba(255,255,255,0.2)]"
-            title="Mercantile Investments and Finance PLC"
-          >
-            <img 
-              src="/images/mi.jpg" 
-              alt="Mercantile Investments" 
-              className="h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
-            />
-          </a>
+          <div className="text-[11px] font-medium text-white/50 leading-relaxed max-w-2xl uppercase tracking-wider">
+            Customer financing solutions are facilitated through{" "}
+            <a 
+              href="https://mi.com.lk/en/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-white hover:text-gold transition-colors underline underline-offset-4"
+            >
+              Mercantile Investments and Finance PLC
+            </a>
+            , an independent financial institution.
+          </div>
         </motion.div>
 
         {/* Bottom Bar */}
