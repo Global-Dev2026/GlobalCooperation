@@ -12,6 +12,15 @@ export default function Captcha({ onChange, onRefresh }: CaptchaProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const [captcha, setCaptcha] = useState("");
 
+    // Use refs to store props to prevent dependency loop when parent passes inline functions
+    const onChangeRef = useRef(onChange);
+    const onRefreshRef = useRef(onRefresh);
+
+    useEffect(() => {
+        onChangeRef.current = onChange;
+        onRefreshRef.current = onRefresh;
+    }, [onChange, onRefresh]);
+
     const generateCaptcha = useCallback(() => {
         const chars = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789";
         let result = "";
@@ -19,9 +28,9 @@ export default function Captcha({ onChange, onRefresh }: CaptchaProps) {
             result += chars.charAt(Math.floor(Math.random() * chars.length));
         }
         setCaptcha(result);
-        onChange(result);
-        if (onRefresh) onRefresh();
-    }, [onChange, onRefresh]);
+        onChangeRef.current(result);
+        if (onRefreshRef.current) onRefreshRef.current();
+    }, []); // No dependencies to avoid recreation loops
 
     const drawCaptcha = useCallback(() => {
         const canvas = canvasRef.current;
@@ -98,7 +107,6 @@ export default function Captcha({ onChange, onRefresh }: CaptchaProps) {
             const y = canvas.height / 2 + (Math.random() - 0.5) * 16;
             const angle = (Math.random() - 0.5) * 0.7; // up to ±40°
             const skewX = (Math.random() - 0.5) * 0.45; // horizontal shear
-
             const fillColor = colors[Math.floor(Math.random() * colors.length)];
 
             ctx.save();
@@ -135,7 +143,7 @@ export default function Captcha({ onChange, onRefresh }: CaptchaProps) {
             );
             ctx.fill();
         }
-    }, [captcha, onChange]);
+    }, [captcha]); // Only depend on captcha string
 
     useEffect(() => {
         generateCaptcha();
