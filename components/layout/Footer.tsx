@@ -39,7 +39,7 @@ export default function Footer() {
   return (
     <footer className="bg-burgundy text-white border-t border-white/5">
       <motion.div
-        className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-8"
+        className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-6"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
@@ -130,13 +130,13 @@ export default function Footer() {
           </motion.div>
         </div>
 
-        {/* Strategic Business Partner */}
+        {/* Strategic Financing Partner */}
         <motion.div 
-          className="flex flex-col items-center justify-center gap-4 mb-8 pt-8 w-full border-t border-white/10"
+          className="flex flex-col items-start justify-start gap-4 mb-4 pt-4 w-full border-t border-white/10"
           variants={itemVariants}
         >
           <span className="text-sm font-heading font-medium text-white/70 uppercase tracking-widest">
-            Strategic Business Partner
+            Strategic Financing Partner
           </span>
           <a
             href="https://mi.com.lk/en/"
@@ -148,7 +148,7 @@ export default function Footer() {
             <img 
               src="/images/mi.jpg" 
               alt="Mercantile Investments" 
-              className="h-16 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+              className="h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
             />
           </a>
         </motion.div>

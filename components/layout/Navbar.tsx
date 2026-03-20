@@ -74,6 +74,8 @@ export default function Navbar() {
     setIsOpen(false);
   };
 
+  const isLightPage = pathname.startsWith("/careers");
+
   return (
     <>
       <motion.nav
@@ -92,8 +94,8 @@ export default function Navbar() {
         }}
         className={cn(
           "fixed top-4 left-1/2 z-[100] flex items-center justify-between px-6 lg:px-10 w-[95%] lg:w-[85%] max-w-7xl transition-all duration-500 rounded-full py-4 lg:py-5",
-          isScrolled
-            ? "bg-black/40 backdrop-blur-2xl border border-white/10 shadow-[0_0_40px_rgba(0,0,0,0.5)]"
+          (isScrolled || isLightPage)
+            ? "bg-black/60 backdrop-blur-2xl border border-white/10 shadow-[0_40px_80px_rgba(0,0,0,0.3)]"
             : "bg-transparent border-transparent backdrop-blur-none"
         )}
       >
