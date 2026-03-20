@@ -363,7 +363,7 @@ export default function InternshipPrograms() {
                                     </div>
 
                                     <a
-                                        href="mailto:jobs@globalsoftsl.com?subject=Internship Application"
+                                        href="mailto:internship@globalsoftsl.com?subject=Internship Application"
                                         className="w-full py-5 bg-[#E0BB20] hover:bg-white text-[#841818] rounded-2xl font-black text-center text-lg shadow-xl shadow-black/20 transition-all block active:scale-95"
                                     >
                                         Apply via Email
