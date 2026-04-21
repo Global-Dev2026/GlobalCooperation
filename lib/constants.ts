@@ -537,6 +537,15 @@ export const BOARD_OF_DIRECTORS = [
     linkedin: "https://www.linkedin.com/in/pasan-dileepa-457ab7131/",
   },
   {
+    id: "rasika",
+    name: "Major Rasika Jayasinghe (Rtd)",
+    position: "Director",
+    education: "BSc (DS) Mech Eng",
+    bio: "Major Rasika Jayasinghe (Rtd.), BSc (Defence Studies), Mechanical Engineer, is a Director of Global Tech Private Limited. A graduate of General Sir John Kotelawala Defence University, he brings a blend of military discipline, engineering expertise, and industry experience to support the company’s strategic and technical growth.",
+    image: "/images/directers/rasika.png",
+    linkedin: "",
+  },
+  {
     id: "lakshitha",
     name: "Rumesh Lakshitha ",
     position: "Director",
